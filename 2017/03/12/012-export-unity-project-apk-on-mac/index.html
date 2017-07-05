@@ -36,7 +36,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="sNatic">
     <meta name="description" itemprop="description" content="失踪人口终于回归啦！好久没写文章了，因为找工作跳槽搬家入职适应环境什么的各种事情耽搁了好几周没抽出时间来静下心来研究一些东西。因为新项目中工作环境比较原始，打包 apk 和 ipa 都需要完全手动导出，甚至有些文件还需要自己手动复制很是麻烦，有些怀念之前用 jenkins 动动手指在任意电脑打开浏览器添加一系列任务吃个饭回来 30 个包就 OK 的日子，所以突然很想要把所有的一切自动化起来。">
-    <meta name="keywords" content="null,unity,mac,android">
+    <meta name="keywords" content="null,mac,unity,android">
 
     <!-- Site Verification -->
     
@@ -68,7 +68,7 @@
     <meta property="og:title" content="Unity自动化(1)-在Mac上手动打包Apk | 大喵的新窝">
     <meta property="og:image" content="/img/miao.png" />
     <meta property="og:description" content="失踪人口终于回归啦！好久没写文章了，因为找工作跳槽搬家入职适应环境什么的各种事情耽搁了好几周没抽出时间来静下心来研究一些东西。因为新项目中工作环境比较原始，打包 apk 和 ipa 都需要完全手动导出，甚至有些文件还需要自己手动复制很是麻烦，有些怀念之前用 jenkins 动动手指在任意电脑打开浏览器添加一系列任务吃个饭回来 30 个包就 OK 的日子，所以突然很想要把所有的一切自动化起来。">
-    <meta property="og:article:tag" content="unity"> <meta property="og:article:tag" content="mac"> <meta property="og:article:tag" content="android"> 
+    <meta property="og:article:tag" content="mac"> <meta property="og:article:tag" content="unity"> <meta property="og:article:tag" content="android"> 
 
     
         <meta property="article:published_time" content="3月 12, 2017" />
@@ -273,8 +273,39 @@
 
 <!-- Import Font -->
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 300;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: regular;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 500;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: 'Material Icons';
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://lib.baomitu.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.eot);
+            src: url(https://lib.baomitu.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff2) format('woff2'),url(https://lib.baomitu.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff) format('woff'),url(https://lib.baomitu.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.ttf) format('truetype')
+        }
+    </style>
 
 
         <script>lsloader.load("js/jquery.min.js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
