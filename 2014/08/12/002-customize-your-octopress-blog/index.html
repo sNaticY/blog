@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.4.0 -->
+    <script>window.materialVersion = "1.4.0"</script>
+
+    <!-- Title -->
+    
+    <title>
+        
+            Octopress(2)-自定义你的Octopress博客 | 
+        
+        大喵的新窝
+    </title>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="sNatic">
+    <meta name="description" itemprop="description" content="在上一篇博客『在github上搭建octopress博客』中讲到了如何在ubuntu环境下搭建octopress博客系统并装载到github上。那么相信大家都和我一样并不能满足于默认主题默认模板的博客。那么如何对我们的octopress博客进行定制呢？">
+    <meta name="keywords" content="null,octopress">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/miao.png">
+    <link rel="icon" sizes="192x192" href="/img/miao.png">
+    <link rel="apple-touch-icon" href="/img/miao.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="大喵的新窝">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://snatix.com">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Octopress(2)-自定义你的Octopress博客 | 大喵的新窝">
+    <meta property="og:image" content="/img/miao.png" />
+    <meta property="og:description" content="在上一篇博客『在github上搭建octopress博客』中讲到了如何在ubuntu环境下搭建octopress博客系统并装载到github上。那么相信大家都和我一样并不能满足于默认主题默认模板的博客。那么如何对我们的octopress博客进行定制呢？">
+    <meta property="og:article:tag" content="octopress"> 
+
+    
+        <meta property="article:published_time" content="8月 12, 2014" />
+        <meta property="article:modified_time" content="1月 09, 2017" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="Octopress(2)-自定义你的Octopress博客 | 大喵的新窝">
+    <meta name="twitter:description" content="在上一篇博客『在github上搭建octopress博客』中讲到了如何在ubuntu环境下搭建octopress博客系统并装载到github上。那么相信大家都和我一样并不能满足于默认主题默认模板的博客。那么如何对我们的octopress博客进行定制呢？">
+    <meta name="twitter:image" content="/img/miao.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://snatix.com" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://snatix.com/2014/08/12/002-customize-your-octopress-blog/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "大喵的新窝",
+        "logo": "/img/miao.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "sNatic",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/miao.png"
+        },
+        "description": "这只喵很懒，什么都没留下"
+    },
+    "headline": "Octopress(2)-自定义你的Octopress博客",
+    "url": "http://snatix.com/2014/08/12/002-customize-your-octopress-blog/index.html",
+    "datePublished": "8月 12, 2014",
+    "dateModified": "1月 09, 2017",
+    "description": "在上一篇博客『在github上搭建octopress博客』中讲到了如何在ubuntu环境下搭建octopress博客系统并装载到github上。那么相信大家都和我一样并不能满足于默认主题默认模板的博客。那么如何对我们的octopress博客进行定制呢？",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://snatix.com"
+    }
+}
+</script>
+
+
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import CSS & jQuery -->
+    
+        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        
+        
+            <style>
+    
+    
+    
+    
+    
+    .footer-sns-instagram {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xNDAuNiA3OGMtOS44IDIuMi0yOC40IDEzLjgtMzguNiAyNC0xMC42IDEwLjgtMjEuNiAyOC44LTI0LjIgMzkuNC0yLjYgMTEuNC0yLjQgNzE0LjguNCA3MjUuMiA1LjIgMjAuNCAyOSA0Ni4yIDUzLjIgNTcuNiA4LjIgMy44IDE1LjQgMy44IDM3MC42IDMuOCAzNTEuOCAwIDM2Mi44LS4yIDM3MS0zLjggMjEtOS4yIDM4LjgtMjcgNTAtNDkuMmw1LTEwLjItLjQtMzYzLjgtLjYtMzY0LTQuNC04Yy0xMC44LTE5LjYtMTgtMjguMi0zMi42LTM4LjQtOS4yLTYuMi0xOC44LTExLjItMjQuNi0xMi40LTExLjItMi42LTcxNC40LTIuOC03MjQuOC0uMnpNNjYyIDIwMi44YzEyLjYgMi44IDYwLjIgMjIuMiA2OC40IDI4IDQuNCAzIDMwLjIgMzEuNCAzOSA0Mi42IDIuOCAzLjYgOS42IDE5LjQgMTUuMiAzNWwxMCAyOC42LjggMTQ2Yy42IDEwNi40LjQgMTQ5LjItMS40IDE1Ny44LTEuMiA2LjYtNiAyMi4yLTEwLjQgMzQuNi05LjggMjcuOC0yMyA0Ni42LTQ4LjIgNjguOC0yMi4yIDE5LjQtMzYuOCAyNi44LTYxLjQgMzAuOC0xMC40IDEuNi0yMi42IDQtMjcgNS4yLTE1IDMuOC0xNDAuNiA2LjItMjEzLjQgNC0zNy44LTEuMi03My0zLTc4LjYtNC01LjQtMS4yLTE2LjItMi44LTIzLjgtNC0yNi44LTQtNjguOC0zMy42LTg5LjgtNjMuOC0xMC4yLTE0LjgtMTktMzYuMi0yNy42LTY4LjQtMy4yLTEyLTMtMjkyLjQuMi0zMDcuMiA0LjYtMjEuMiAxNi42LTUzIDIzLjYtNjMuMiA0LTUuOCAxNS0xOC40IDI0LjQtMjcuOCAxNC0xNC4yIDIwLjQtMTkgMzUuOC0yNi44IDI3LTEzLjQgNDIuOC0xNyA4NC4yLTE5IDU3LjItMi44IDI2NC40LS42IDI4MCAyLjh6Ii8+PHBhdGggZD0iTTM1NiAyNjIuMmMtMi44IDEtMTEuMiA0LjItMTguNiA3LjItMTIuNCA0LjYtMzUuNCAyMS00Mi44IDMwLjYtNi4yIDgtMjEgNDcuOC0yMi44IDYxLS44IDcuNi0xLjQgNzAuMi0xIDEzOSAuNiAxMDguNiAxLjIgMTI2LjQgNCAxMzUuNCA0LjQgMTMuOCAxOC42IDQ0LjYgMjIuOCA0OS40IDQuNCA0LjggMzAuMiAyNCAzNy42IDI3LjggMTMgNi42IDQ4IDguNCAxNjcuOCA4LjQgMTE1LjIgMCAxNTAuOC0xLjYgMTY2LTcuNCA2LjYtMi40IDMyLjgtMjEuNCAzOS4yLTI4LjIgNy42LTguMiAyMy44LTQ0IDI2LTU3LjYgMS4yLTcuOCAxLjgtNjUgMS40LTE0OWwtLjYtMTM2LjItMTItMjMuOGMtMTEuNC0yMi44LTEyLjYtMjQuNC0yNy0zNS4yLTguMi02LjQtMjAuOC0xNC0yOC0xN2wtMTMtNS42LTE0Ny0uNGMtOTEuMi0uMi0xNDkgLjQtMTUyIDEuNnptMzE1LjYgNDFjMTIuMiA2IDE5LjYgMTQuMiAyMi40IDI0LjggNi40IDI0LTE4LjggNTEuNi00MyA0Ny4yLTkuOC0yLTIzLjYtMTQuOC0zMC4yLTI4LjQtNC42LTkuMi00LjgtMTEuNC0zLTE3LjQgMi42LTcuOCAxNi40LTIyLjQgMjYuNC0yNy42IDkuNC01IDE1LjItNC42IDI3LjQgMS40ek01MzYuOCAzMzhjNSAxIDE4LjYgNyAzMC40IDEzLjQgMjUgMTMuMiA0Ny4yIDMyLjggNjMgNTUuNiA1LjQgNy42IDExLjYgMTYuMiAxMy44IDE5IDUuOCA3LjIgMTQuOCA1NSAxMy40IDcxLTEuNiAxNi42LTEwIDUzLjgtMTMuNiA1OC42LTEuNiAyLjItNy40IDEwLjYtMTMuMiAxOC42LTE2LjQgMjMuNi00OC42IDUyLTYzLjIgNTUuOC00LjYgMS40LTE1LjYgNS42LTI0LjQgOS42LTE1LjggNy4yLTE2LjQgNy40LTQwIDcuMi0yMy4yLS4yLTI0LjQtLjQtMzktNy40LTguMi00LTE5LjItOC4yLTI0LjQtOS40LTE2LjYtNC4yLTQ5LTM0LTY5LjItNjMuNi0xNi4yLTI0LTE5LTM1LTE5LTc0LjQgMC0zMyAzLjgtNTQuOCAxMS4yLTY0LjggMi42LTMuNCA3LjItMTAuNiAxMC40LTE2IDguNC0xNC40IDI0LjQtMzEuOCAzOC40LTQyIDIwLjItMTQuOCA1My44LTMxLjIgNjcuNi0zMyAxNC4yLTIgNDUuNi0xIDU3LjggMS44eiIvPjxwYXRoIGQ9Ik00OTEgMzk4Yy00LjQuOC0xNi40IDYtMjYuNiAxMS40LTE2IDguNC0yMCAxMS42LTMxLjQgMjUuNC03LjYgOS4yLTE0IDE5LjItMTUuNCAyNC0zLjIgMTEuMi0zLjIgNTIgMCA2Mi42IDMuMiAxMSAyNC40IDM2LjQgMzUgNDIgMTQuOCA4IDM3IDE2LjYgNDUuOCAxNy44IDYuMi44IDEyIDAgMjAuNi0zLjIgNi42LTIuMiAxNy44LTYuMiAyNC42LTguNiAxMC44LTMuNiAxNS02LjYgMjcuNC0xOS42IDEyLTEyLjYgMTUtMTcgMTcuMi0yNiAzLjQtMTMuMiAzLjYtNTUuNC4yLTY2LjgtNS0xNy40LTI5LjQtNDAuNC01OC40LTU1LjItOC40LTQuMi0yNy44LTYuMi0zOS0zLjh6Ii8+PC9zdmc+);
+    }
+    
+    
+    
+    .footer-sns-github {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNCA3OGMtNi40IDEuNC0yNi40IDE0LjItMzYgMjIuOC04IDcuMi0yMiAyOS44LTI0LjQgMzkuMi0xLjYgNi40LTIgMTEzLjItMS42IDM2OCAuNiAyOTkuNCAxIDM1OS44IDMuNCAzNjQgMTEgMjAuMiAyMS42IDMyLjQgMzcuMiA0MyAxNS42IDEwLjYgMTcuMiAxMS4yIDM0LjIgMTMuMiAxMC42IDEuMiA2My40IDEuNiAxMjcuNiAxLjRsMTA5LjYtLjYgNi02LjggNi4yLTYuOC0xLjItMjUuMmMtLjgtMTUuOC0uMi0zMy40IDEuNC00Ny4yIDMtMjUuNCAxLjQtMzYuMi02LTQzLjItNS00LjYtNi4yLTQuOC0zMC42LTQuMi0yNy42LjgtMjQgMS42LTY4LjgtMTYtOC42LTMuNC0yMi42LTE4LTI4LjQtMjkuOC0xMS40LTIyLjgtMjctNDUtMzkuMi01NS42LTE0LTEyLjItMTkuOC0yMC44LTE5LjgtMjguNiAwLTExLjYgMTMuNi0xMi42IDMzLjItMi40IDE2LjYgOC44IDIwLjggMTIuNCA0MC44IDM2LjIgMjQuMiAyOC42IDMxIDMzLjYgNTQgMzkuNiAxNS4yIDQgNDIuMiAzIDUxLjQtMS44IDktNC42IDE4LTE1LjIgMjQuNC0yOS4yIDExLjQtMjQuMiA3LjQtMzEuMi0yMC42LTM2LjgtOS44LTItMjkuMi04LTQzLjQtMTMuNC00MC40LTE1LjgtNjQuNi0zNy40LTg1LjQtNzYuMi0xMS42LTIxLjgtMTUuNC0zMy0xOC4yLTUzLjYtNC4yLTMyLjItNC44LTYwLjItMS40LTg0IDMuNC0yMy44IDYuOC0zMi44IDIwLjItNTQgNC02IDguOC0xNS42IDExLTIxLjQgMy44LTEwIDMuOC0xMS42IDEtMzAtNS4yLTM0LjItMy4yLTUyLjQgNy42LTcwLjIgNy4yLTEyLjIgMTUtMTcuMiAyNC4yLTE1LjggMTIuOCAyLjIgNTIgMTcuNCA2Ni44IDI2LjIgMjYgMTUgMjkgMTUuNCA4Mi40IDcuMiAyNC42LTMuOCAzMy44LTQuMiA2MC0zLjIgMTcgLjYgNDEuNCAzIDU0IDUuMiAzOC40IDYuNiA0OS42IDUuMiA3My0xMCA2LjYtNC4yIDE3LjQtOS40IDI0LTExLjYgNi42LTIuMiAxNi01LjggMjEtOC4yIDEzLTYgMjgtNS42IDM1LjYuOCAxMi40IDEwLjQgMTguNiA0MS40IDE0LjQgNzEuNi00LjQgMzAuNi0zIDM5LjQgOC40IDUzLjggMy40IDQuNCAxMS4yIDE5LjIgMTcuNCAzMy4yTDc3NSA0NDN2NzhsLTEwIDI4Yy0xNS4yIDQzLjItMzYuOCA3My4yLTY2LjIgOTIuOC0xMy40IDguOC01NyAyNS40LTc2LjggMjktMjguMiA1LjItMzMuMiAxMi42LTIyIDMyLjIgMTEuMiAxOS40IDEyLjQgMzIuOCAxMS42IDEyOS42bC0uNiA4NS44IDUuNCA0LjZjMy42IDMgOS4yIDUuMiAxNiA2IDUuOC44IDYwLjIgMSAxMjAuNi42IDEwOC40LS42IDExMC4yLS42IDExOS01IDI0LTExLjYgNDAtMjcuNCA1MS42LTUwLjZsNS40LTExIC42LTM0N2MuNC0yMjMtLjItMzUzLjQtMS40LTM2NS0yLTE3LTIuNi0xOC42LTEzLTM0LTEwLjYtMTUuNC0yMi44LTI2LjItNDMuMi0zNy4yLTQuMi0yLjQtNjQuNi0yLjgtMzY2LTMuMi0xOTguNiAwLTM2NCAuNC0zNjcuNiAxLjR6Ii8+PC9zdmc+);
+    }
+    
+    
+    
+    .footer-sns-zhihu {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzYuOCA3OC44Yy04LjYgMi44LTI0IDEyLjQtMzMuNiAyMS04LjYgNy44LTIxLjQgMjcuOC0yNC40IDM3LjgtNC4yIDE0LTQgNzIzLjQgMCA3MzMuNCA4LjYgMjAuNiAzNi44IDQ4LjYgNTYgNTUuNiA5IDMuNCA3NDcuNCAzLjQgNzU2LjQgMCAxOS44LTcuMiA0OS0zNi42IDU2LTU2LjIgMi4yLTYgMi42LTc1LjYgMi44LTM2Ni40IDAtMjMzLjgtLjYtMzYxLjQtMi0zNjYtMS4yLTMuOC02LjYtMTMuOC0xMi4yLTIyLjItOC4yLTEyLjItMTMuNC0xNy40LTI1LjgtMjUuNi04LjQtNS44LTE5LTExLjQtMjMuMi0xMi4yLTQuNi0xLjItMTYzLjItMS44LTM3NC44LTEuOC0yOTMgMC0zNjguNi42LTM3NS4yIDIuNnptMTkwIDE0NS42YzUuNCA3LjYgNCAxNy40LTQuOCAzMS42LTkuOCAxNi0xMC44IDI3LjQtMyAzNSAyLjYgMi44IDYuNCA1IDguNCA1czM3LjguNCA3OS42LjZjNjggLjQgNzYuNi44IDgyLjQgMy44IDkuMiA1IDEyLjYgMTEgMTIuNiAyMiAwIDctMS4yIDEwLjgtNC44IDE1bC00LjggNS40LTM4IC4yYy01My44IDAtNTMuOCAwLTU1LjQgNTEuMi0uNiAxOC0xLjYgNDIuOC0yLjIgNTUtMS4yIDIyLjguNiAzMS42IDcuNiAzNi4yIDEuNC44IDIyLjIgMiA0NiAyLjZsNDMuMiAxIDguOCA2YzE1LjQgMTAuOCAxNy44IDI5LjIgNSAzNy01LjggMy42LTEwLjIgNC01MS44IDQtMzEgMC00NyAuOC01MC42IDIuNC03IDMuMi0xNC4yIDE3LjYtMTcuMiAzNC40LTMuMiAxNi42LTEgMjEuOCA5LjYgMjUuMiAxMy40IDQuMiAyMS44IDExLjIgNDkgNDEuNCAzNSAzOC44IDM2LjYgNDEgNDEuOCA1OC44IDcgMjMuOCAyLjIgNDEuOC0xMS40IDQxLjgtNy42IDAtMTItMy0yMS0xNC42LTEzLjgtMTcuNC01NC40LTY1LjgtNjItNzMuOC0xNS4yLTE2LTI5LjQtNS44LTM4LjggMjcuNC0xLjggNi42LTguOCAyMy4yLTE1LjYgMzctMTAuOCAyMi0xNCAyNi44LTI3LjQgMzkuNi0xOS42IDE5LjItMjYuNCAyMy01My42IDI5LjYtMjcuMiA2LjQtMzcgNS42LTM4LTMuNi0xLTguNCA0LjQtMTYuNCAyMC0yOSAxNi0xMyAzNi44LTM2LjYgNDUuMi01MS40IDMtNS4yIDguMi0xMy44IDExLjYtMTkgMy40LTUgMTEuOC0yMC40IDE4LjYtMzQuMiAxMC0yMCAxMy42LTI5LjQgMTcuMi00NyAyLjYtMTIuMiA2LjItMjUuNCA3LjgtMjkuNCA0LTkuNCA0LTIxLjQuMi0yNy01LjItNy40LTE2LTguOC02Mi42LTguNC01MC40LjQtNTUuMi0uOC01Ny42LTEzLjItMS44LTEwLjQgNS44LTI0LjQgMTYuMi0yOS44IDcuNC0zLjggMTEuOC00LjIgNTYuMi00LjhsNDguNC0uOCA0LjYtNWM0LjgtNSA0LjgtNSA1LTYxLjYgMC0zNS4yLS44LTU5LjItMi02My4yLTMuOC0xMS4yLTExLTE0LjgtMzAuMi0xNC44cy0yMS40IDEuNC0zMS4yIDE4LjJjLTguMiAxNC40LTIwLjYgMjguOC0zMy4yIDM4LjgtMTMuMiAxMC40LTIxLjYgMTMtMjggOS04LjQtNS42LTUuMi0yMy4yIDguMi00My4yIDQtNi40IDkuMi0xOC42IDEyLjItMjkuNiAzLTEwLjIgNy40LTIzLjIgMTAtMjkgMi40LTUuNiA2LTE2LjggOC0yNC42IDUuNi0yMy42IDI0LTUwLjggMzkuNC01OC40IDExLjItNS40IDE4LjYtNS40IDIyLjQuMnptNDUyIDY4LjJjMTEuOCA3LjggMTEuNC0uOCAxMC44IDIxNi0uNiAxODEtLjggMTk4LjgtNCAyMDMtNy42IDEwLjgtOS44IDExLjQtNTMuNiAxMi40bC00MSAxLTE0IDcuOGMtNy42IDQuMi0yMS4yIDEzLTI5LjggMTkuNC0yNS44IDE5LjItMzUgMTkuOC00My40IDMuMi0xMS44LTIzLjItMjMuNi0zMy4yLTM5LjQtMzMuNC04LjggMC0xMy42LTIuOC0xNy4yLTkuOC0yLjYtNC44LTMtMzMuOC0yLjYtMjA4LjguNC0xOTkuOC40LTIwMyA0LjQtMjA3LjQgMi4yLTIuNCA1LjgtNS4yIDgtNi4yIDIuMi0uOCA1MS44LTEuNCAxMTAtMS4yIDk5IC40IDEwNi42LjYgMTExLjggNHoiLz48cGF0aCBkPSJNNjA2LjggMzM3LjRjLTIuNC40LTYuNCAzLTkgNS44bC00LjggNS4yLS42IDE1Ni40LS40IDE1Ni40IDYuNCA5LjRjMy42IDUuMiA5LjggMTUuMiAxMy42IDIxLjggOCAxNC4yIDE2LjggMjAuNiAyNS42IDE4LjYgMy4yLS42IDEzLjgtNyAyMy42LTE0LjIgMjMtMTcgMjcuOC0xOSA1MC4yLTIwLjIgMTYuNC0xIDE5LjItMS44IDIzLjYtNi4yIDIuOC0yLjggNS02LjQgNS4yLTguMlY1MDUuNmMwLTExNi0uNi0xNTQuNC0yLjYtMTU4LjYtNC44LTEwLjQtOC40LTExLTcwLTEwLjgtMzEuMi4yLTU4LjYuOC02MC44IDEuMnoiLz48L3N2Zz4=);
+    }
+    
+    
+    
+</style>
+
+        
+        <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+
+        <script>lsloader.load("js/jquery.min.js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+    
+    
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Analytics -->
+    
+
+    <!-- Custom Head -->
+    
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-1-概述"><span class="post-toc-text">PART 1 概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-2-使用第三方主题"><span class="post-toc-text">PART 2 使用第三方主题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-3-修改主题样式"><span class="post-toc-text">PART 3 修改主题样式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-4-添加第三方服务"><span class="post-toc-text">PART 4 添加第三方服务</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#主页侧边栏添加-“about-me”"><span class="post-toc-text">主页侧边栏添加 “about me”</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加『多说』评论模块"><span class="post-toc-text">添加『多说』评论模块</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加-“Categories”-模块"><span class="post-toc-text">添加 “Categories” 模块</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加-GitHub-Repos"><span class="post-toc-text">添加 GitHub Repos</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-5-总结"><span class="post-toc-text">PART 5 总结</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Octopress(2)-自定义你的Octopress博客
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/miao.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>sNatic</strong>
+        <span>8月 12, 2014</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC0ElEQVR42u3aQZLiQAwEQP7/6dkHEECVxAbgTp8IB246+zA1knz7O/K6YWNjY2NjY2NjY38l+xZf999/dOd+/eTZ+xWSPSR7xsbGxj6B/eJP/4MNPfrmc0D+u8+Pr94zNjY29gHs54GRLJ2vPAvLzZ6xsbGxsfPS4vlBJCXHbA/Y2NjY2PlPzppK+5DDxsbGxt43lfIGU3Jk+W99uJeGjY2N/fXsTXh86vMH5tvY2NjYX8lur+if/rhUeL7RNmhf7BwbGxv7ouz2pclZ1G3utIOEVQWGjY2N/YPs54vm7aF8PNAe0+wgitzGxsbGvhA7LyTy1v8+3tqQG1Zg2NjY2D/LzoepeXsoaUW1oZiXH1GAYWNjY1+Ivdnce1+X3Jcxw0EvNjY29uXYs3ibtaiSw5pFYx1g2NjY2D/LnjWGNow8Ptu4erE+NjY29kXZ7eA2HyrkoTiLxvw+NjY29jnsWSsniZ886vbxiY2NjY29ad9sGkDvAheDXmxsbOzLsWcb2qzWDgY2ZQw2Njb2Cew8wNoRbFt47EfL2NjY2Oewc0DbftqEWRucw/k2NjY29iXYSfAkJcQMvIm0/A42Njb2tdn5aHbWGGrLm9mx/sd3TrGxsbG/nt1ucTb0nb2Og42NjY3dNpVmraK2qEgws6eG4wFsbGzsA9ir8epohDBrOb3YJzY2NvZF2W2rKG8ktYPkfM18ZWxsbOwz2ZtWfjuO3b8wtOqlYWNjY1+CPSsM8pKjHTnkgdoWUdjY2NhXZbfXfqNt0TKLN2xsbOxz2O3IdtO4f9cxtYUQNjY29gnsPLSSUGlXTg5uPyTAxsbGPoGdh0f+VDsYaIcBxXAaGxsbG3vdisojqoVFTStsbGxs7JgxKy3yp/JhMzY2NvZp7E17aNbun40QkqIIGxsb+zR2O+jNPyfN/c0QoohPbGxs7Iuyz7mwsbGxsbGxsbGxv+b6B4+Gmt3clLc2AAAAAElFTkSuQmCC">
+    
+</ul>
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/octopress/">octopress</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Octopress(2)-自定义你的Octopress博客&url=http://snatix.com/2014/08/12/002-customize-your-octopress-blog/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Octopress(2)-自定义你的Octopress博客&url=http://snatix.com/2014/08/12/002-customize-your-octopress-blog/index.html&via=sNatic" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://snatix.com/2014/08/12/002-customize-your-octopress-blog/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://snatix.com/2014/08/12/002-customize-your-octopress-blog/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>在上一篇博客『<a href="http://snatix.com/2014/08/09/001-how-to-create-octopress-blog/">在github上搭建octopress博客</a>』中讲到了如何在ubuntu环境下搭建octopress博客系统并装载到github上。那么相信大家都和我一样并不能满足于默认主题默认模板的博客。那么如何对我们的octopress博客进行定制呢？</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>想要让你的octopress博客与众不同大概有以下几种方法，首先最简单最直接的就是：</p>
+<ul>
+<li>使用<a href="https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes" target="_blank" rel="external">第三方主题</a></li>
+</ul>
+<p>当然第三方主题也就那么几十种总有要求比较严格的朋友希望更个性化一些的选择：</p>
+<ul>
+<li>在别人的主题基础上进行修改</li>
+</ul>
+<p>当然只修改主题是远远不能满足需求的。还希望有到访人数统计啊、分享到微博空间朋友圈、添加评论系统、日志分类、搜索引擎关键词等等更多更高端的功能</p>
+<ul>
+<li>添加第三方服务</li>
+</ul>
+<p>目前为止想到的就是这些。其他需求什么的以后遇到了再考虑吧。</p>
+<h2 id="PART-2-使用第三方主题"><a href="#PART-2-使用第三方主题" class="headerlink" title="PART 2 使用第三方主题"></a>PART 2 使用第三方主题</h2><p>使用第三方主题的方法非常简单。我在github上找到这个页面『<a href="https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes" target="_blank" rel="external">3rd Party Octopress Themes</a>』里边收录了很多octopress主题。而且提供了preview。迅速从里边找到你心仪的主题然后安装吧。怎么安装？</p>
+<ul>
+<li>点击你心仪的主题、进入到该主题的github页面。</li>
+<li>在README.md里找到安装方法。</li>
+</ul>
+<p>好吧有人看到这里要喷我了。这不是等于什么都没说么。好吧其实大部分主题可以通过以下方法来安装。以我写这篇博客时正在使用的octostrap3为例。</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cd</span> octopress
+<span class="token function">git</span> clone https://github.com/kAworu/octostrap3 .themes/octostrap3
+rake <span class="token string">'install[octostrap3]'</span>
+rake preview   <span class="token comment" spellcheck="true">#预览一下确认无误以后再generate然后上传什么的</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后第三方主题就安装成功了，怎么样效果还可以吧。有一些主题默认添加了某些在我大天朝会被墙的服务什么twitter facebook什么的导致页面载入非常慢。所以推荐像我一样不会自己动手修改主题的尽可能选择简洁一些的。缺什么功能等我们以后学会了再补上就好。</p>
+<h2 id="PART-3-修改主题样式"><a href="#PART-3-修改主题样式" class="headerlink" title="PART 3 修改主题样式"></a>PART 3 修改主题样式</h2><p>好吧其实到这我也什么都不会。所以机智的百度下发现这些</p>
+<ul>
+<li>『<a href="http://shanewfx.github.io/blog/2012/08/13/improve-blog-theme/" target="_blank" rel="external">Octopress主题改造</a>』</li>
+<li>『<a href="http://www.360doc.com/content/12/0215/22/1016783_186940749.shtml" target="_blank" rel="external">为Octopress修改主题和自定义样式</a>』</li>
+</ul>
+<p>关于主题主题改造这方面这两位博主在文章里说的很清楚了。但是经过我的一系列尝试发现里边提到的关于<code>sass/custom/</code>这个文件夹下的文件取消注释进行修改的方式仅限于使用默认主题或者以默认主题为基础的第三方主题。很遗憾我已经安装了bootstrap系列的主题所以都没有用，就没办法为大家做具体的演示了。有需要的请移步上述博客。</p>
+<h2 id="PART-4-添加第三方服务"><a href="#PART-4-添加第三方服务" class="headerlink" title="PART 4 添加第三方服务"></a>PART 4 添加第三方服务</h2><p>嗯重要的部分终于来了。当初选择octopress大多是被简洁的风格和强大的可定制性吸引，于是我决定做以下几件事</p>
+<ul>
+<li>在主页侧边栏添加 “about me”</li>
+<li>在每一篇博客底部添加『<a href="http://duoshuo.com/" target="_blank" rel="external">多说</a>』评论模块</li>
+<li>在所有页面侧边栏添加『Categories』模块</li>
+<li>在所有页面侧边栏添加 “GitHub Repos”</li>
+</ul>
+<blockquote>
+<p><strong>P.S: 以下内容都是在octostrap3主题的基础上进行的。如果是其他主题可能页面效果并不好，请大家根据需要自行修改。</strong></p>
+</blockquote>
+<h3 id="主页侧边栏添加-“about-me”"><a href="#主页侧边栏添加-“about-me”" class="headerlink" title="主页侧边栏添加 “about me”"></a>主页侧边栏添加 “about me”</h3><p>打开 <code>/source/_includes/custom/asides/about.html</code><br>编辑内容如下</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>section</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>panel panel-default<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>panel-heading<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>panel-title<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>About Me<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list-group<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list-group-item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/images/Me.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>230<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>230<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- 在source/images/放置你的头像"Me.png",调整宽高看起来舒服即可 --></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list-group-item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>你的自述1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list-group-item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>你的自述2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!--自述3，4，5什么的随意添加--></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>section</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>考虑需要在哪些页面显示这些内容，我决定只在首页侧边栏的顶部显示，那么就打开<code>_config.yml</code>,找到<code>blog_index_asides:</code>去掉前面的“#”，添加</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">blog_index_asides</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>custom/asides/about.html<span class="token punctuation">]</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>如果已有其他内容，注意用“,”和空格与后边的项目隔开。<br>保存后运行<code>rake preview</code>试试看效果吧。</p>
+<h3 id="添加『多说』评论模块"><a href="#添加『多说』评论模块" class="headerlink" title="添加『多说』评论模块"></a>添加『<a href="http://duoshuo.com/" target="_blank" rel="external">多说</a>』评论模块</h3><p>首先在多说首页 <a href="http://duoshuo.com/" target="_blank" rel="external">http://duoshuo.com/</a> 注册帐号，记住你所添的多说站点的域名，如 yourname.duoshuo.com</p>
+<p>在<code>source/_includes/post</code>目录下，新建文件 “duoshuo.html”</p>
+<script src="//gist.github.com/fcf0d3e2354bc663cb19.js?file=duoshuo.html"></script>
+<p>打开<code>source/_layouts/post.html</code>在<code>&lt;/article&gt;</code>下插入如下代码。</p>
+<script src="//gist.github.com/fcf0d3e2354bc663cb19.js?file=post.html"></script>
+<p>最后<code>rake preview</code>看下有没有生效吧。</p>
+<h3 id="添加-“Categories”-模块"><a href="#添加-“Categories”-模块" class="headerlink" title="添加 “Categories” 模块"></a>添加 “Categories” 模块</h3><p>这个问题着实让我蛋疼了很久，百度一下可以找到很多，例如</p>
+<ul>
+<li><a href="http://codemacro.com/2012/07/18/add-category-list-to-octopress/" target="_blank" rel="external">为octopress添加分类(category)列表</a></li>
+<li><a href="http://blog.eddie.com.tw/2011/12/05/add-catetories-to-sidebar-in-octopress/" target="_blank" rel="external">帮你的octopress增加文章分类</a></li>
+</ul>
+<p>但是这些并不符合要求，效果<strong>非常</strong>不美观。绝对无法容忍，然后就突然在octostrap主题的<a href="https://github.com/kAworu/octostrap3" target="_blank" rel="external">官方页面</a><br>的<a href="http://kaworu.github.io/octopress/" target="_blank" rel="external">demo页</a>发现，作者的侧边栏的 categories 好漂亮。正是我想要的，果断找到了这个网页位于github的<a href="https://github.com/kAworu/octopress/tree/octostrap3-demo" target="_blank" rel="external">源文件页面</a></p>
+<p>找到<code>/source/_includes/custom/asides/category_list.html</code><br>内容如下</p>
+<script src="//gist.github.com/fcf0d3e2354bc663cb19.js?file=category_list.html"></script>
+<p>然后在相同的目录下建立相同的文件全部copy进去。<br>然后打开<code>_config.yml</code>,找到<code>default_asides:</code>添加</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">default_asides</span><span class="token punctuation">:</span> custom/asides/cate gory_list.html
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>嗯，这样效果就圆满了。</p>
+<h3 id="添加-GitHub-Repos"><a href="#添加-GitHub-Repos" class="headerlink" title="添加 GitHub Repos"></a>添加 GitHub Repos</h3><p>这个就更简单了，直接打开<code>_config.yml</code>,修改如下：</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># Github repositories</span>
+<span class="token key atrule">github_user</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">#你的github用户名</span>
+<span class="token key atrule">github_repo_count</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">#要显示的repo的数量</span>
+<span class="token key atrule">github_show_profile_link</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span class="token key atrule">github_skip_forks</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在<code>default_asides:</code>添加</p>
+<pre class="line-numbers language-text"><code class="language-text">default_asides: asides/github.html
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><code>rake preview</code>一下看看是不是圆满了。</p>
+<h2 id="PART-5-总结"><a href="#PART-5-总结" class="headerlink" title="PART 5 总结"></a>PART 5 总结</h2><p>以上就是博主自己折腾的事情了。如果大家还有其他需要例如豆瓣、微博墙等等其他想要放进来的东西请参照以下几篇博客，应该可以找到满意的答案。</p>
+<ul>
+<li><a href="http://blog.csdn.net/biaobiaoqi/article/details/9289563" target="_blank" rel="external">定制Octopress</a></li>
+<li><a href="http://812lcl.com/blog/2013/10/26/octopressce-bian-lan-ji-ping-lun-xi-tong-ding-zhi/" target="_blank" rel="external">Octopress侧边栏定制及评论系统定制</a></li>
+<li><a href="http://yrzhll.com/blog/2012/12/12/comment/" target="_blank" rel="external">在octopress中添加多说的最新评论</a></li>
+</ul>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2014/08/12/002-customize-your-octopress-blog/">http://snatix.com/2014/08/12/002-customize-your-octopress-blog/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://snatix.com/2014/08/12/002-customize-your-octopress-blog/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://snatix.com/2014/08/12/002-customize-your-octopress-blog/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//snatix.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2014/08/13/003-use-gitcafe-to-speed-up/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2014/08/09/001-how-to-create-octopress-blog/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/miao.png" alt="sNatic's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        Hi! I&#39;m snatic
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="/about" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">account_box</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2014/08/">八月 2014<span class="sidebar_archives-count">6</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/Hexo博客重启计划/">Hexo博客重启计划<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/Octopress折腾之路/">Octopress折腾之路<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Unity通用框架工程/">Unity通用框架工程<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/git探索之路/">git探索之路<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                    <i class="material-icons sidebar-material-icons">label_outline</i>
+                
+                标签云
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">account_circle</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links" title="友情链接">
+                
+                    <i class="material-icons sidebar-material-icons">touch_app</i>
+                
+                友情链接
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+        <a href="https://www.instagram.com/snaticx/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-instagram">
+                <span class="visuallyhidden">Instagram</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/sNaticY" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/liu-yan-44-87" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-zhihu">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2014&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>大喵的新窝
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+
+    <script>lsloader.load("js/lazyload.min.js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
+    <script>lsloader.load("js/js.min.js","/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+
+
+
+    <script>lsloader.load("js/nprogress.js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+<script id="dsq-count-scr" src="//snatix.disqus.com/count.js" async></script>
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.4.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

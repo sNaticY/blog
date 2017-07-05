@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.4.0 -->
+    <script>window.materialVersion = "1.4.0"</script>
+
+    <!-- Title -->
+    
+    <title>
+        
+            重启Hexo(2)-Material深度探索 | 
+        
+        大喵的新窝
+    </title>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="sNatic">
+    <meta name="description" itemprop="description" content="在上一篇文章「在Mac上安装Hexo」中介绍了如何在 mac 搭建 Hexo 博客环境并部署到 coding.net 上，那么接下来的任务就是针对目前白纸一张的博客进行一些自定义让它变得更好用吧～我们的目标是基于 Material 主题完成「标签云」「评论系统」以及「友情链接」并探索一些其他的小功能。">
+    <meta name="keywords" content="null,hexo,mac,blog">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/miao.png">
+    <link rel="icon" sizes="192x192" href="/img/miao.png">
+    <link rel="apple-touch-icon" href="/img/miao.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="大喵的新窝">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://snatix.com">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="重启Hexo(2)-Material深度探索 | 大喵的新窝">
+    <meta property="og:image" content="/img/miao.png" />
+    <meta property="og:description" content="在上一篇文章「在Mac上安装Hexo」中介绍了如何在 mac 搭建 Hexo 博客环境并部署到 coding.net 上，那么接下来的任务就是针对目前白纸一张的博客进行一些自定义让它变得更好用吧～我们的目标是基于 Material 主题完成「标签云」「评论系统」以及「友情链接」并探索一些其他的小功能。">
+    <meta property="og:article:tag" content="hexo"> <meta property="og:article:tag" content="mac"> <meta property="og:article:tag" content="blog"> 
+
+    
+        <meta property="article:published_time" content="1月 14, 2017" />
+        <meta property="article:modified_time" content="2月 19, 2017" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="重启Hexo(2)-Material深度探索 | 大喵的新窝">
+    <meta name="twitter:description" content="在上一篇文章「在Mac上安装Hexo」中介绍了如何在 mac 搭建 Hexo 博客环境并部署到 coding.net 上，那么接下来的任务就是针对目前白纸一张的博客进行一些自定义让它变得更好用吧～我们的目标是基于 Material 主题完成「标签云」「评论系统」以及「友情链接」并探索一些其他的小功能。">
+    <meta name="twitter:image" content="/img/miao.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://snatix.com" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://snatix.com/2017/01/14/008-customize-hexo/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "大喵的新窝",
+        "logo": "/img/miao.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "sNatic",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/miao.png"
+        },
+        "description": "这只喵很懒，什么都没留下"
+    },
+    "headline": "重启Hexo(2)-Material深度探索",
+    "url": "http://snatix.com/2017/01/14/008-customize-hexo/index.html",
+    "datePublished": "1月 14, 2017",
+    "dateModified": "2月 19, 2017",
+    "description": "在上一篇文章「在Mac上安装Hexo」中介绍了如何在 mac 搭建 Hexo 博客环境并部署到 coding.net 上，那么接下来的任务就是针对目前白纸一张的博客进行一些自定义让它变得更好用吧～我们的目标是基于 Material 主题完成「标签云」「评论系统」以及「友情链接」并探索一些其他的小功能。",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://snatix.com"
+    }
+}
+</script>
+
+
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import CSS & jQuery -->
+    
+        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        
+        
+            <style>
+    
+    
+    
+    
+    
+    .footer-sns-instagram {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xNDAuNiA3OGMtOS44IDIuMi0yOC40IDEzLjgtMzguNiAyNC0xMC42IDEwLjgtMjEuNiAyOC44LTI0LjIgMzkuNC0yLjYgMTEuNC0yLjQgNzE0LjguNCA3MjUuMiA1LjIgMjAuNCAyOSA0Ni4yIDUzLjIgNTcuNiA4LjIgMy44IDE1LjQgMy44IDM3MC42IDMuOCAzNTEuOCAwIDM2Mi44LS4yIDM3MS0zLjggMjEtOS4yIDM4LjgtMjcgNTAtNDkuMmw1LTEwLjItLjQtMzYzLjgtLjYtMzY0LTQuNC04Yy0xMC44LTE5LjYtMTgtMjguMi0zMi42LTM4LjQtOS4yLTYuMi0xOC44LTExLjItMjQuNi0xMi40LTExLjItMi42LTcxNC40LTIuOC03MjQuOC0uMnpNNjYyIDIwMi44YzEyLjYgMi44IDYwLjIgMjIuMiA2OC40IDI4IDQuNCAzIDMwLjIgMzEuNCAzOSA0Mi42IDIuOCAzLjYgOS42IDE5LjQgMTUuMiAzNWwxMCAyOC42LjggMTQ2Yy42IDEwNi40LjQgMTQ5LjItMS40IDE1Ny44LTEuMiA2LjYtNiAyMi4yLTEwLjQgMzQuNi05LjggMjcuOC0yMyA0Ni42LTQ4LjIgNjguOC0yMi4yIDE5LjQtMzYuOCAyNi44LTYxLjQgMzAuOC0xMC40IDEuNi0yMi42IDQtMjcgNS4yLTE1IDMuOC0xNDAuNiA2LjItMjEzLjQgNC0zNy44LTEuMi03My0zLTc4LjYtNC01LjQtMS4yLTE2LjItMi44LTIzLjgtNC0yNi44LTQtNjguOC0zMy42LTg5LjgtNjMuOC0xMC4yLTE0LjgtMTktMzYuMi0yNy42LTY4LjQtMy4yLTEyLTMtMjkyLjQuMi0zMDcuMiA0LjYtMjEuMiAxNi42LTUzIDIzLjYtNjMuMiA0LTUuOCAxNS0xOC40IDI0LjQtMjcuOCAxNC0xNC4yIDIwLjQtMTkgMzUuOC0yNi44IDI3LTEzLjQgNDIuOC0xNyA4NC4yLTE5IDU3LjItMi44IDI2NC40LS42IDI4MCAyLjh6Ii8+PHBhdGggZD0iTTM1NiAyNjIuMmMtMi44IDEtMTEuMiA0LjItMTguNiA3LjItMTIuNCA0LjYtMzUuNCAyMS00Mi44IDMwLjYtNi4yIDgtMjEgNDcuOC0yMi44IDYxLS44IDcuNi0xLjQgNzAuMi0xIDEzOSAuNiAxMDguNiAxLjIgMTI2LjQgNCAxMzUuNCA0LjQgMTMuOCAxOC42IDQ0LjYgMjIuOCA0OS40IDQuNCA0LjggMzAuMiAyNCAzNy42IDI3LjggMTMgNi42IDQ4IDguNCAxNjcuOCA4LjQgMTE1LjIgMCAxNTAuOC0xLjYgMTY2LTcuNCA2LjYtMi40IDMyLjgtMjEuNCAzOS4yLTI4LjIgNy42LTguMiAyMy44LTQ0IDI2LTU3LjYgMS4yLTcuOCAxLjgtNjUgMS40LTE0OWwtLjYtMTM2LjItMTItMjMuOGMtMTEuNC0yMi44LTEyLjYtMjQuNC0yNy0zNS4yLTguMi02LjQtMjAuOC0xNC0yOC0xN2wtMTMtNS42LTE0Ny0uNGMtOTEuMi0uMi0xNDkgLjQtMTUyIDEuNnptMzE1LjYgNDFjMTIuMiA2IDE5LjYgMTQuMiAyMi40IDI0LjggNi40IDI0LTE4LjggNTEuNi00MyA0Ny4yLTkuOC0yLTIzLjYtMTQuOC0zMC4yLTI4LjQtNC42LTkuMi00LjgtMTEuNC0zLTE3LjQgMi42LTcuOCAxNi40LTIyLjQgMjYuNC0yNy42IDkuNC01IDE1LjItNC42IDI3LjQgMS40ek01MzYuOCAzMzhjNSAxIDE4LjYgNyAzMC40IDEzLjQgMjUgMTMuMiA0Ny4yIDMyLjggNjMgNTUuNiA1LjQgNy42IDExLjYgMTYuMiAxMy44IDE5IDUuOCA3LjIgMTQuOCA1NSAxMy40IDcxLTEuNiAxNi42LTEwIDUzLjgtMTMuNiA1OC42LTEuNiAyLjItNy40IDEwLjYtMTMuMiAxOC42LTE2LjQgMjMuNi00OC42IDUyLTYzLjIgNTUuOC00LjYgMS40LTE1LjYgNS42LTI0LjQgOS42LTE1LjggNy4yLTE2LjQgNy40LTQwIDcuMi0yMy4yLS4yLTI0LjQtLjQtMzktNy40LTguMi00LTE5LjItOC4yLTI0LjQtOS40LTE2LjYtNC4yLTQ5LTM0LTY5LjItNjMuNi0xNi4yLTI0LTE5LTM1LTE5LTc0LjQgMC0zMyAzLjgtNTQuOCAxMS4yLTY0LjggMi42LTMuNCA3LjItMTAuNiAxMC40LTE2IDguNC0xNC40IDI0LjQtMzEuOCAzOC40LTQyIDIwLjItMTQuOCA1My44LTMxLjIgNjcuNi0zMyAxNC4yLTIgNDUuNi0xIDU3LjggMS44eiIvPjxwYXRoIGQ9Ik00OTEgMzk4Yy00LjQuOC0xNi40IDYtMjYuNiAxMS40LTE2IDguNC0yMCAxMS42LTMxLjQgMjUuNC03LjYgOS4yLTE0IDE5LjItMTUuNCAyNC0zLjIgMTEuMi0zLjIgNTIgMCA2Mi42IDMuMiAxMSAyNC40IDM2LjQgMzUgNDIgMTQuOCA4IDM3IDE2LjYgNDUuOCAxNy44IDYuMi44IDEyIDAgMjAuNi0zLjIgNi42LTIuMiAxNy44LTYuMiAyNC42LTguNiAxMC44LTMuNiAxNS02LjYgMjcuNC0xOS42IDEyLTEyLjYgMTUtMTcgMTcuMi0yNiAzLjQtMTMuMiAzLjYtNTUuNC4yLTY2LjgtNS0xNy40LTI5LjQtNDAuNC01OC40LTU1LjItOC40LTQuMi0yNy44LTYuMi0zOS0zLjh6Ii8+PC9zdmc+);
+    }
+    
+    
+    
+    .footer-sns-github {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNCA3OGMtNi40IDEuNC0yNi40IDE0LjItMzYgMjIuOC04IDcuMi0yMiAyOS44LTI0LjQgMzkuMi0xLjYgNi40LTIgMTEzLjItMS42IDM2OCAuNiAyOTkuNCAxIDM1OS44IDMuNCAzNjQgMTEgMjAuMiAyMS42IDMyLjQgMzcuMiA0MyAxNS42IDEwLjYgMTcuMiAxMS4yIDM0LjIgMTMuMiAxMC42IDEuMiA2My40IDEuNiAxMjcuNiAxLjRsMTA5LjYtLjYgNi02LjggNi4yLTYuOC0xLjItMjUuMmMtLjgtMTUuOC0uMi0zMy40IDEuNC00Ny4yIDMtMjUuNCAxLjQtMzYuMi02LTQzLjItNS00LjYtNi4yLTQuOC0zMC42LTQuMi0yNy42LjgtMjQgMS42LTY4LjgtMTYtOC42LTMuNC0yMi42LTE4LTI4LjQtMjkuOC0xMS40LTIyLjgtMjctNDUtMzkuMi01NS42LTE0LTEyLjItMTkuOC0yMC44LTE5LjgtMjguNiAwLTExLjYgMTMuNi0xMi42IDMzLjItMi40IDE2LjYgOC44IDIwLjggMTIuNCA0MC44IDM2LjIgMjQuMiAyOC42IDMxIDMzLjYgNTQgMzkuNiAxNS4yIDQgNDIuMiAzIDUxLjQtMS44IDktNC42IDE4LTE1LjIgMjQuNC0yOS4yIDExLjQtMjQuMiA3LjQtMzEuMi0yMC42LTM2LjgtOS44LTItMjkuMi04LTQzLjQtMTMuNC00MC40LTE1LjgtNjQuNi0zNy40LTg1LjQtNzYuMi0xMS42LTIxLjgtMTUuNC0zMy0xOC4yLTUzLjYtNC4yLTMyLjItNC44LTYwLjItMS40LTg0IDMuNC0yMy44IDYuOC0zMi44IDIwLjItNTQgNC02IDguOC0xNS42IDExLTIxLjQgMy44LTEwIDMuOC0xMS42IDEtMzAtNS4yLTM0LjItMy4yLTUyLjQgNy42LTcwLjIgNy4yLTEyLjIgMTUtMTcuMiAyNC4yLTE1LjggMTIuOCAyLjIgNTIgMTcuNCA2Ni44IDI2LjIgMjYgMTUgMjkgMTUuNCA4Mi40IDcuMiAyNC42LTMuOCAzMy44LTQuMiA2MC0zLjIgMTcgLjYgNDEuNCAzIDU0IDUuMiAzOC40IDYuNiA0OS42IDUuMiA3My0xMCA2LjYtNC4yIDE3LjQtOS40IDI0LTExLjYgNi42LTIuMiAxNi01LjggMjEtOC4yIDEzLTYgMjgtNS42IDM1LjYuOCAxMi40IDEwLjQgMTguNiA0MS40IDE0LjQgNzEuNi00LjQgMzAuNi0zIDM5LjQgOC40IDUzLjggMy40IDQuNCAxMS4yIDE5LjIgMTcuNCAzMy4yTDc3NSA0NDN2NzhsLTEwIDI4Yy0xNS4yIDQzLjItMzYuOCA3My4yLTY2LjIgOTIuOC0xMy40IDguOC01NyAyNS40LTc2LjggMjktMjguMiA1LjItMzMuMiAxMi42LTIyIDMyLjIgMTEuMiAxOS40IDEyLjQgMzIuOCAxMS42IDEyOS42bC0uNiA4NS44IDUuNCA0LjZjMy42IDMgOS4yIDUuMiAxNiA2IDUuOC44IDYwLjIgMSAxMjAuNi42IDEwOC40LS42IDExMC4yLS42IDExOS01IDI0LTExLjYgNDAtMjcuNCA1MS42LTUwLjZsNS40LTExIC42LTM0N2MuNC0yMjMtLjItMzUzLjQtMS40LTM2NS0yLTE3LTIuNi0xOC42LTEzLTM0LTEwLjYtMTUuNC0yMi44LTI2LjItNDMuMi0zNy4yLTQuMi0yLjQtNjQuNi0yLjgtMzY2LTMuMi0xOTguNiAwLTM2NCAuNC0zNjcuNiAxLjR6Ii8+PC9zdmc+);
+    }
+    
+    
+    
+    .footer-sns-zhihu {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzYuOCA3OC44Yy04LjYgMi44LTI0IDEyLjQtMzMuNiAyMS04LjYgNy44LTIxLjQgMjcuOC0yNC40IDM3LjgtNC4yIDE0LTQgNzIzLjQgMCA3MzMuNCA4LjYgMjAuNiAzNi44IDQ4LjYgNTYgNTUuNiA5IDMuNCA3NDcuNCAzLjQgNzU2LjQgMCAxOS44LTcuMiA0OS0zNi42IDU2LTU2LjIgMi4yLTYgMi42LTc1LjYgMi44LTM2Ni40IDAtMjMzLjgtLjYtMzYxLjQtMi0zNjYtMS4yLTMuOC02LjYtMTMuOC0xMi4yLTIyLjItOC4yLTEyLjItMTMuNC0xNy40LTI1LjgtMjUuNi04LjQtNS44LTE5LTExLjQtMjMuMi0xMi4yLTQuNi0xLjItMTYzLjItMS44LTM3NC44LTEuOC0yOTMgMC0zNjguNi42LTM3NS4yIDIuNnptMTkwIDE0NS42YzUuNCA3LjYgNCAxNy40LTQuOCAzMS42LTkuOCAxNi0xMC44IDI3LjQtMyAzNSAyLjYgMi44IDYuNCA1IDguNCA1czM3LjguNCA3OS42LjZjNjggLjQgNzYuNi44IDgyLjQgMy44IDkuMiA1IDEyLjYgMTEgMTIuNiAyMiAwIDctMS4yIDEwLjgtNC44IDE1bC00LjggNS40LTM4IC4yYy01My44IDAtNTMuOCAwLTU1LjQgNTEuMi0uNiAxOC0xLjYgNDIuOC0yLjIgNTUtMS4yIDIyLjguNiAzMS42IDcuNiAzNi4yIDEuNC44IDIyLjIgMiA0NiAyLjZsNDMuMiAxIDguOCA2YzE1LjQgMTAuOCAxNy44IDI5LjIgNSAzNy01LjggMy42LTEwLjIgNC01MS44IDQtMzEgMC00NyAuOC01MC42IDIuNC03IDMuMi0xNC4yIDE3LjYtMTcuMiAzNC40LTMuMiAxNi42LTEgMjEuOCA5LjYgMjUuMiAxMy40IDQuMiAyMS44IDExLjIgNDkgNDEuNCAzNSAzOC44IDM2LjYgNDEgNDEuOCA1OC44IDcgMjMuOCAyLjIgNDEuOC0xMS40IDQxLjgtNy42IDAtMTItMy0yMS0xNC42LTEzLjgtMTcuNC01NC40LTY1LjgtNjItNzMuOC0xNS4yLTE2LTI5LjQtNS44LTM4LjggMjcuNC0xLjggNi42LTguOCAyMy4yLTE1LjYgMzctMTAuOCAyMi0xNCAyNi44LTI3LjQgMzkuNi0xOS42IDE5LjItMjYuNCAyMy01My42IDI5LjYtMjcuMiA2LjQtMzcgNS42LTM4LTMuNi0xLTguNCA0LjQtMTYuNCAyMC0yOSAxNi0xMyAzNi44LTM2LjYgNDUuMi01MS40IDMtNS4yIDguMi0xMy44IDExLjYtMTkgMy40LTUgMTEuOC0yMC40IDE4LjYtMzQuMiAxMC0yMCAxMy42LTI5LjQgMTcuMi00NyAyLjYtMTIuMiA2LjItMjUuNCA3LjgtMjkuNCA0LTkuNCA0LTIxLjQuMi0yNy01LjItNy40LTE2LTguOC02Mi42LTguNC01MC40LjQtNTUuMi0uOC01Ny42LTEzLjItMS44LTEwLjQgNS44LTI0LjQgMTYuMi0yOS44IDcuNC0zLjggMTEuOC00LjIgNTYuMi00LjhsNDguNC0uOCA0LjYtNWM0LjgtNSA0LjgtNSA1LTYxLjYgMC0zNS4yLS44LTU5LjItMi02My4yLTMuOC0xMS4yLTExLTE0LjgtMzAuMi0xNC44cy0yMS40IDEuNC0zMS4yIDE4LjJjLTguMiAxNC40LTIwLjYgMjguOC0zMy4yIDM4LjgtMTMuMiAxMC40LTIxLjYgMTMtMjggOS04LjQtNS42LTUuMi0yMy4yIDguMi00My4yIDQtNi40IDkuMi0xOC42IDEyLjItMjkuNiAzLTEwLjIgNy40LTIzLjIgMTAtMjkgMi40LTUuNiA2LTE2LjggOC0yNC42IDUuNi0yMy42IDI0LTUwLjggMzkuNC01OC40IDExLjItNS40IDE4LjYtNS40IDIyLjQuMnptNDUyIDY4LjJjMTEuOCA3LjggMTEuNC0uOCAxMC44IDIxNi0uNiAxODEtLjggMTk4LjgtNCAyMDMtNy42IDEwLjgtOS44IDExLjQtNTMuNiAxMi40bC00MSAxLTE0IDcuOGMtNy42IDQuMi0yMS4yIDEzLTI5LjggMTkuNC0yNS44IDE5LjItMzUgMTkuOC00My40IDMuMi0xMS44LTIzLjItMjMuNi0zMy4yLTM5LjQtMzMuNC04LjggMC0xMy42LTIuOC0xNy4yLTkuOC0yLjYtNC44LTMtMzMuOC0yLjYtMjA4LjguNC0xOTkuOC40LTIwMyA0LjQtMjA3LjQgMi4yLTIuNCA1LjgtNS4yIDgtNi4yIDIuMi0uOCA1MS44LTEuNCAxMTAtMS4yIDk5IC40IDEwNi42LjYgMTExLjggNHoiLz48cGF0aCBkPSJNNjA2LjggMzM3LjRjLTIuNC40LTYuNCAzLTkgNS44bC00LjggNS4yLS42IDE1Ni40LS40IDE1Ni40IDYuNCA5LjRjMy42IDUuMiA5LjggMTUuMiAxMy42IDIxLjggOCAxNC4yIDE2LjggMjAuNiAyNS42IDE4LjYgMy4yLS42IDEzLjgtNyAyMy42LTE0LjIgMjMtMTcgMjcuOC0xOSA1MC4yLTIwLjIgMTYuNC0xIDE5LjItMS44IDIzLjYtNi4yIDIuOC0yLjggNS02LjQgNS4yLTguMlY1MDUuNmMwLTExNi0uNi0xNTQuNC0yLjYtMTU4LjYtNC44LTEwLjQtOC40LTExLTcwLTEwLjgtMzEuMi4yLTU4LjYuOC02MC44IDEuMnoiLz48L3N2Zz4=);
+    }
+    
+    
+    
+</style>
+
+        
+        <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+
+        <script>lsloader.load("js/jquery.min.js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+    
+    
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Analytics -->
+    
+
+    <!-- Custom Head -->
+    
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-1-概述"><span class="post-toc-text">PART 1 概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-2-标签云页面"><span class="post-toc-text">PART 2 标签云页面</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-3-接入多说评论系统"><span class="post-toc-text">PART 3 接入多说评论系统</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART4-添加友情链接"><span class="post-toc-text">PART4 添加友情链接</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-5-探索其他有趣的功能"><span class="post-toc-text">PART 5 探索其他有趣的功能</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#开启本地搜索服务"><span class="post-toc-text">开启本地搜索服务</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#开启生成二维码服务"><span class="post-toc-text">开启生成二维码服务</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-5-为文章添加题图"><span class="post-toc-text">PART 5 为文章添加题图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-6-总结"><span class="post-toc-text">PART 6 总结</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        <!-- Custom Thumbnail -->
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(http://ojgpkbakj.bkt.clouddn.com/2017011409.jpg)">
+    
+            <p class="article-headline-p">
+                重启Hexo(2)-Material深度探索
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/miao.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>sNatic</strong>
+        <span>1月 14, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACYElEQVR42u3aS3LCQAwFQO5/6WTLhuFJ8/EU1V65gNhqLyxF0uvvp48XHh4eHh4eHh7eZbxXfESX/vD790/G558+yWPDw8PDO8NLgh5jktuPQx/j89jw8PDwTvLmw8pTwjgZ9GLDw8PDu5m36nGs/Q0eHh7ezbzoNsM00EsqeHh4eLfxkn/4k1vm3+bnh3oteHh4eDFvphW7+/zofA8PDw8v4JVXmloFcW/J4IGdMjw8PLyAl7+Ik0CrC1UJtRwPHh4e3hHeqtFXtYGbPOh81QAPDw/vDG9VyzVv/iYFdC+R4OHh4Z3hzYz/Z4rs6vXzwhoPDw9vNy8vgpO2RTUx9O715UHg4eHhHeflZW51wJ83PvJI8PDw8G7jlRee9i0EBI8DDw8P7zwvKYt7y1W9xnE+csPDw8N7ilcd9vcK7jz9NNcU8PDw8DbzqotQScLotXSr6QEPDw/vWV7+0s9L4UL7IH6IURGPh4eHt5mXF77VJkLvRT9f4uPh4eHt5uVt1l4KqQ7AtjQj8PDw8A7yqoX1juWt6gIBHh4e3kle3qhNMNX10zzBfGk94+Hh4T3EqzZPe8VxPn5bnBjw8PDwNpTUeTFdXZnqLWAtbkbg4eHhTfCqR2+cX20cJ/f9CMbDw8PbzKu+6E+Gu2ynDA8PD++hddVq+dsrl6srrXh4eHjP8qohJiOrXrO4l6Lw8PDwbub1BlT5QtX4gZabEXh4eHhX8lZRE9gDiQEPDw9vohlRXY1K/jZpBBeuiYeHh3eEV12iykPMwfnC1pfBGx4eHt5m3u8deHh4eHh4eHh4Fxz/JyiGkqBdtn4AAAAASUVORK5CYII=">
+    
+</ul>
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/blog/">blog</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/hexo/">hexo</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/mac/">mac</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=重启Hexo(2)-Material深度探索&url=http://snatix.com/2017/01/14/008-customize-hexo/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=重启Hexo(2)-Material深度探索&url=http://snatix.com/2017/01/14/008-customize-hexo/index.html&via=sNatic" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://snatix.com/2017/01/14/008-customize-hexo/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://snatix.com/2017/01/14/008-customize-hexo/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>在上一篇文章「<a href="http://snatix.com/2017/01/08/007-install-hexo-on-mac/">在Mac上安装Hexo</a>」中介绍了如何在 mac 搭建 Hexo 博客环境并部署到 coding.net 上，那么接下来的任务就是针对目前白纸一张的博客进行一些自定义让它变得更好用吧～我们的目标是基于 <a href="https://material.viosey.com/" target="_blank" rel="external">Material</a> 主题完成「标签云」「评论系统」以及「友情链接」并探索一些其他的小功能。</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>因为目前博主使用的是 <a href="https://github.com/viosey/hexo-theme-material" target="_blank" rel="external">Material</a> 主题，所以一切定制均以该主题为核心展开。其他主题可能步骤稍有不同但思路都差不多，大家酌情筛选就好~简单的来说主要有以下内容</p>
+<ol>
+<li>标签云页面</li>
+<li>接入多说评论系统</li>
+<li>添加友情链接页面</li>
+<li>添加搜索和生成二维码链接的功能</li>
+<li>为文章添加题图</li>
+</ol>
+<h2 id="PART-2-标签云页面"><a href="#PART-2-标签云页面" class="headerlink" title="PART 2 标签云页面"></a>PART 2 标签云页面</h2><p>Material 主题自带标签云功能，但是作者的教程页面藏的很深让我一度以为需要自行安装第三方标签云插件，具体使用方法非常简单，首先</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ hexo new page <span class="token string">"tags"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后打开<code>source/tags/index.md</code>并添加标签</p>
+<pre class="line-numbers language-md"><code class="language-md">layout: tags
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>完成后保存文件，并在主题的<code>_config.yml</code>文件修改<code>pages</code>项，这样可以在左侧菜单中显示一个链接跳转至标签云页面</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017011402.png" alt="标签云"></p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">pages</span><span class="token punctuation">:</span>
+    <span class="token key atrule">标签云</span><span class="token punctuation">:</span> <span class="token string">"/tags"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>这样标签云功能就轻松完成了，效果如图所示</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017011401.png" alt="标签云"></p>
+<h2 id="PART-3-接入多说评论系统"><a href="#PART-3-接入多说评论系统" class="headerlink" title="PART 3 接入多说评论系统"></a>PART 3 接入多说评论系统</h2><p>Material 主题可以很方便的接入多说的评论，只需要修改主题<code>_config.yml</code>中的<code>comment</code>项即可：</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">comment</span><span class="token punctuation">:</span>
+    <span class="token key atrule">use</span><span class="token punctuation">:</span> duoshuo
+    <span class="token key atrule">shortname</span><span class="token punctuation">:</span> yourname
+    <span class="token key atrule">duoshuo_thread_key</span><span class="token punctuation">:</span> your_duoshuo_thread_key_fdas3be87
+    <span class="token key atrule">duoshuo_embed_js_url</span><span class="token punctuation">:</span> <span class="token string">"https://yourname.duoshuo.com/embed.js"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>那么<code>shortname</code>，<code>duoshuo_thread_key</code>，<code>duoshuo_embed_js_url</code>是如何获得的呢？首先进入 <a href="http://duoshuo.com/" target="_blank" rel="external">多说官网</a> 并使用任意方法登录。登录后点击「我要安装」按钮，填写必要的信息后点击创建即可～</p>
+<p>创建站点完毕后进入站点，点击左侧「设置」-「基本设置」可看到站点的域名和密钥，域名前缀填写至<code>shortname</code>项，密钥填至<code>duoshuo_thread_key</code>项，并将<code>https://yourname.duoshuo.com/embed.js</code>替换为 <code>你的域名/embed.js</code>即可。</p>
+<p>完成后评论系统效果如图所示</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017011403.png" alt="标签云"></p>
+<h2 id="PART4-添加友情链接"><a href="#PART4-添加友情链接" class="headerlink" title="PART4 添加友情链接"></a>PART4 添加友情链接</h2><p>友情链接同样也是 Material 主题自带的功能，作者好贴心～具体开启方法如下：</p>
+<p>首先新建一个页面</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ hexo new page <span class="token string">"links"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后打开<code>source/links/index.md</code>并添加标签</p>
+<pre class="line-numbers language-markdown"><code class="language-markdown">layout: links
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在博客目录的<code>source</code>文件夹下新建<code>_data</code>目录，并新建文件<code>links.yml</code>，以以下内容为模板添加好友即可</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">Name</span><span class="token punctuation">:</span> 
+    <span class="token key atrule">link</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//example.com
+    <span class="token key atrule">avatar</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//example.com/avatar.png
+    <span class="token key atrule">descr</span><span class="token punctuation">:</span> <span class="token string">"这是一个描述"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最后编辑主题的<code>_config.yml</code>文件</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">pages</span><span class="token punctuation">:</span>
+    <span class="token key atrule">友情链接</span><span class="token punctuation">:</span> <span class="token string">"/links"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>完成后的效果如下图所示，由于博主的好友较少，故借了主题作者的博客一张图：</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017011404.png" alt="标签云"></p>
+<p>感觉超棒有没有～</p>
+<h2 id="PART-5-探索其他有趣的功能"><a href="#PART-5-探索其他有趣的功能" class="headerlink" title="PART 5 探索其他有趣的功能"></a>PART 5 探索其他有趣的功能</h2><h3 id="开启本地搜索服务"><a href="#开启本地搜索服务" class="headerlink" title="开启本地搜索服务"></a>开启本地搜索服务</h3><p>作者开启的默认搜索是 Google 搜索，但是由于大家都懂得原因其实并不是很好用，开启内置的本地搜索功能也非常方便，首先安装 <a href="https://github.com/PaicHyperionDev/hexo-generator-search" target="_blank" rel="external">hexo-generator-search</a> 插件</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> hexo-generator-search --save
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后在主题的<code>_config.yml</code>文件中修改<code>search</code>项为</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">search</span><span class="token punctuation">:</span>
+    <span class="token key atrule">use</span><span class="token punctuation">:</span> local
+    <span class="token key atrule">swiftype_key</span><span class="token punctuation">:</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这样就可以实现简单的搜索了，而且与主题融合的也很棒。</p>
+<h3 id="开启生成二维码服务"><a href="#开启生成二维码服务" class="headerlink" title="开启生成二维码服务"></a>开启生成二维码服务</h3><p>首先安装 <a href="https://github.com/yscoder/hexo-helper-qrcode" target="_blank" rel="external">hexo-helper_qrcode</a> 插件</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> hexo-helper-qrcode --save
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后在主题配置文件<code>_config.yml</code>中修改</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">qrcode</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>效果如下图所示</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017011405.png" alt="标签云"></p>
+<p>感觉是一个很有趣的小功能～</p>
+<h2 id="PART-5-为文章添加题图"><a href="#PART-5-为文章添加题图" class="headerlink" title="PART 5 为文章添加题图"></a>PART 5 为文章添加题图</h2><p>可能大家注意到，Material 这个主题每一篇文章都会默认随机配置一张主题图，显示在主页该文章的上方，如果想要自定义这张图怎么办呢</p>
+<p>答案是在文章顶部的<code>front-matter</code>添加<code>thumbnail</code>即可，如</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">title</span><span class="token punctuation">:</span> 重启Hexo(2)<span class="token punctuation">-</span>Material深度探索
+<span class="token key atrule">date</span><span class="token punctuation">:</span> <span class="token datetime number">2017-01-14 12:19:49</span>
+<span class="token key atrule">tags</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>hexo<span class="token punctuation">,</span> mac<span class="token punctuation">,</span> blog<span class="token punctuation">]</span>
+<span class="token key atrule">categories</span><span class="token punctuation">:</span> Hexo博客重启计划
+<span class="token key atrule">thumbnail</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//ojgpkbakj.bkt.clouddn.com/2017011409.jpg
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最终效果如本文题图所示。</p>
+<h2 id="PART-6-总结"><a href="#PART-6-总结" class="headerlink" title="PART 6 总结"></a>PART 6 总结</h2><p>目前为止已经尽可能的挖掘 Material 这个主题中大多数有用的好东西了，可以愉快的开始写博客了(根本不想写搭完就满足的忘记了!!!)。修改好的配置记得上传到 github 进行托管哦，不然下次再来一遍感觉很浪费时间的。。这个篇章差不多也该完结了之后想到什么再补充吧~</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2017/01/14/008-customize-hexo/">http://snatix.com/2017/01/14/008-customize-hexo/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://snatix.com/2017/01/14/008-customize-hexo/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://snatix.com/2017/01/14/008-customize-hexo/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//snatix.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/01/15/009-start-with-asset-bundle/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/01/08/007-install-hexo-on-mac/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/miao.png" alt="sNatic's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        Hi! I&#39;m snatic
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="/about" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">account_box</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2014/08/">八月 2014<span class="sidebar_archives-count">6</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/Hexo博客重启计划/">Hexo博客重启计划<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/Octopress折腾之路/">Octopress折腾之路<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Unity通用框架工程/">Unity通用框架工程<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/git探索之路/">git探索之路<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                    <i class="material-icons sidebar-material-icons">label_outline</i>
+                
+                标签云
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">account_circle</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links" title="友情链接">
+                
+                    <i class="material-icons sidebar-material-icons">touch_app</i>
+                
+                友情链接
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+        <a href="https://www.instagram.com/snaticx/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-instagram">
+                <span class="visuallyhidden">Instagram</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/sNaticY" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/liu-yan-44-87" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-zhihu">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2014&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>大喵的新窝
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+
+    <script>lsloader.load("js/lazyload.min.js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
+    <script>lsloader.load("js/js.min.js","/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+
+
+
+    <script>lsloader.load("js/nprogress.js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+<script id="dsq-count-scr" src="//snatix.disqus.com/count.js" async></script>
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.4.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

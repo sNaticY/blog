@@ -1,0 +1,1715 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[Unity自动化(3)-使用Shell脚本导出ipa]]></title>
+      <url>/2017/04/04/014-automatic-export-ipa-with-shell/</url>
+      <content type="html"><![CDATA[<p>清明节在家睡了一天又看了一整天《生活大爆炸》发现只剩最后一天了- -12点起床洗澡吃饭以后，意识到每次假期都有一种刚起床就只剩最后一天的最后一个晚上的感觉好想哭。。。上周去了 UWA 最后就被迫鸽了大家一个周末，看来坚持每周写一篇文章的计划还是任重而道远啊～好了言归正传，我们回到自动化打包的话题，「<a href="http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/">上一期</a>」中我们提到由于各种原因我们仅有 mobileprovision 文件和 p12 文件来导出 ipa的方法，感觉其实是很麻烦的，那么我们的目标就是让这一切自动化起来。</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>我们的目标是，从 svn update 以后就可以直接运行一个 shell 脚本导出 ipa，无需任何额外操作。那么其实中间大概有这么几个步骤。</p>
+<ol>
+<li>打开 Unity 选择 Build XcodeProject</li>
+<li>打开 Xcode 做一大堆配置</li>
+<li>XcodeProject Archive</li>
+<li>导出 ipa</li>
+</ol>
+<p>在写脚本的时候博主就尽量遵循简单易懂的原则方便大家阅读，尽量不写多余的控制逻辑，有需要的话大家可以自行扩展~首先在开始之前确保我们已经按照上一篇教程的方式成功导出过 ipa 从而确认环境没有太大的问题。</p>
+<h2 id="PART-2-Build-XcodeProject"><a href="#PART-2-Build-XcodeProject" class="headerlink" title="PART 2 Build XcodeProject"></a>PART 2 Build XcodeProject</h2><hr>
+<p>原文链接：<a href="http://snatix.com/2017/04/04/014-automatic-export-ipa-with-shell/">http://snatix.com/2017/04/04/014-automatic-export-ipa-with-shell/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Unity通用框架工程 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> mac </tag>
+            
+            <tag> unity </tag>
+            
+            <tag> ipa </tag>
+            
+            <tag> shell </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Unity自动化(2)-无需企业开发帐号密码打包Ipa]]></title>
+      <url>/2017/03/18/013-export-ipa-without-apple-id/</url>
+      <content type="html"><![CDATA[<p>终于迎来一个不用加班的周六可以愉快的写文章了。换了工位换了两台一样的显示器心情无比舒爽觉得终于要开展全新生活啦～之前两台显示器型号高矮全都不一样让我这样的强迫症患者超级难受 - -。言归正传，接下来我们来到了导出 ipa 的环节。通常在稍微规模大一点的公司是不会给开发者提供他们的具有开发者账户权限的 Apple Id 和密码的，因此想要导出 ipa 就只能通过公司提供的 p12 证书和 mobileprovision 描述文件，那么具体要怎么操作呢？</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>在「<a href="https://snatix.com/2017/03/12/012-export-unity-project-apk-on-mac/">上一期</a>」中我们介绍了在 mac 上导出 apk 的方法，那么现在来到了导出 ipa 的环节。正如引言所述，通常我们是没有企业开发帐号和密码的，只有 mobileprovision 和 p12 文件。目前 Xcode 版本已经达到 8.2 但是很多教程还停留在 7.x 甚至 6 的时代，有很多地方已经不适用了。所以接下来我们根据不同的 Xcode 版本来尝试打包一个带有企业证书的 inhouse 包并发布到服务器上可以允许任意用户远程安装。具体步骤如下：</p>
+<ol>
+<li>准备好一个 Unity 工程并将其导出 Xcode 工程</li>
+<li>导入 p12 证书和 mobileprovision 描述文件</li>
+<li>生成对应的 app 文件</li>
+<li>将 app 文件转换成 ipa 文件</li>
+<li>制作 plist 文件并发布到服务器</li>
+</ol>
+<h2 id="PART-2-将Unity工程导出xcode工程"><a href="#PART-2-将Unity工程导出xcode工程" class="headerlink" title="PART 2 将Unity工程导出xcode工程"></a>PART 2 将Unity工程导出xcode工程</h2><p>为了给大家演示又方便打包博主就简单的制作一个 Unity 工程吧，如图所示。。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032001.png" alt="示例工程"></p>
+<p>相信大家一眼就看出来了就只有一行代码把<code>Time.time</code>显示在屏幕中间。。好吧我们现在开始导出 xcode 工程。Build Settings 面板如下，点击<code>Build</code>再选一个路径就可以导出了，要注意的是<code>Run in Xcode as</code>必须要选择<code>Debug</code>才行，还有就是别忘了修改<code>Bundle Identifier</code>与证书一致，如果不知道的话可以留到 Xcode 工程中再修改。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032002.png" alt="BuildSettings"></p>
+<p>最后打开导出的目录双击<code>Unity-iPhone.xcodeproj</code>打开 Xcode 工程，成功！</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032004.png" alt="Xcode工程"></p>
+<h2 id="PART-2-导入-p12证书和-mobileprovision"><a href="#PART-2-导入-p12证书和-mobileprovision" class="headerlink" title="PART 2 导入.p12证书和.mobileprovision"></a>PART 2 导入.p12证书和.mobileprovision</h2><p>接下来的步骤可能不同版本的 Xcode 会不太一样，以博主的 Xcode 8.2.1 为例。打开以后如上图所示。可以看到有一个报错叫做<code>&quot;Signing for &quot;Unity-iPhone&quot; requires a development team&quot;</code>，一般来说如果自己拥有开发者帐号的话直接按照各种教程的步骤来就没问题了。但是很多时候我们并没有对应的企业开发者帐号的使用权限，只有如下图的两个文件。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032005.png" alt="证书"></p>
+<p>关于这两个文件的作用和来源这里就不再赘述了，总之很麻烦而且博主也没有企业级开发者帐号没有亲手操作过～通常公司的平台组会为我们准备好这两个文件。首先回到 Xcode 工程中，切换到<code>Signing</code>部分，取消<code>Automatically manage signing</code>。此时会出现多个要求导入<code>Provisioning Profile</code>的部分，如下图所示。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032006.png" alt="证书"></p>
+<p>接下来的操作很简单，只需要在每一个地方点击<code>Import Profile...</code>并选择之前的<code>example.mobileprovision</code>文件即可。如果之前没有修改<code>Bundle Identifier</code>的话，会有报错信息提示：<code>Provisioning profile &quot;xxxxxx&quot; has app ID &quot;com.xxx.xxx&quot;, which does not match the bundle ID &quot;com.snatic.example&quot;.</code> 按要求修改<code>Bundle Identifier</code>即可。</p>
+<p>那么修复了这条报错以后，还会提示<code>No &quot;iOS Distribution&quot; signing certificate matching team ID &quot;xxxxxxxxx&quot; with a private key was found.</code>那么此时我们需要导入的就是刚才的 .p12 文件了，双击以后输入密码即可导入很方便。那么目前为止所有的报错全都解决了可以安全导出 ipa 了么？</p>
+<h2 id="PART-3-生成app文件"><a href="#PART-3-生成app文件" class="headerlink" title="PART 3 生成app文件"></a>PART 3 生成app文件</h2><p>理论上此时我们就可以直接插上一台 iPhone 开始运行了，但是我们的目标是导出 ipa，因此按照正常流程往下走的话就是点击 Product -&gt; Archive 然后 Export 就好了，这个流程在 Xcode 7 中完全没有问题。但在 Xcode 8 中，会做如下提示。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032007.png" alt="添加帐号"></p>
+<p>在我们没有开发者帐号以及企业子帐号的情况下这一步没办法绕过了，在 Xcode 7 中可以直接选择<code>Use local signing assets</code>的选项但是这里并不会直接出现还是需要先登录。那么我们只能剑走偏锋了。</p>
+<p>插上一台 iPhone 直接点击运行，等待编译和安装完成以后确认在设备上运行无误，然后我们就会在左侧看到 <code>XXXX.app</code>，如图所示。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032008.png" alt="导出app"></p>
+<p>右键点击该文件，选择<code>Show in Finder</code>即可找到我们至关重要的 app 文件。</p>
+<h2 id="PART-4-将app转换为ipa"><a href="#PART-4-将app转换为ipa" class="headerlink" title="PART 4 将app转换为ipa"></a>PART 4 将app转换为ipa</h2><p>转换的方法有几种，限于篇幅(其实是太懒)博主就先介绍三种简单的方法，关于高级的自动化脚本的方法下次单独开一篇文章来介绍吧～</p>
+<h3 id="方法一-拖入iTunes"><a href="#方法一-拖入iTunes" class="headerlink" title="方法一 拖入iTunes"></a>方法一 拖入iTunes</h3><p>打开 iTunes 切换到应用页，然后直接将上一步得到的 app 文件拖进来，就能得到如下图的应用。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032201.png" alt="导出app"></p>
+<p>右键点击应用 -&gt; 在 Finder 中显示 就可以得到我们所需要的 ipa 文件了。</p>
+<h3 id="方法二-手动压缩改后缀"><a href="#方法二-手动压缩改后缀" class="headerlink" title="方法二 手动压缩改后缀"></a>方法二 手动压缩改后缀</h3><ol>
+<li>新建“Payload”文件夹，注意大小写</li>
+<li>将 app 文件放到<code>Payload</code>文件夹中</li>
+<li>在<code>Payload</code>文件夹右键压缩成 zip 后将生成的 zip 文件后缀为 ipa</li>
+</ol>
+<p>感觉简单粗暴，这个过程明显可以写一个脚本来完成的。下次再慢慢讲脚本的问题～理想状态是可以不用打开 xcode 不用插手机就能直接导出，这样就可以一键导出 ipa 包了。</p>
+<h2 id="PART-5-Inhouse发布"><a href="#PART-5-Inhouse发布" class="headerlink" title="PART 5 Inhouse发布"></a>PART 5 Inhouse发布</h2><p>其实发布 Inhouse 下载非常简单，如果按照正常打包流程的话 Xcode 是会为我们自动生成所需要的 plist 文件的，但是我们的流程比较奇怪所以需要新建一个文件，粘贴以下内容最后修改后缀为<code>plist</code></p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token doctype">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plist</span> <span class="token attr-name">version</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>items<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>array</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>assets<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>array</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>kind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>software-package<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>url<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>THE URL FOR YOUR IPA: ex: https://go.com/appname.ipa<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>kind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>full-size-image<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>needs-shine<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>true</span><span class="token punctuation">/></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>url<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>THE URL FOR INSTALLATION @2x ICON: ex: https://go.com/Icon@2x.png<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>kind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>display-image<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>needs-shine<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>true</span><span class="token punctuation">/></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>url<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>THE URL FOR INSTALLATION ICON: ex: https://go.com/Icon.png<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>array</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>metadata<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>bundle-identifier<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>YOUR BUNDLE ID (Take it from your Xcode Project)<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>bundle-version<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>1.2.3 Your app version<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>kind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>software<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>title<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>The Title To Present To The User installing the app<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>array</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plist</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>按照说明修改其中的字段以后将该文件与 ipa 一起上传支持 https 协议的服务器，没有的话就在 oschina 或者 coding,net 之类的新建一个 Git 仓库然后上传就没问题了，记得图标也要上传不然会有奇怪的无法下载的问题，图标大小不大于 500*500 就好。最后我们在任意一个网页上插入如下代码，在<code>url=</code>后面填写刚才上传的 plist 文件地址就好了。</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>itms-services://?action<span class="token punctuation">=</span>download-manifest&amp;url<span class="token punctuation">=</span>https://mydomain.com/apps/MyInHouseApp.plist<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Install the In-House App<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>用手机打开这个页面试试。点击链接就可以下载了果然很方便的样子。</p>
+<h2 id="PART-6-总结"><a href="#PART-6-总结" class="headerlink" title="PART 6 总结"></a>PART 6 总结</h2><p>拖了小半周零零碎碎的总算是写完了，貌似没什么干货反而让截图占了很大的篇幅。但是为了把整个流程讲清楚多截几张图也还好。也许新版本的  Xcode 发布以后这篇教程就过期了～当前的 Xcode 版本是 8.2.1 不知道苹果会不会在以后的版本中采取更严格的方式限制打包。不过目前手动打包 ipa 的方法并不是我们的重点，下周我们一起研究自动打包脚本～</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/">http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Unity通用框架工程 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> mac </tag>
+            
+            <tag> unity </tag>
+            
+            <tag> ipa </tag>
+            
+            <tag> ios </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Unity自动化(1)-在Mac上手动打包Apk]]></title>
+      <url>/2017/03/12/012-export-unity-project-apk-on-mac/</url>
+      <content type="html"><![CDATA[<p>失踪人口终于回归啦！好久没写文章了，因为找工作跳槽搬家入职适应环境什么的各种事情耽搁了好几周没抽出时间来静下心来研究一些东西。因为新项目中工作环境比较原始，打包 apk 和 ipa 都需要完全手动导出，甚至有些文件还需要自己手动复制很是麻烦，有些怀念之前用 jenkins 动动手指在任意电脑打开浏览器添加一系列任务吃个饭回来 30 个包就 OK 的日子，所以突然很想要把所有的一切自动化起来。</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>虽说我们的目标是完全自动化，但第一节课还是从入门开始(其实就是偷懒想少写一些内容)，也就是先把手动打包的流程整理清楚，因为考虑到如果想要同一台电脑想要同时打包 apk 和 ipa 所以我们的选择就只有 mac，mac 上打包 ipa 很常见了，那么如何在 mac 上为 unity 打包一个 apk 呢。其实坑还是挺多的，当然以下提到的一切都建立在可以「科学上网」的基础上。其实步骤很简单</p>
+<ol>
+<li>安装 JDK</li>
+<li>安装 Android SDK</li>
+<li>安装 NDK</li>
+<li>使用 Android 虚拟机验证</li>
+</ol>
+<h2 id="PART-2-安装-JDK"><a href="#PART-2-安装-JDK" class="headerlink" title="PART 2 安装 JDK"></a>PART 2 安装 JDK</h2><p>博主使用的是 Unity5.5.0f3 的版本，其实配置起来还是比较方便的。当然前提是我们已经安装 Unity Android Support以后，切换到 Android Platform 打开 Unity Preference 以后可以看到需要配置的地方都提供了<code>Download</code>按钮，点击一下就可以跳转到具体的官网页面下载了当然如果没有「科学上网」的帮助的话很可能这些页面完全打不开或者下载速度不忍直视。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017031201.png" alt="配置环境"></p>
+<p>首先我们第一步是下载 JDK，点击对应的「Download」就可以调转到 <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">ORACLE官网下载页</a> 进行下载了。貌似没有太多复杂的东西好说，找到 JDK 也就是 Java SE Development Kit 的下载页进入以后选择好相应的平台下载，最后一路安装就没问题了，英语水平正常的话完全没有任何要注意的坑所以就不截图了。安装好一般来说路径就跟博主图里的路径是差不多的。</p>
+<p>最后在 Terminal 里输入<code>java -version</code>试试有版本号信息的话出现就表示安装成功了。最后确认好位置填入到 Unity Prefrences 里面 JDK 一项就好了。</p>
+<h2 id="PART-3-安装-Android-Studio"><a href="#PART-3-安装-Android-Studio" class="headerlink" title="PART 3 安装 Android Studio"></a>PART 3 安装 Android Studio</h2><p>这一步是安装 Android SDK，目前来说安装 Android SDK 的一般方式就是安装好 Android Studio 然后打开 SDK Manager 来管理所有的 Android SDK，当然也可以直接下载好放在某个位置设置路径就行了但是博主不喜欢来历不明比较奇怪的东西，毕竟以后要接渠道 SDK 也用得到 Android Studio 顺便安装一个也省心。</p>
+<p> 点击 Unity Prefrences 中 SDK 项后面的<code>Download</code>进入 <a href="https://developer.android.com/sdk/index.html#Other" target="_blank" rel="external">Android Studio 官方下载页</a> 直接点击下载即可</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017031202.png" alt="官方下载页"></p>
+<p>这个官网还挺好看的就截一张图吧。一路安装好以后首次打开会帮你下载好最新的 Andriod SDK 和 SDK Tools 之类的东西，很方便。最后在 Unity Prefrences 中配置路径就好了就跟博主的还是差不多的路径。</p>
+<p>什么这样就结束了么？当然会有坑的不然这篇文章也没必要写了。提示 NDK 如果不用 IL2CPP 的话留白就好了，但这时候我们点击<code>Build</code>会发现并不能正常出包，大概会报如下的错</p>
+<pre class="line-numbers language-text"><code class="language-text">CommandInvokationFailure: Unable to list target platforms. Please make sure the android sdk path is correct. See the Console for more details. 
+/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/bin/java -Xmx2048M -Dcom.android.sdkmanager.toolsdir="/Users/snatic/Library/Android/sdk/tools" -Dfile.encoding=UTF8 -jar "/Applications/Unity/PlaybackEngines/AndroidPlayer/Tools/sdktools.jar" -
+
+stderr[
+Error:Invalid command android
+]
+stdout[
+
+]
+exit code: 64
+UnityEditor.Android.Command.Run (System.Diagnostics.ProcessStartInfo psi, UnityEditor.Android.WaitingForProcessToExit waitingForProcessToExit, System.String errorMsg)
+UnityEditor.Android.AndroidSDKTools.RunCommandInternal (System.String javaExe, System.String sdkToolsDir, System.String[] sdkToolCommand, Int32 memoryMB, System.String workingdir, UnityEditor.Android.WaitingForProcessToExit waitingForProcessToExit, System.String errorMsg)
+UnityEditor.Android.AndroidSDKTools.RunCommandSafe (System.String javaExe, System.String sdkToolsDir, System.String[] sdkToolCommand, Int32 memoryMB, System.String workingdir, UnityEditor.Android.WaitingForProcessToExit waitingForProcessToExit, System.String errorMsg)
+UnityEditor.HostView:OnGUI()
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>那么是哪里出了问题呢，博主在这个地方头疼好久最终找到了解决方案，就是回到刚才的  <a href="https://developer.android.com/sdk/index.html#Other" target="_blank" rel="external">Android Studio 官方下载页</a> 拉到底部，找到「仅获取命令行工具」的地方选择对应平台的下载，解压后复制到 SDK目录下，例如<code>/Users/snatic/Library/Android/sdk</code>，再替换原来的<code>tools</code>文件夹。</p>
+<p>最后设置环境变量，在 Terminal 中输入</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">export</span> ANDROID_SDK_HOME<span class="token operator">=</span><span class="token string">"/Users/snatic/Library/Android/sdk"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>需要注意的是，下次打开 Android Studio 的时候可能会提示 SDK Tools 有更新，点击忽略即可。不然下次打包又会悲剧的重新替换一遍不要问我怎么知道的。。。</p>
+<h2 id="PART-4-安装-NDK"><a href="#PART-4-安装-NDK" class="headerlink" title="PART 4 安装 NDK"></a>PART 4 安装 NDK</h2><p>不了解 IL2CPP 或者只打算用 mono 的同学到目前位置应该差不多可以打包了，如果想要使用 IL2CPP 的话我们还需要下载 NDK，需要注意的是我们并不能使用 Android Studio 中的 SDK Manager 来安装 NDK。需要按照 Unity Prefrence 的指引，我们会得到一个名为<code>android-ndk-r10e-darwin-x86_64.bin</code>的文件，然而这个文件如何使用呢？首先进入到该文件所在目录，输入以下命令更改文件的读写权限</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">chmod</span> a+x android-ndk-r10e-darwin-x86_64.bin
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>再运行以下命令执行该文件</p>
+<pre class="line-numbers language-bash"><code class="language-bash">./android-ndk-r10e-darwin-x86_64.bin
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这样我们就会得到一个文件夹就是我们所需要的 NDK 了，把它移动到喜欢的目录就好了，博主将它和 Android SDK 放在一起了，最后在 Unity Prefrences 中填写路径，完成配置，可以使用 IL2CPP 打包 APK 了。</p>
+<h2 id="PART-5-使用-Android-Studio-自带的虚拟机"><a href="#PART-5-使用-Android-Studio-自带的虚拟机" class="headerlink" title="PART 5 使用 Android Studio 自带的虚拟机"></a>PART 5 使用 Android Studio 自带的虚拟机</h2><p>生成 APK 文件以后当然是想要迫不及待的验证一下到底对不对了，那么如何创建 Android 虚拟机呢？首先打开 Android Studio 随便新建一个工程如图所示。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017031203.png" alt="Android Studio"></p>
+<p>依次打开<code>Tools -&gt; Android -&gt; AVD Manager</code>，按照指引选择机型后下载对应版本的系统镜像文件并创建虚拟机，最后点击绿色箭头运行即可。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017031204.png" alt="Android Studio"></p>
+<p>最后把生成好的 APK 拖到虚拟机中即可安装运行了，随便搭一个场景写点代码试一试效果吧~</p>
+<h2 id="PART-6-总结"><a href="#PART-6-总结" class="headerlink" title="PART 6 总结"></a>PART 6 总结</h2><p>好像这么结束的确有点水不过作为系列的第一篇还是情有可原的。替换 tools 文件夹真的坑了我好久，最后还是在万能的 stackoverflow「<a href="http://stackoverflow.com/questions/42538433/not-finding-android-sdk-unity#" target="_blank" rel="external">这个页面</a>」 找到了解决方案。以后的版本也许就会修复这个问题不用这么麻烦了，但是目前为止因为没有 Assetbundle 要处理，也没有渠道 SDK 资源替换之类的操作，所以本质上就是一键打包 apk 的，但是 ipa 就不同了需要我们先导出 xcode 工程，搞定烦人的证书以后再导出 ipa 安装。很想自动化处理这一切，一起拭目以待吧。</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2017/03/12/012-export-unity-project-apk-on-mac/">http://snatix.com/2017/03/12/012-export-unity-project-apk-on-mac/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Unity通用框架工程 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> mac </tag>
+            
+            <tag> unity </tag>
+            
+            <tag> android </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[重启Hexo(3)-添加打赏功能]]></title>
+      <url>/2017/02/13/011-hexo-blog-donate-plugin/</url>
+      <content type="html"><![CDATA[<p>因为在『<a href="https://snatix.com/about/">关于我</a>』页面中承诺要制作打赏功能拖延一个月还没开始动手，被某小盆友吐槽以后决定奋发图强的瞬间做好了。但是当时制作过程太紧迫就没有一步一步的记录下来，现在就稍微补一下吧～其实过程太简单所以这篇文章应该内容很少，但的确很好用～</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>距离系列的『<a href="http://snatix.com/2017/01/14/008-customize-hexo/">上一篇</a>』过去了一个多月终于迎来了更新，那就是「打赏」功能！其实这样的需求不算少，大家随便用「hexo」「打赏」这样的关键词百度一下就会发现很多很多转载来转载去的文章，翻来覆去讲的大概就是那些内容，很多都是为某个特殊主题服务的，或者是主题框架与自己使用的主题完全不同，就会导致很多麻烦的问题。可能很多同学没有打算深入研究某个主题，因此也对主题框架一知半解，花时间解决那些问题还挺麻烦的，就想简简单单的复制一段代码就实现的打赏功能难道不存在么？当然存在</p>
+<ol>
+<li>在主题文章内容的 ejs 文件里插入关键代码</li>
+<li>在博客<code>_config.yml</code>中定义二维码链接</li>
+<li>在需要添加打赏功能的文章顶部添加标识</li>
+</ol>
+<h2 id="PART-2-在关键位置插入关键代码"><a href="#PART-2-在关键位置插入关键代码" class="headerlink" title="PART 2 在关键位置插入关键代码"></a>PART 2 在关键位置插入关键代码</h2><p>既然说关键代码当然很关键了，最关键的是代码是整体的。不存在一部分放在某个地方，另一部分放在其他地方然后相互调用的问题，完美方便懒得了解自己正在用的主题的框架的同学。当然，这段代码具体插在哪里还是有讲究的。总之大家先查看以下代码。</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>%</span> <span class="token attr-name">if</span> <span class="token attr-name">(page.donate)</span> <span class="token attr-name">{</span> <span class="token attr-name">%</span><span class="token punctuation">></span></span>
+<span class="token comment" spellcheck="true">&lt;!-- css --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/css<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token style language-css">
+  <span class="token selector"><span class="token class">.center</span> </span><span class="token punctuation">{</span>
+    <span class="token property">text-align</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector"><span class="token class">.hidden</span> </span><span class="token punctuation">{</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> none<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector"><span class="token class">.donate_bar</span> a<span class="token class">.btn_donate</span></span><span class="token punctuation">{</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> inline-block<span class="token punctuation">;</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> <span class="token number">82</span>px<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">82</span>px<span class="token punctuation">;</span>
+    <span class="token property">background</span><span class="token punctuation">:</span> <span class="token url">url("http://ojgpkbakj.bkt.clouddn.com/DonateButton.gif")</span> no-repeat<span class="token punctuation">;</span>
+    <span class="token property">_background</span><span class="token punctuation">:</span> <span class="token url">url("http://ojgpkbakj.bkt.clouddn.com/DonateButton.gif")</span> no-repeat<span class="token punctuation">;</span>
+
+    <span class="token property">-webkit-transition</span><span class="token punctuation">:</span> background <span class="token number">0</span>s<span class="token punctuation">;</span>
+    <span class="token property">-moz-transition</span><span class="token punctuation">:</span> background <span class="token number">0</span>s<span class="token punctuation">;</span>
+    <span class="token property">-o-transition</span><span class="token punctuation">:</span> background <span class="token number">0</span>s<span class="token punctuation">;</span>
+    <span class="token property">-ms-transition</span><span class="token punctuation">:</span> background <span class="token number">0</span>s<span class="token punctuation">;</span>
+    <span class="token property">transition</span><span class="token punctuation">:</span> background <span class="token number">0</span>s<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token selector"><span class="token class">.donate_bar</span> a<span class="token class">.btn_donate</span><span class="token pseudo-class">:hover</span></span><span class="token punctuation">{</span> <span class="token property">background-position</span><span class="token punctuation">:</span> <span class="token number">0</span>px -<span class="token number">82</span>px<span class="token punctuation">;</span><span class="token punctuation">}</span>
+  <span class="token selector"><span class="token class">.donate_bar</span> <span class="token class">.donate_txt</span> </span><span class="token punctuation">{</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> block<span class="token punctuation">;</span>
+    <span class="token property">color</span><span class="token punctuation">:</span> <span class="token hexcode">#9d9d9d</span><span class="token punctuation">;</span>
+    <span class="token property">font</span><span class="token punctuation">:</span> <span class="token number">14</span>px/<span class="token number">2</span> <span class="token string">"Microsoft Yahei"</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector"><span class="token class">.bold</span></span><span class="token punctuation">{</span> <span class="token property">font-weight</span><span class="token punctuation">:</span> bold<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+
+<span class="token comment" spellcheck="true">&lt;!-- /css --></span>
+<span class="token comment" spellcheck="true">&lt;!-- Donate Module --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>donate_module<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+  <span class="token comment" spellcheck="true">&lt;!-- btn_donate &amp; tips --></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>donate_board<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>donate_bar center<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>btn_donate<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>btn_donate<span class="token punctuation">"</span></span> <span class="token attr-name">target</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>_self<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>javascript:;<span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Donate 打赏<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>donate_txt<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      &lt;%= theme.donate.text %>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token comment" spellcheck="true">&lt;!-- /btn_donate &amp; tips --></span>
+
+  <span class="token comment" spellcheck="true">&lt;!-- donate guide --></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>donate_guide<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>donate_bar center hidden<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>&lt;%<span class="token punctuation">=</span> theme.donate.wechat %<span class="token punctuation">></span><span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>用微信扫一扫哦~<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>fancybox<span class="token punctuation">"</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>article0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>&lt;%<span class="token punctuation">=</span> theme.donate.wechat %<span class="token punctuation">></span><span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>微信打赏 snatic<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>190px<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>auto<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+
+
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>&lt;%<span class="token punctuation">=</span> theme.donate.alipay %<span class="token punctuation">></span><span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>用支付宝扫一扫即可~<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>fancybox<span class="token punctuation">"</span></span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>article0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>&lt;%<span class="token punctuation">=</span> theme.donate.alipay %<span class="token punctuation">></span><span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>支付宝打赏 snatic<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>190px<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>auto<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>donate_txt<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      &lt;%= theme.donate.text %>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token comment" spellcheck="true">&lt;!-- /donate guide --></span>
+
+  <span class="token comment" spellcheck="true">&lt;!-- donate script --></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    document.getElementById('btn_donate').onclick = function() {
+      $('#donate_board').addClass('hidden');
+      $('#donate_guide').removeClass('hidden');
+    }
+
+    function donate_on_web(){
+      $('#donate').submit();
+    }
+
+    var original_window_onload = window.onload;
+    window.onload = function () {
+      if (original_window_onload) {
+        original_window_onload();
+      }
+      document.getElementById('donate_board_wdg').className = 'hidden';
+    }
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+  <span class="token comment" spellcheck="true">&lt;!-- /donate script --></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token comment" spellcheck="true">&lt;!-- /Donate Module --></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>还挺长的，但是排版缩进博主都整理好了大家勇敢的复制粘贴吧。那么复制粘贴到哪里呢，这的确是一个问题。通常是位于<code>themes/xxx/layout/_partial/</code>之类的目录下面，找到类似<code>post-content.ejs</code>或者看着名字像是文章正文的文件中合适的位置，一般是<code>&lt;%- page.content %&gt;</code>这一行的后面。。。</p>
+<p>好吧我承认我表达的有点隐晦，不过大家都是聪明的程序猿或者攻城狮，随便试试就试出来了，当然了解结构的同学可以自行根据需要添加在文章开头也是没什么问题的～</p>
+<h2 id="PART-3-填写全局配置"><a href="#PART-3-填写全局配置" class="headerlink" title="PART 3 填写全局配置"></a>PART 3 填写全局配置</h2><p>这一步就很简单了打开位于根目录下的<code>_config.yml</code>文件，在最后添加如下代码并且把内容改成你想要的配置就好了。</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># Donate</span>
+<span class="token key atrule">donate</span><span class="token punctuation">:</span>
+  <span class="token key atrule">text</span><span class="token punctuation">:</span> 一定会有好心人支持我的，一块两块的就好～
+  <span class="token key atrule">wechat</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//ojgpkbakj.bkt.clouddn.com/WechatImage.png
+  <span class="token key atrule">alipay</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//ojgpkbakj.bkt.clouddn.com/AlipayImage.png
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>text</code>就是显示在「赏」字下面的那一行小字，然后<code>wechat</code>和<code>alipay</code>分别对应微信和支付宝的收款二维码（不要贴成付款二维码了），最好截图以后稍微放到 Photoshop 里面处理一下，毕竟美观一些大家付款的欲望也会更强的……吧。</p>
+<h2 id="PART-4-为想要的文章开启打赏功能"><a href="#PART-4-为想要的文章开启打赏功能" class="headerlink" title="PART 4 为想要的文章开启打赏功能"></a>PART 4 为想要的文章开启打赏功能</h2><p>最后也是最关键的一步，很多人不管什么文章都喜欢在后面放一个大大的「赏」字好像这个字出现次数越多就会收到打赏的机率越高一样。。。然而博主并不这么认为，因为隐隐约约觉得好像在乞讨一样～所以可以选择性的为某篇文章开启打赏功能当然是必备的。只需要在文章顶部的<code>front-matter</code>添加<code>donate</code>即可，像是这样。</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">title</span><span class="token punctuation">:</span> 重启Hexo(3)<span class="token punctuation">-</span>添加打赏功能
+<span class="token key atrule">date</span><span class="token punctuation">:</span> <span class="token datetime number">2017-02-13 12:18:53</span>
+<span class="token key atrule">tags</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>hexo<span class="token punctuation">,</span> mac<span class="token punctuation">,</span> blog<span class="token punctuation">]</span>
+<span class="token key atrule">categories</span><span class="token punctuation">:</span> Hexo博客重启计划
+<span class="token key atrule">donate</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>作为有节操的博主本来是只在「关于我」这样的页面放一个打赏的入口，心里默默计划着万一哪天真的写了一篇特别厉害的文章说不定也会加入（比如这篇？）好吧其实是放一个按钮给大家点一点让大家能够直观的看到效果。</p>
+<h2 id="PART-5-总结"><a href="#PART-5-总结" class="headerlink" title="PART 5 总结"></a>PART 5 总结</h2><p>目前为止打赏功能就算是完成了，看起来挺简单的因为文章里省略了最耗时的过程——用 PS 处理二维码，为了美观也是竭尽全力～好吧这次本系列下次更新可能要好久好久了，因为主题也慢慢的稳定下来～以前喜欢折腾主题不喜欢写文章的习惯已经在慢慢的改变了，希望以后能再勤劳一些写更多的文章～打赏功能不出意外的话应该会显示在文章底部喽～</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2017/02/13/011-hexo-blog-donate-plugin/">http://snatix.com/2017/02/13/011-hexo-blog-donate-plugin/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Hexo博客重启计划 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> mac </tag>
+            
+            <tag> blog </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Assetbundle(2)-学习Assetbundle Manager]]></title>
+      <url>/2017/01/29/010-using-assetbundle-manager/</url>
+      <content type="html"><![CDATA[<p>过完年稍微出去浪了一天终于决定重新开始好好学习天天向上了～在上一篇文章『<a href="http://snatix.com/2017/01/15/009-start-with-asset-bundle/">Assetbundle(1)-初次接触</a>』中简单地讲解了 Assetbundle 最基本的使用方法，那么最基本的使用和项目中稳定的使用是有很大的区别的~有太多细节需要处理。那么今天就来学习一个神器「<a href="https://www.assetstore.unity3d.com/en/#!/content/45836" target="_blank" rel="external">AssetBundle Manager</a>」</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>AssetBundle Manager 其实是 Unity 官方提供的一个用于开发者方便的管理 Assetbundle 的一个插件。这里有详细的 <a href="https://unity3d.com/cn/learn/tutorials/topics/scripting/assetbundles-and-assetbundle-manager" target="_blank" rel="external">官方教程</a> ，但是这篇文章并不打算把教程翻译一遍了事 (其实是英文水平差又懒)。博主准备用自己的方式来详细讲解这个插件的用法，最后合理的把它集成在我们的 Asset Manager 中～毕竟重复造轮子不仅累而且技术含量也高。。那么接下来将会涉及到以下几个方面</p>
+<ol>
+<li>API介绍</li>
+<li>尝试各种方式加载资源和场景</li>
+<li>Variants 这种高级用法</li>
+<li>一些好玩的小功能</li>
+</ol>
+<h2 id="PART-2-API-介绍"><a href="#PART-2-API-介绍" class="headerlink" title="PART 2 API 介绍"></a>PART 2 API 介绍</h2><p>虽然博主是行动派喜欢自己动手试试，但是简单的介绍还是需要的，因为没太多可以讲的博主决定就抄官方文档了。。</p>
+<blockquote>
+<p>The AssetBundle Manager’s API includes:</p>
+<ul>
+<li><strong><em>Initialize()</em></strong> Initializes the AssetBundle manifest object.</li>
+<li><strong><em>LoadAssetAsync()</em></strong> Loads a given asset from a given AssetBundle and handles all the dependencies.</li>
+<li><strong><em>LoadLevelAsync()</em></strong> Loads a given scene from a given AssetBundle and handles all the dependencies.</li>
+<li><strong><em>LoadDependencies()</em></strong> Loads all the dependent AssetBundles for a given AssetBundle.</li>
+<li><strong><em>BaseDownloadingURL</em></strong> Sets the base downloading url which is used for automatic downloading dependencies.</li>
+<li><strong><em>SimulateAssetBundleInEditor</em></strong> Sets Simulation Mode in the Editor.</li>
+<li><strong><em>Variants</em></strong> Sets the active variant.</li>
+<li><strong><em>RemapVariantName()</em></strong> Resolves the correct AssetBundle according to the active variant.</li>
+</ul>
+</blockquote>
+<p>大概就是讲有以下 API：</p>
+<ul>
+<li><strong>Initialize()</strong> 初始化 AssetBundle Manifest 对象</li>
+<li><strong>LoadAssetAsync()</strong> 从指定的一个 AssetBundle 中加载指定资源并处理所有的依赖</li>
+<li><strong>LoadLevelAsync()</strong> 从指定的一个 AssetBundle 中加载指定场景并处理所有的依赖</li>
+<li><strong>LoadDependencies()</strong> 加载指定的 AssetBundle 的所有依赖 AssetBundle</li>
+<li><strong>BaseDownloadingURL</strong> 设置用来自动下载依赖的基本地址</li>
+<li><strong>SimulateAssetBundleInEditor</strong> 在编辑器中设置模拟模式</li>
+<li><strong>Variants</strong> 设置当前激活的 Variant</li>
+<li><strong>RemapVariantName()</strong> 根据当前的变体决定正确的 AssetBundle</li>
+</ul>
+<p>Api 似乎非常简洁正式我想要的，不知道用起来是不是很复杂呢？Asset Store 里下载下来该 <a href="https://www.assetstore.unity3d.com/en/#!/content/45836" target="_blank" rel="external">插件</a> 会自带一个 Demo 大家可以根据需求自行参考～</p>
+<h2 id="PART-3-尝试加载资源和场景"><a href="#PART-3-尝试加载资源和场景" class="headerlink" title="PART 3 尝试加载资源和场景"></a>PART 3 尝试加载资源和场景</h2><p>接下来必然要在我们的 AssetManager 工程中来使用这个插件了，首先我们需要在 Asset store 中找到这个 <a href="https://www.assetstore.unity3d.com/en/#!/content/45836" target="_blank" rel="external">插件</a> 。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017012901.png" alt="Asset Store"></p>
+<p>作为一个洁癖当然不会随便的把 Example 和 README 什么的导入进来了～想看的话可以到另一个工程里看一看</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017012902.png" alt="导入"></p>
+<p>完成以后就把整个文件夹移动到 AssetManager 文件夹下让他成为我们插件的一部分～(蜜汁觉得好像哪里不太对不过算了先这样吧)。因为这次的主要目的是使用这个插件所以我们暂时就不做任何修改了，原汁原味的使用～</p>
+<h3 id="使用插件生成一次-AssetBundle"><a href="#使用插件生成一次-AssetBundle" class="headerlink" title="使用插件生成一次 AssetBundle"></a>使用插件生成一次 AssetBundle</h3><p>因为之前我们已经做过一次依赖测试所以资源就不需要再添加了，不明白的同学请先看「<a href="https://snatix.com/2017/01/15/009-start-with-asset-bundle/">上一篇</a>」，直接点击菜单<code>Assets/AssetBundles/Build AssetBundles</code>就可以生成想要的 AssetBundle 了。如图所示，插件在我们 Asset 同级目录下生成了<code>AssetBundles/OSX</code>目录并把生成好的 Bundle 放在里面。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017012903.png" alt="AssetBundles"></p>
+<p>按照相同的目录结构把生成的文件放在 http 服务器上这样准备工作就完成了~记得把<code>Asset/AssetBundles/Simulation Mode</code>关掉不然就只是模拟模式。。。</p>
+<h3 id="加载资源"><a href="#加载资源" class="headerlink" title="加载资源"></a>加载资源</h3><p>直接新建一个场景 <code>example_3</code> 再新建一个脚本<code>Example_3.cs</code>就可以了开始测试了。如以下代码</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp">IEnumerator <span class="token function">LoadDependenciesAndPrefab</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    AssetBundleManager<span class="token punctuation">.</span><span class="token function">SetSourceAssetBundleURL</span><span class="token punctuation">(</span>Config<span class="token punctuation">.</span>ABServerRootPath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">yield</span> <span class="token keyword">return</span> AssetBundleManager<span class="token punctuation">.</span><span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    AssetBundleLoadAssetOperation request <span class="token operator">=</span> AssetBundleManager<span class="token punctuation">.</span><span class="token function">LoadAssetAsync</span><span class="token punctuation">(</span><span class="token string">"prefab_2"</span><span class="token punctuation">,</span> <span class="token string">"prefab_2"</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span>GameObject<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">yield</span> <span class="token keyword">return</span> <span class="token function">StartCoroutine</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    GameObject prefab <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token generic-method function">GetAsset<span class="token punctuation">&lt;</span>GameObject<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    GameObject<span class="token punctuation">.</span><span class="token function">Instantiate</span><span class="token punctuation">(</span>prefab<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>直接在<code>Start</code>函数中开启协程调用以上函数，发现已经可以了～不需要处理依赖什么的，就好像异步加载本地资源一样非常方便。</p>
+<h3 id="加载场景"><a href="#加载场景" class="headerlink" title="加载场景"></a>加载场景</h3><p>首先制作一个场景，制作的步骤不说了大概就是从 Asset Store 里随便下载一个免费的场景，然后把必要的资源移动到我们规划好的文件夹里- - 最后设置好 AssetBundle Name 就好了。最终效果大概是下图这样</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017020101.png" alt="场景完成"></p>
+<p>那么资源的具体位置不多说了总之就是按照资源的类型分别放在<code>Materials</code>,<code>Modles</code>,<code>Prefabs</code>,<code>Scenes</code>,<code>Textures</code> 等文件夹里。需要注意的是，场景文件不可以和普通的资源文件设置相同的 AssetBundle Name，因此我们把场景文件最后生成一下 Assetbundle 看看～</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017020102.png" alt="生成的文件"></p>
+<p>生成好的文件如上图所示，<code>scene_4</code>很小只有100K左右，查看其 manifest 文件可以得出以下依赖关系（没装 visio 之类的随便用一个 vscode 插件画了一下）</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017020103.png" alt="依赖关系"></p>
+<p>那么这种复杂的依赖关系是不是处理起来很麻烦呢~答案显然是否。。使用 AssetBundle Manager 可以轻松搞定，新建一个空场景拖一个空 GameObject 然后挂上一个名叫 Example_4 的脚本，注意看以下代码。</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp">IEnumerator <span class="token function">LoadDependenciesAndScene</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    AssetBundleManager<span class="token punctuation">.</span><span class="token function">SetSourceAssetBundleURL</span><span class="token punctuation">(</span>Config<span class="token punctuation">.</span>ABServerRootPath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">yield</span> <span class="token keyword">return</span> AssetBundleManager<span class="token punctuation">.</span><span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    AssetBundleLoadOperation request <span class="token operator">=</span> AssetBundleManager<span class="token punctuation">.</span><span class="token function">LoadLevelAsync</span><span class="token punctuation">(</span><span class="token string">"scene_4"</span><span class="token punctuation">,</span> <span class="token string">"CalibrationScene"</span><span class="token punctuation">,</span> <span class="token keyword">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">yield</span> <span class="token keyword">return</span> <span class="token function">StartCoroutine</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>同样啰嗦了很多遍的在<code>Start</code>函数里开启一个协程调用以上代码就可以加载出来场景了（可能要等待10秒钟或更久）是不是很好很强大～效果为了提高网页加载速度就不贴那么多图了跟之前的差不多～大家自己试试吧。</p>
+<h2 id="PART-4-Variants-的用法"><a href="#PART-4-Variants-的用法" class="headerlink" title="PART 4 Variants 的用法"></a>PART 4 Variants 的用法</h2><p>至于 Variants 到底是什么和具体使用场景就不细说了毕竟博主也没真正在项目中使用这个东西，欲了解精准概念请移步「<a href="https://docs.unity3d.com/Manual/BuildingAssetBundles.html" target="_blank" rel="external">官方文档</a>」，但是据博主观察大多数例子都举相同资源的不同质量的贴图，hd，sd之类的。以之前加载的场景为例，最终的贴图的依赖位于整个依赖链的最后，假设我们要准备两个不同贴图分辨率的场景的话，可能要从头到尾很多东西包括 material，mode 和 prefab 什么的都要重新制作一遍，造成了极大的浪费，否则就要写代码去动态加载要额外处理很多事情。那么现在 Assetbundle 就提供了这样的一个后缀一样的参数，允许你设置当前的 Variants 然后再去加载场景，这样就可以前面所有的东西都一样，只为两套不同分辨率的贴图制作两个 AssetBundle，加载的时候就根据当前的 Variants 把所需要的贴图所在的 Assetbundle 下载并 Load 所需要的贴图了。废话说了不少可能具体怎么操作大家还是不太明白，简单的尝试一下吧</p>
+<p>首先在<code>Examples/Textures/</code>下建立两个文件夹命名不一样就行，然后把两个<strong>相同名称</strong>的资源分别放进去设置<strong>相同的</strong> AssetBundle Name，然后分别设置<strong>不同的</strong> Variants （以”a”，”b”为例）。最后制作 prefab 引用其中任何一个资源即可，最后制作场景添加脚本什么的就不想细说了。重点是观察以下代码</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp">IEnumerator <span class="token function">LoadDependenciesAndScene</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    AssetBundleManager<span class="token punctuation">.</span><span class="token function">SetSourceAssetBundleURL</span><span class="token punctuation">(</span>Config<span class="token punctuation">.</span>ABServerRootPath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    AssetBundleManager<span class="token punctuation">.</span>ActiveVariants <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span><span class="token string">"b"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">yield</span> <span class="token keyword">return</span> AssetBundleManager<span class="token punctuation">.</span><span class="token function">Initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    AssetBundleLoadAssetOperation request <span class="token operator">=</span> AssetBundleManager<span class="token punctuation">.</span><span class="token function">LoadAssetAsync</span><span class="token punctuation">(</span><span class="token string">"prefab_5"</span><span class="token punctuation">,</span> <span class="token string">"prefab_5"</span><span class="token punctuation">,</span> <span class="token keyword">typeof</span><span class="token punctuation">(</span>GameObject<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">yield</span> <span class="token keyword">return</span> <span class="token function">StartCoroutine</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    GameObject prefab <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token generic-method function">GetAsset<span class="token punctuation">&lt;</span>GameObject<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    GameObject<span class="token punctuation">.</span><span class="token function">Instantiate</span><span class="token punctuation">(</span>prefab<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>需要注意的就只有<code>AssetBundleManager.ActiveVariants = new string[] {&quot;b&quot;};</code>这一行，其他的都是复制粘贴过来的几乎完全一样。。自己尝试该代码运行会发现加载进来的 prefab 所依赖的贴图会随着这里填写不同的 Variants 自动切换。而制作 prefab 时完全无需考虑这一点，也不用再写其他的代码加载，非常方便的样子～</p>
+<h2 id="PART-5-一些有趣的小功能"><a href="#PART-5-一些有趣的小功能" class="headerlink" title="PART 5 一些有趣的小功能"></a>PART 5 一些有趣的小功能</h2><h3 id="Simulation-Mode"><a href="#Simulation-Mode" class="headerlink" title="Simulation Mode"></a>Simulation Mode</h3><p>最后来探索以下 Assetbundle Manager 还有什么有趣的小功能吧，还记得之前让大家关闭的<code>Assets/AssetBundles/Simulation Mode</code>的功能么？那我们打开会如何呢？是的大家会发现即使你关掉我们用来下载 Assetbundle 的 http 服务也可以正常加载，而且无需重新生成 bundle 就可以更新资源。这极大的简化了我们的开发流程，不需要额外的资源管理机制就可以迅速看到 Assetbundle 中的改动效果而无需先重新生成一遍再放到服务器上。</p>
+<h3 id="Local-AssetBundle-Server"><a href="#Local-AssetBundle-Server" class="headerlink" title="Local AssetBundle Server"></a>Local AssetBundle Server</h3><p>只是在本地直接模拟还是不够满意的，就是想模拟远程下载怎么办，只需要开启<code>Assets/AssetBundles/Local AssetBundle Server</code>就好了，因为博主电脑是 mac 各种麻烦的原因开启的时候总会报错可能要安装高版本的 mono 或者有其他的解决方案，下次找到了方法再补充，所以现在也不知道到底有多好用～Windows 上的大家应该用起来爽爽的~</p>
+<h2 id="PART-6-总结"><a href="#PART-6-总结" class="headerlink" title="PART 6 总结"></a>PART 6 总结</h2><p>到此为止关于神奇的插件 AssetBundle Manager 就基本上介绍完了，总的来说是一个非常方便的插件，一口气帮助我们解决了许多细节问题而且感觉非常靠谱的样子。下一步就是完成一个自动设置 AssetBundle Name 的功能了，然后针对插件进行一些魔改了。不知道多久可以做好，等思路差不多的时候就开始更新下一篇！</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2017/01/29/010-using-assetbundle-manager/">http://snatix.com/2017/01/29/010-using-assetbundle-manager/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Unity通用框架工程 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> asset bundle </tag>
+            
+            <tag> unity </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Assetbundle(1)-初次接触]]></title>
+      <url>/2017/01/15/009-start-with-asset-bundle/</url>
+      <content type="html"><![CDATA[<p>这理论上应该是一个冗长无比的系列，但是既然决定开这个深坑了就要好好填～其实一直以来都希望有一套自己熟悉的框架来自行维护，有什么想法的时候拿起来就能写，同时也有机会接触到 Unity 的方方面面而不是只会拼 UI 写业务系统。不管是 ulua 还是 slua，目的就是通过 AssetBundle 来更新，因此我们首先从 Assetbundle 开始。</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>其实随便搜一搜就会发现关于 Unity5.x 的 Assetbundle 的文章超多，但是很多都是在结合 Unity4 的 Assetbundle 来对比着讲的，或者是讲的稍微有点深，某些很基础很的概念还没有普及到就开始使用了，看着很不爽。经过一小段时间的研究以后终于有了一些感觉，那么我来尝试用我自己的语言来向零基础的初次接触 Assetbundle 的同学们从头开始讲～</p>
+<ol>
+<li>什么是 Assetbundle，为什么要使用这个鬼东西</li>
+<li>尝试随便写点代码用一下看看效果</li>
+<li>据说可以自动处理依赖，试一试</li>
+</ol>
+<p>不知道为什么今天的文风比较随意，大家将就看吧~</p>
+<h2 id="PART-2-Assetbundle-介绍"><a href="#PART-2-Assetbundle-介绍" class="headerlink" title="PART 2 Assetbundle 介绍"></a>PART 2 Assetbundle 介绍</h2><p>其实我很讨厌长篇大论的写东西来介绍某个概念，一是读起来太麻烦，二是我也写不出来。但是考虑到完整性，介绍一下又是不得不做的事情，我就不复制那些随便一搜一大堆的东西了，大概用自己的语言讲一下，讲的不对大家就当没看见就好了或者在评论区稍微提醒我修改～真想了解精准定义和概念的请移步「<a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html" target="_blank" rel="external">官方文档</a>」</p>
+<h3 id="什么是-Assetbundle"><a href="#什么是-Assetbundle" class="headerlink" title="什么是 Assetbundle"></a>什么是 Assetbundle</h3><p>Asset 大家都知道是什么其实就是游戏用到的模型，贴图，场景，Prefab之类的资源。那么 Assetbundle 顾名思义就是把这些东西打成一个 Bundle。。。所以其实就是 Unity 官方提供了一种机制允许开发者把这些游戏资源打包放在自己的服务器，然后运行时再把 bundle 下载下来，把 Asset 解出来再使用。</p>
+<h3 id="为什么要用-Assetbundle"><a href="#为什么要用-Assetbundle" class="headerlink" title="为什么要用 Assetbundle"></a>为什么要用 Assetbundle</h3><p>首先就是可以减少包体大小，有些公司的产品很在意这些因为某商店的安装包超过 100M 时就默认不允许玩家使用流量下载，因此可以把很大的模型场景贴图之类的移出去，然后玩家安装好游戏以后在游戏里继续下载直到全部资源都下载完毕才可以开始玩。</p>
+<p>其次就是更新资源了，贴图模型和 Prefab 全都可以更新，用上 <a href="https://github.com/pangweiwei/slua" target="_blank" rel="external">slua</a> 或 <a href="https://github.com/topameng/tolua" target="_blank" rel="external">tolua</a> 的话连代码都可以更新，麻麻再也不怕我写出 bug 了~而且可以热更新的话就不需要每次修复 bug 或添加新特性都要更整包了有效提高玩家的用户体验。</p>
+<p>大概的概念介绍到此结束，想了解更多的同学请自行翻阅「<a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html" target="_blank" rel="external">官方文档</a>」，俗话说 Talk is cheap, show me the code。所以我们接下来就用代码说话。</p>
+<h2 id="PART-3-简单的尝试-Assetbundle"><a href="#PART-3-简单的尝试-Assetbundle" class="headerlink" title="PART 3 简单的尝试 Assetbundle"></a>PART 3 简单的尝试 Assetbundle</h2><p>首先做实验的第一步是生成 Assetbundle，那么新建工程新建场景脚本什么不说了直接观察目录结构</p>
+<pre class="line-numbers language-tex"><code class="language-tex">|---AssetManager    //Unity工程目录
+    |---Assets    //资源目录
+    |    |---AssetManager    //插件目录(博主最终想要把整个作成插件的形式)
+    |        |---Editor        //Editor脚本放置目录
+    |        |---Examples    //一大堆示例
+    |        |    |---Prefabs
+    |        |    |---Scenes
+    |        |    |---Textures
+    |        |
+    |        |---Scripts        //插件脚本
+    |    
+    |---Bundls    //放置生成的AssetBundle的目录
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="写一句生成-Assetbundle-的代码"><a href="#写一句生成-Assetbundle-的代码" class="headerlink" title="写一句生成 Assetbundle 的代码"></a>写一句生成 Assetbundle 的代码</h3><p>那么如何生成 Assetbundle 呢？超级简单，核心就一个函数<code>BuildPipeline.BuildAssetBundles</code>。</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token keyword">using</span> UnityEditor<span class="token punctuation">;</span>
+<span class="token keyword">namespace</span> AssetManager
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Menu</span>
+    <span class="token punctuation">{</span>
+        <span class="token punctuation">[</span><span class="token function">MenuItem</span><span class="token punctuation">(</span><span class="token string">"AssetManager/Build AssetBundles"</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">BuildAssetBundles</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            BuildPipeline<span class="token punctuation">.</span><span class="token function">BuildAssetBundles</span><span class="token punctuation">(</span><span class="token string">"outputPath"</span><span class="token punctuation">,</span> BuildAssetBundleOptions<span class="token punctuation">.</span>None<span class="token punctuation">,</span> BuildTarget<span class="token punctuation">.</span>StandaloneOSXUniversal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在<code>AssetManager/Editor</code>下放置该文件就可以了。简单的说这样做可以让标题栏出现一个菜单<code>AssetManager/Build AssetBundles</code>，点一下就会自动生成 Assetbundle 了。是不是很方便，第一个参数是输出的路径，如我们项目结构的规划放置在与<code>Assets</code>同级的<code>Bundles</code>目录下，不出意外的话这个目录以后应该会反复用到，为了方便以后扩展最好做一个静态类 config 作为配置。</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token keyword">using</span> UnityEngine<span class="token punctuation">;</span>
+<span class="token keyword">namespace</span> AssetManager
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Config</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">string</span> ABRootName <span class="token operator">=</span> <span class="token string">"Bundles"</span><span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">string</span> ABOutputPath <span class="token operator">=</span> Application<span class="token punctuation">.</span>dataPath <span class="token operator">+</span> <span class="token string">"/../"</span> <span class="token operator">+</span> ABRootName<span class="token punctuation">;</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">string</span> ABServerRootPath <span class="token operator">=</span> <span class="token string">"http://192.168.31.40/"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样就可以把第一段代码中的<code>&quot;outputPath&quot;</code>替换成<code>Config.ABOutputPath</code>了。那么生成的代码写完了，下一步就是做个 prefab 生成一下 Assetbundle 试试~</p>
+<h3 id="随便制作一个-Prefab-做实验"><a href="#随便制作一个-Prefab-做实验" class="headerlink" title="随便制作一个 Prefab 做实验"></a>随便制作一个 Prefab 做实验</h3><p>制作 Prefab 的过程不多说了，大概就是随便放一张图在<code>Example/Textures</code>然后在做一个把一个带有 Sprite 的 GameObject 做成 Prefab，再把图片拖进去就行了，像是这样</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017012101.png" alt="制作一个Prefab"></p>
+<p>为了等一下观察生成的 Assetbundle 的大小，我特意放了一张很大的图（博主的壁纸，在 Unity 中显示大小为 2.2M ）。最后把 Prefab 放在了<code>Example/Prefabs</code>文件夹，设置<code>Assetbundle Name</code>为<code>prefab_1</code>。这样这一步就完成了。</p>
+<h3 id="生成一个-Assetbundle-并放在服务器上"><a href="#生成一个-Assetbundle-并放在服务器上" class="headerlink" title="生成一个 Assetbundle 并放在服务器上"></a>生成一个 Assetbundle 并放在服务器上</h3><p>第一步顺利完成的话，应该会看到菜单栏出现了名为<code>AssetManager</code>的菜单，点击<code>AssetManager/Build AssetBundles</code>，等待几秒钟就生成好了。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017012102.png" alt="生成中"></p>
+<p>生成好了以后应该可以在<code>Bundles</code>这个文件夹下看到四个文件，观察一下发现名为<code>prefab_1</code>的文件很大大约有1.4M，而<code>Bundles</code>这个文件却很小只有不到1K。为什么一个 Prefab 打成的 Assetbundle 会这么大呢？答案是这个 Bundle 里包含了 Prefab 依赖的全部资源，因此那张很大的壁纸也被包含在里面了。我们把两个不带<code>.manifest</code>后缀的文件上传到自己的 http 服务器上确保用浏览器可以访问到。</p>
+<p>启动 Http 服务的方法很多，博主在局域网内另一台 Ubuntu 上某个文件夹直接运行以下命令：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">sudo</span> python -m SimpleHTTPServer 80
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>就可以在当前文件夹下开启 Http 服务了，mac 想模拟的话大家自行寻找方法。上传文件也不说了博主就随便开启了个 ftp 就传了反正只是做实验。下一步是写一些代码把这个 Prefab 加载进来。</p>
+<h3 id="加载-Assetbundle-中的-Prefab"><a href="#加载-Assetbundle-中的-Prefab" class="headerlink" title="加载 Assetbundle 中的 Prefab"></a>加载 Assetbundle 中的 Prefab</h3><p>新建一个场景<code>Example_1</code>，保存在<code>Example/Scenes</code>中，再新建一个 GameObject 名为<code>Example_1</code>，新建一个脚本名为<code>Example_1</code>，保存在<code>Example/Scripts</code>中，再挂在上一步创建好的 Prefab 上，开始写代码。</p>
+<p>首先思路是使用<code>www</code>把这个文件下载下来，再把里面的内容 Load 进来，最后在场景中 Instanciate 这个 Prefab。实现这一套思路最简单的代码是这样的。</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token keyword">using</span> System<span class="token punctuation">.</span>Collections<span class="token punctuation">;</span>
+<span class="token keyword">using</span> UnityEngine<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Example_1</span> <span class="token punctuation">:</span> MonoBehaviour
+<span class="token punctuation">{</span>
+    <span class="token keyword">void</span> <span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">StartCoroutine</span><span class="token punctuation">(</span><span class="token function">LoadPrefabFromAssetBundle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    IEnumerator <span class="token function">LoadPrefabFromAssetBundle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        WWW www <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WWW</span><span class="token punctuation">(</span> Config<span class="token punctuation">.</span>ABServerRootPath <span class="token operator">+</span> <span class="token string">"prefab_1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">yield</span> <span class="token keyword">return</span> www<span class="token punctuation">;</span>
+
+        GameObject prefab <span class="token operator">=</span> www<span class="token punctuation">.</span>assetBundle<span class="token punctuation">.</span><span class="token generic-method function">LoadAsset<span class="token punctuation">&lt;</span>GameObject<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token string">"prefab_1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        GameObject<span class="token punctuation">.</span><span class="token function">Instantiate</span><span class="token punctuation">(</span>prefab<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>运行一下，等待几秒后成功的把该显示的加载出来了~（可能有10秒）图就不截了大家应该都想象得出来，就跟上面制作的一模一样。到此为止我们的 Assetbundle 最基础的用法已经掌握了。</p>
+<h2 id="PART-4-自动依赖管理"><a href="#PART-4-自动依赖管理" class="headerlink" title="PART 4 自动依赖管理"></a>PART 4 自动依赖管理</h2><p>为什么会有依赖的问题呢？大家应该都发现了，把一个 Prefab 打成 Assetbundle 是会在生成的 Assetbundle 文件中包含所有依赖的资源，那么如果博主的壁纸在两个 Prefab 中使用呢？简单测试一下会发现生成的两个 Assetbundle 大小都约为1.4M。那么就会对玩家的流量造成极大的浪费，而且加载速度也会变慢。所以我们需要把他们依赖的公共资源单独打包至一个 Assetbundle 中。好的现在开始动手试试～</p>
+<p>首先放一张新的图在<code>Examples/Textures</code>下随便放两张完全一样的贴图命名为<code>texture_2</code>和<code>texture_3</code>，然后设置<code>texture_2</code>的 AssetBundle Name 为<code>texrure_2</code>，<code>texture_3</code>不进行任何设置作为对照组，然后做两个 prefab 分别引用这张图片，再给 prefab 分别设置 AssetBundle Name 为 <code>prefab_2</code>和<code>prefab_3</code>。最后生成一下，好的具体步骤就不演示了~生成结果如下图所示</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017012601.png" alt="生成结果"></p>
+<p>大家可以观察到生成的名为<code>prefab_2</code>的文件大小为 2KB ，小于<code>prefab_3</code>的 3KB，这充分表明他所依赖的资源已经被分离出去了因此打好的 Assetbundle 大小会变小。那么如果用之前加载 prefab 的方法把 prefab_2 加载出来会发生什么事情呢？简单的修改代码尝试一下会发现，结果如图所示</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017012602.png" alt="丢失Sprite"></p>
+<p>我们的 Sprite 丢失了~那么正确的处理方式是怎样呢？答案是要先把他所依赖的 Assetbundle 加载好。那么如何获取依赖的 Assetbundle 呢？</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp">IEnumerator <span class="token function">LoadDependenciesAndPrefab</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    WWW www <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WWW</span><span class="token punctuation">(</span>Config<span class="token punctuation">.</span>ABServerRootPath <span class="token operator">+</span> Config<span class="token punctuation">.</span>ABRootName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">yield</span> <span class="token keyword">return</span> www<span class="token punctuation">;</span>
+
+    AssetBundleManifest manifest <span class="token operator">=</span> www<span class="token punctuation">.</span>assetBundle<span class="token punctuation">.</span><span class="token generic-method function">LoadAsset<span class="token punctuation">&lt;</span>AssetBundleManifest<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token string">"AssetBundleManifest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> dependenceBundleName <span class="token operator">=</span> manifest<span class="token punctuation">.</span><span class="token function">GetAllDependencies</span><span class="token punctuation">(</span><span class="token string">"prefab_2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">string</span> name <span class="token keyword">in</span> dependenceBundleName<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        www <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WWW</span><span class="token punctuation">(</span>Config<span class="token punctuation">.</span>ABServerRootPath <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">yield</span> <span class="token keyword">return</span> www<span class="token punctuation">;</span>
+        www<span class="token punctuation">.</span>assetBundle<span class="token punctuation">.</span><span class="token function">LoadAllAssets</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      www <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WWW</span><span class="token punctuation">(</span>Config<span class="token punctuation">.</span>ABServerRootPath <span class="token operator">+</span> <span class="token string">"prefab_2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">yield</span> <span class="token keyword">return</span> www<span class="token punctuation">;</span>
+
+     GameObject prefab <span class="token operator">=</span> www<span class="token punctuation">.</span>assetBundle<span class="token punctuation">.</span><span class="token generic-method function">LoadAsset<span class="token punctuation">&lt;</span>GameObject<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token string">"prefab_2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    GameObject<span class="token punctuation">.</span><span class="token function">Instantiate</span><span class="token punctuation">(</span>prefab<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在<code>Start()</code>里开启一个协程调用以上函数试试～这应该是可以把一层依赖关系的 Assetbundle 解出来的最直观的代码了，不管好不好看至少可以非常清晰的理解思路。事实上不管多层依赖都只需要递归地把所有有依赖关系的 AssetBundle 用同样地方法解出来最后加载你想要的 Prefab 就可以了。</p>
+<h2 id="PART-5-总结"><a href="#PART-5-总结" class="headerlink" title="PART 5 总结"></a>PART 5 总结</h2><p>这一篇写的非常基础也非常水，其实这也算是博主自己探索 Assetbundle 的过程的一个笔记～希望可以对像博主一样完全初次接触 Assetbundle 的同学有帮助。文章配套的工程已经放在博主的 <a href="https://github.com/sNaticY/unity-asset-manager" target="_blank" rel="external">github</a> 了。接下来就要随着学习的进行一步一步的构建我们的插件，希望最终可以实现配置好路径就可以完成自动设置 Assetbundle Name，生成和上传 Assetbundle，下载和加载资源等等操作而不需要过多的关注这些细节。不知道最终多久可以完成，希望不会太久远～加油！</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2017/01/15/009-start-with-asset-bundle/">http://snatix.com/2017/01/15/009-start-with-asset-bundle/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Unity通用框架工程 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> asset bundle </tag>
+            
+            <tag> unity </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[重启Hexo(2)-Material深度探索]]></title>
+      <url>/2017/01/14/008-customize-hexo/</url>
+      <content type="html"><![CDATA[<p>在上一篇文章「<a href="http://snatix.com/2017/01/08/007-install-hexo-on-mac/">在Mac上安装Hexo</a>」中介绍了如何在 mac 搭建 Hexo 博客环境并部署到 coding.net 上，那么接下来的任务就是针对目前白纸一张的博客进行一些自定义让它变得更好用吧～我们的目标是基于 <a href="https://material.viosey.com/" target="_blank" rel="external">Material</a> 主题完成「标签云」「评论系统」以及「友情链接」并探索一些其他的小功能。</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>因为目前博主使用的是 <a href="https://github.com/viosey/hexo-theme-material" target="_blank" rel="external">Material</a> 主题，所以一切定制均以该主题为核心展开。其他主题可能步骤稍有不同但思路都差不多，大家酌情筛选就好~简单的来说主要有以下内容</p>
+<ol>
+<li>标签云页面</li>
+<li>接入多说评论系统</li>
+<li>添加友情链接页面</li>
+<li>添加搜索和生成二维码链接的功能</li>
+<li>为文章添加题图</li>
+</ol>
+<h2 id="PART-2-标签云页面"><a href="#PART-2-标签云页面" class="headerlink" title="PART 2 标签云页面"></a>PART 2 标签云页面</h2><p>Material 主题自带标签云功能，但是作者的教程页面藏的很深让我一度以为需要自行安装第三方标签云插件，具体使用方法非常简单，首先</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ hexo new page <span class="token string">"tags"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后打开<code>source/tags/index.md</code>并添加标签</p>
+<pre class="line-numbers language-md"><code class="language-md">layout: tags
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>完成后保存文件，并在主题的<code>_config.yml</code>文件修改<code>pages</code>项，这样可以在左侧菜单中显示一个链接跳转至标签云页面</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017011402.png" alt="标签云"></p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">pages</span><span class="token punctuation">:</span>
+    <span class="token key atrule">标签云</span><span class="token punctuation">:</span> <span class="token string">"/tags"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>这样标签云功能就轻松完成了，效果如图所示</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017011401.png" alt="标签云"></p>
+<h2 id="PART-3-接入多说评论系统"><a href="#PART-3-接入多说评论系统" class="headerlink" title="PART 3 接入多说评论系统"></a>PART 3 接入多说评论系统</h2><p>Material 主题可以很方便的接入多说的评论，只需要修改主题<code>_config.yml</code>中的<code>comment</code>项即可：</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">comment</span><span class="token punctuation">:</span>
+    <span class="token key atrule">use</span><span class="token punctuation">:</span> duoshuo
+    <span class="token key atrule">shortname</span><span class="token punctuation">:</span> yourname
+    <span class="token key atrule">duoshuo_thread_key</span><span class="token punctuation">:</span> your_duoshuo_thread_key_fdas3be87
+    <span class="token key atrule">duoshuo_embed_js_url</span><span class="token punctuation">:</span> <span class="token string">"https://yourname.duoshuo.com/embed.js"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>那么<code>shortname</code>，<code>duoshuo_thread_key</code>，<code>duoshuo_embed_js_url</code>是如何获得的呢？首先进入 <a href="http://duoshuo.com/" target="_blank" rel="external">多说官网</a> 并使用任意方法登录。登录后点击「我要安装」按钮，填写必要的信息后点击创建即可～</p>
+<p>创建站点完毕后进入站点，点击左侧「设置」-「基本设置」可看到站点的域名和密钥，域名前缀填写至<code>shortname</code>项，密钥填至<code>duoshuo_thread_key</code>项，并将<code>https://yourname.duoshuo.com/embed.js</code>替换为 <code>你的域名/embed.js</code>即可。</p>
+<p>完成后评论系统效果如图所示</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017011403.png" alt="标签云"></p>
+<h2 id="PART4-添加友情链接"><a href="#PART4-添加友情链接" class="headerlink" title="PART4 添加友情链接"></a>PART4 添加友情链接</h2><p>友情链接同样也是 Material 主题自带的功能，作者好贴心～具体开启方法如下：</p>
+<p>首先新建一个页面</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ hexo new page <span class="token string">"links"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后打开<code>source/links/index.md</code>并添加标签</p>
+<pre class="line-numbers language-markdown"><code class="language-markdown">layout: links
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在博客目录的<code>source</code>文件夹下新建<code>_data</code>目录，并新建文件<code>links.yml</code>，以以下内容为模板添加好友即可</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">Name</span><span class="token punctuation">:</span> 
+    <span class="token key atrule">link</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//example.com
+    <span class="token key atrule">avatar</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//example.com/avatar.png
+    <span class="token key atrule">descr</span><span class="token punctuation">:</span> <span class="token string">"这是一个描述"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最后编辑主题的<code>_config.yml</code>文件</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">pages</span><span class="token punctuation">:</span>
+    <span class="token key atrule">友情链接</span><span class="token punctuation">:</span> <span class="token string">"/links"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>完成后的效果如下图所示，由于博主的好友较少，故借了主题作者的博客一张图：</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017011404.png" alt="标签云"></p>
+<p>感觉超棒有没有～</p>
+<h2 id="PART-5-探索其他有趣的功能"><a href="#PART-5-探索其他有趣的功能" class="headerlink" title="PART 5 探索其他有趣的功能"></a>PART 5 探索其他有趣的功能</h2><h3 id="开启本地搜索服务"><a href="#开启本地搜索服务" class="headerlink" title="开启本地搜索服务"></a>开启本地搜索服务</h3><p>作者开启的默认搜索是 Google 搜索，但是由于大家都懂得原因其实并不是很好用，开启内置的本地搜索功能也非常方便，首先安装 <a href="https://github.com/PaicHyperionDev/hexo-generator-search" target="_blank" rel="external">hexo-generator-search</a> 插件</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> hexo-generator-search --save
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后在主题的<code>_config.yml</code>文件中修改<code>search</code>项为</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">search</span><span class="token punctuation">:</span>
+    <span class="token key atrule">use</span><span class="token punctuation">:</span> local
+    <span class="token key atrule">swiftype_key</span><span class="token punctuation">:</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这样就可以实现简单的搜索了，而且与主题融合的也很棒。</p>
+<h3 id="开启生成二维码服务"><a href="#开启生成二维码服务" class="headerlink" title="开启生成二维码服务"></a>开启生成二维码服务</h3><p>首先安装 <a href="https://github.com/yscoder/hexo-helper-qrcode" target="_blank" rel="external">hexo-helper_qrcode</a> 插件</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> hexo-helper-qrcode --save
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然后在主题配置文件<code>_config.yml</code>中修改</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">qrcode</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>效果如下图所示</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017011405.png" alt="标签云"></p>
+<p>感觉是一个很有趣的小功能～</p>
+<h2 id="PART-5-为文章添加题图"><a href="#PART-5-为文章添加题图" class="headerlink" title="PART 5 为文章添加题图"></a>PART 5 为文章添加题图</h2><p>可能大家注意到，Material 这个主题每一篇文章都会默认随机配置一张主题图，显示在主页该文章的上方，如果想要自定义这张图怎么办呢</p>
+<p>答案是在文章顶部的<code>front-matter</code>添加<code>thumbnail</code>即可，如</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">title</span><span class="token punctuation">:</span> 重启Hexo(2)<span class="token punctuation">-</span>Material深度探索
+<span class="token key atrule">date</span><span class="token punctuation">:</span> <span class="token datetime number">2017-01-14 12:19:49</span>
+<span class="token key atrule">tags</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>hexo<span class="token punctuation">,</span> mac<span class="token punctuation">,</span> blog<span class="token punctuation">]</span>
+<span class="token key atrule">categories</span><span class="token punctuation">:</span> Hexo博客重启计划
+<span class="token key atrule">thumbnail</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//ojgpkbakj.bkt.clouddn.com/2017011409.jpg
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最终效果如本文题图所示。</p>
+<h2 id="PART-6-总结"><a href="#PART-6-总结" class="headerlink" title="PART 6 总结"></a>PART 6 总结</h2><p>目前为止已经尽可能的挖掘 Material 这个主题中大多数有用的好东西了，可以愉快的开始写博客了(根本不想写搭完就满足的忘记了!!!)。修改好的配置记得上传到 github 进行托管哦，不然下次再来一遍感觉很浪费时间的。。这个篇章差不多也该完结了之后想到什么再补充吧~</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2017/01/14/008-customize-hexo/">http://snatix.com/2017/01/14/008-customize-hexo/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Hexo博客重启计划 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> mac </tag>
+            
+            <tag> blog </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[重启Hexo(1)-在Mac上安装Hexo]]></title>
+      <url>/2017/01/08/007-install-hexo-on-mac/</url>
+      <content type="html"><![CDATA[<p>上次做过大量自定义的 <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a> 博客，因为自己智障的原因全都搞丢了，伤心之余很久没有更新博客了，前段时间刚买了2016款 macbook pro ，想要在新电脑上搭建 hexo 环境重新开始写博客了～顺便把这个过程记录下来纪念博客重生历程好了！</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>其实在 mac os 上搭建 hexo 的过程是很简单的，遇到最大的阻碍是下载速度太慢～如果是完全干净没有装过 node 或者 npm 的机器的话跟着一步一步做就可以了，简单来说大概有以下几步。</p>
+<ol>
+<li>下载 Xcode 并安装 Command Line Tools</li>
+<li>安装 nvm 并使用 nvm 安装 npm + node</li>
+<li>安装 hexo</li>
+<li>简单配置一下</li>
+<li>在 coding.net 部署</li>
+</ol>
+<h2 id="PART-2-环境准备"><a href="#PART-2-环境准备" class="headerlink" title="PART 2 环境准备"></a>PART 2 环境准备</h2><h3 id="安装-Git"><a href="#安装-Git" class="headerlink" title="安装 Git"></a>安装 Git</h3><p>Mac用户直接使用以下 <a href="https://sourceforge.net/projects/git-osx-installer/" target="_blank" rel="external">Installer</a> 安装即可</p>
+<h3 id="下载-Xcode-并安装-Command-Line-Tools"><a href="#下载-Xcode-并安装-Command-Line-Tools" class="headerlink" title="下载 Xcode 并安装 Command Line Tools"></a>下载 Xcode 并安装 Command Line Tools</h3><p>根据 Hexo 官网对 Mac 用户的说明，因为 Hexo 的编译需要依赖 Xcode 的某些组件，所以需要先从 <a href="https://itunes.apple.com/us/app/xcode/id497799835?ls=1&amp;mt=12" target="_blank" rel="external">App Store</a> 下载。下载完成后打开 <code>Xcode -&gt; Preferences -&gt; Download -&gt; Command Line Tools -&gt; Install</code> 即可。</p>
+<h3 id="安装-nvm-并使用-nvm-安装-npm-node"><a href="#安装-nvm-并使用-nvm-安装-npm-node" class="headerlink" title="安装 nvm 并使用 nvm 安装 npm + node"></a>安装 nvm 并使用 nvm 安装 npm + node</h3><p>Hexo 官方推荐使用 <a href="https://github.com/creationix/nvm" target="_blank" rel="external">nvm</a> 来安装 npm，个人认为这样很有必要，因为 npm 版本太多太复杂，不是专业做 nodejs 开发很容易在日后使用其他工具的时候把环境搞乱或者遇到其他什么问题。这个过程非常简单～两种很方便的方式安装 nvm</p>
+<p>cURL：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh <span class="token operator">|</span> sh
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>Wget：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">wget</span> -qO- https://raw.githubusercontent.com/creationix/nvm/master/install.sh <span class="token operator">|</span> sh
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>等待 nvm 安装结束后，重启 Terminal 并执行以下命令来安装 Node.js</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ nvm <span class="token function">install</span> stable
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="PART-3-Hexo-的安装与配置"><a href="#PART-3-Hexo-的安装与配置" class="headerlink" title="PART 3 Hexo 的安装与配置"></a>PART 3 Hexo 的安装与配置</h2><h3 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h3><p>完成基本的环境配置以后就可以开始安装 Hexo 了～很简单就一句话。</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> -g hexo-cli
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>安装好以后在自己喜欢的地方初始化就好</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ hexo init blog
+$ <span class="token function">cd</span> blog
+$ <span class="token function">npm</span> <span class="token function">install</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>到此为止 Hexo 的安装就全部完成了～ 运行<code>hexo server</code>，用浏览器打开 <a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a> 看看效果吧，基本的作者标题之类的配置就不再啰嗦啦大家自己看着办吧～</p>
+<h3 id="安装喜欢的主题"><a href="#安装喜欢的主题" class="headerlink" title="安装喜欢的主题"></a>安装喜欢的主题</h3><p>既然是个人博客那么定制主题就是一个很重要的环节～值得一提的是，为了避免像博主一样犯一些智障的错误导致自己辛苦定制的主题付之一炬的话，最好先找到自己喜欢的主题 fork，再安装～此后任何的修改都可以提交上去，下次想要在另一台机器上重新安装或者恢复的时候就很方便了。</p>
+<p>在 <a href="https://hexo.io/themes/" target="_blank" rel="external">这个页面</a> 可以找到官方推荐的海量主题～从中挑选一款自己喜欢的吧，以博主目前使用的 <a href="https://github.com/viosey/hexo-theme-material" target="_blank" rel="external">Material</a> 为例。首先 Fork 一份到自己的仓库，如 <a href="https://github.com/sNaticY/hexo-theme-material" target="_blank" rel="external">https://github.com/sNaticY/hexo-theme-material</a> ，然后在 <code>blog</code> 目录下运行以下命令</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">git</span> clone https://github.com/sNaticY/hexo-theme-material.git themes/material
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>之后打开<code>_config.yml</code>文件，修改其中的 <code>theme: landscape</code> 为</p>
+<pre class="line-numbers language-yml"><code class="language-yml">theme: material
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>到此为止新的主题就安装完成了～其他的更复杂的主题可能有一些插件需要安装，建议大家自行查看对应的 ReadMe 完成安装～</p>
+<blockquote>
+<p>P s. 通常主题作者都会持续维护自己开发的主题～修复一些 bug 或者提供一些新特性之类的，那么 fork 主题以后如何持续跟着作者的节奏更新呢？答案是创建一个 pull request 然后左边的 base fork 选择自己的仓库，右边 head fork 选择作者的仓库，然后再自行 Merge pull request 即可～</p>
+</blockquote>
+<h2 id="PART-4-发布到-Coding-net"><a href="#PART-4-发布到-Coding-net" class="headerlink" title="PART 4 发布到 Coding.net"></a>PART 4 发布到 Coding.net</h2><p>由于某种大家都懂的原因，国内访问 github-pages 服务非常慢。。因此作为替代方案，发布到 <a href="https://coding.net/" target="_blank" rel="external">coding.net</a> 是一个不错的选择。</p>
+<h3 id="创建仓库并添加-SSH公钥"><a href="#创建仓库并添加-SSH公钥" class="headerlink" title="创建仓库并添加 SSH公钥"></a>创建仓库并添加 SSH公钥</h3><p>登陆 coding.net，并创建一个与你的 id 同名的仓库，例如 <a href="https://git.coding.net/sNatic/snatic.git" target="_blank" rel="external">https://git.coding.net/sNatic/snatic.git</a> ，为你的账户配置 ssh。mac 用户直接在 Terminal 中输入</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ ssh-keygen -t rsa -C “username@example.com”
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>之后一路回车即可(喜欢的话也可以输入密码)，成功后会显示</p>
+<pre class="line-numbers language-bash"><code class="language-bash">Your identification has been saved <span class="token keyword">in</span> /Users/you/.ssh/id_rsa.
+<span class="token comment" spellcheck="true"># Your public key has been saved in /Users/you/.ssh/id_rsa.pub.</span>
+<span class="token comment" spellcheck="true"># The key fingerprint is:</span>
+<span class="token comment" spellcheck="true"># 01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db your_email@example.com</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>之后打开<code>id_rsa.pub</code>文件，复制其中全部内容，添加到 <a href="https://coding.net/user/account/setting/keys" target="_blank" rel="external">账户-&gt;SSH公钥-&gt;新增公钥</a> 的公钥内容中，点添加即可。</p>
+<p>尝试验证一下有没有添加成功，输入<code>ssh -T git@git.coding.net</code></p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">ssh</span> -T git@git.coding.net
+The authenticity of host <span class="token string">'git.coding.net (45.124.125.220)'</span> can<span class="token string">'t be established.
+RSA key fingerprint is SHA256:jok1237q5LsfevE7iPNehBgXRw51ErE77S0av+Vg/Ik.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '</span>git.coding.net,45.124.125.220<span class="token string">' (RSA) to the list of known hosts.
+Hello sNatic! You'</span>ve connected to Coding.net via SSH successfully<span class="token operator">!</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>出现类似以上文字就表示成功</p>
+<h3 id="配置-Hexo"><a href="#配置-Hexo" class="headerlink" title="配置 Hexo"></a>配置 Hexo</h3><p>首先 coding 是使用 git 进行托管的，因此我们需要下载 <code>hexo-deployer-git</code>工具</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> hexo-deployer-git --save
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>接下来就可以在<code>_config.yml</code>中设置</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># Deployment</span>
+<span class="token comment" spellcheck="true">## Docs: https://hexo.io/docs/deployment.html</span>
+<span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> git
+  <span class="token key atrule">repository</span><span class="token punctuation">:</span> https<span class="token punctuation">:</span>//git.coding.net/sNatic/snatic.git
+  <span class="token key atrule">branch</span><span class="token punctuation">:</span> master
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>回到 Terminal 中试试以下命令</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ hexo g <span class="token operator">&amp;&amp;</span> hexo d
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>如果没有任何报错的话，你的页面已经生成好并发布到 coding 了，最后一步就是回到 coding 中设置 coding-pages 服务。</p>
+<h3 id="设置-coding-pages-服务并自定义域名"><a href="#设置-coding-pages-服务并自定义域名" class="headerlink" title="设置 coding-pages 服务并自定义域名"></a>设置 coding-pages 服务并自定义域名</h3><p>进入之前创建好的 coding 项目的设置页面，选择部署来源为 master 分支，点击保存。等待部署完成以后可以根据提示进入 <a href="http://snatic.coding.me/sNatic" target="_blank" rel="external">http://sNatic.coding.me/sNatic</a> 访问你的博客了，理论上来说应该是和运行<code>$ hexo s</code>后访问 <a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a> 看到的页面完全一样的～</p>
+<p>接下来进入你的域名 dns 服务商，以博主使用的 dnspod 为例。假设需要自定义域名为 <code>snatic.net</code> ，则添加一条 CNAME 记录，并将记录值设置为 <code>pages.coding.me</code>。如下图所示</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017010802.png" alt="设置cname记录"></p>
+<p>回到 coding 项目的设置页面，在自定义域名中输入你的域名，点击绑定即可～</p>
+<p>几分钟后 dns 生效以后就可以通过自定义域名访问你的博客了。</p>
+<h2 id="PART-4-总结"><a href="#PART-4-总结" class="headerlink" title="PART 4 总结"></a>PART 4 总结</h2><p>到此为止一个全新的带有主题的 hexo 博客已经全部搭建完毕了，最后记得将工程源码托管到 github 哦～</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2017/01/08/007-install-hexo-on-mac/">http://snatix.com/2017/01/08/007-install-hexo-on-mac/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Hexo博客重启计划 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> mac </tag>
+            
+            <tag> coding </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[探索Git(2)-Gitignore和branch的使用]]></title>
+      <url>/2014/08/23/006-gitignore-and-git-branch/</url>
+      <content type="html"><![CDATA[<p>在上一篇博客『<a href="http://snatix.com/2014/08/21/005-start-by-git-shell/">初体验之git Shell</a>』中。我们探索了一些 git 的基本操作比如 git 初始化、追踪文件、加入暂存区、提交、比较、查看提交记录以及很暴力的回滚项目。那么 git 的精髓『分支』该如何使用呢？在此之前我们可能还注意到上次的工作目录太『不干净』了每次使用<code>git status</code>命令总会输出一大堆”untracked files”很影响心情。怎样才能彻底忽略掉那一大堆不需要跟踪的自动生成的文件呢？</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>在介绍分支之前我们首先要让我们的工作目录“干净”一些，最基本的方法就是创建并使用<code>.gitignore</code>文件将项目中不需要被显示的文件忽略掉。</p>
+<ul>
+<li><code>.gitignore</code>的创建及使用方法</li>
+</ul>
+<p>在进行版本管理时我们偶尔会需要在两个版本之间进行切换，但又不想暴力的把某个版本之后的所有工作全都抛弃，所以我们会用到“分支”这个概念。在分支这一块我们会进行以下几种情况的尝试</p>
+<ul>
+<li>创建分支<code>git branch</code></li>
+<li>转换到某个分支<code>git checkout</code></li>
+<li>创建一个分支并转换到该分支<code>git checkout -b</code></li>
+<li>合并分支<code>git merge</code></li>
+<li>管理分支<code>git branch -v</code></li>
+<li>删除分支<code>git branch -d</code></li>
+<li>合并冲突分支</li>
+</ul>
+<h2 id="PART-2-忽略某些文件"><a href="#PART-2-忽略某些文件" class="headerlink" title="PART 2 忽略某些文件"></a>PART 2 忽略某些文件</h2><p>首先我们<code>git status</code>输出一下当前项目信息</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master +7 ~0 -0 !]</span>> git status
+<span class="token comment" spellcheck="true"># On branch master</span>
+<span class="token comment" spellcheck="true"># Untracked files:</span>
+<span class="token comment" spellcheck="true">#   (use "git add &lt;file>..." to include in what will be committed)</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true">#       HelloGit.sln</span>
+<span class="token comment" spellcheck="true">#       HelloGit.v12.suo</span>
+<span class="token comment" spellcheck="true">#       HelloGit/App.config</span>
+<span class="token comment" spellcheck="true">#       HelloGit/HelloGit.csproj</span>
+<span class="token comment" spellcheck="true">#       HelloGit/Properties/</span>
+<span class="token comment" spellcheck="true">#       HelloGit/bin/</span>
+<span class="token comment" spellcheck="true">#       HelloGit/obj/</span>
+nothing added to commit but untracked files present <span class="token punctuation">(</span>use <span class="token string">"git add"</span> to track<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>好多“Untracked files”。看起来极度不美观。我们创建一个名为<code>.gitignore</code>的文件。好像在 windows 中不能重命名为”.”开头的文件名。我们直接使用 visual studio 新建一个文件再另存为就可以了。尝试在<code>.gitignore</code>文件中添加如下内容</p>
+<pre class="line-numbers language-text"><code class="language-text">#自定义需要忽略的文件
+*.sln
+*.suo
+*.csproj
+*.config
+.gitignore
+HelloGit/obj/
+HelloGit/Properties/
+HelloGit/bin/
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>再试试<code>git status</code>输出结果</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master +1 ~0 -0 !]</span>> git status
+<span class="token comment" spellcheck="true"># On branch master</span>
+nothing to commit<span class="token punctuation">,</span> working directory clean
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>嗯这样就成功了。该忽略的文件都不再显示了，这个世界清净的许多。<code>.gitignore</code>文件规则如下。(来源于《progit》)</p>
+<blockquote>
+<p>文件 .gitignore 的格式规范如下：</p>
+<ul>
+<li>所有空行或者以注释符号 ＃ 开头的行都会被 Git 忽略。</li>
+<li>可以使用标准的 glob 模式匹配。</li>
+<li>匹配模式最后跟反斜杠（/）说明要忽略的是目录。</li>
+<li>要忽略指定模式以外的文件或目录，可以在模式前加上惊叹号（!）取反。</li>
+</ul>
+<p>所谓的 glob 模式是指 shell 所使用的简化了的正则表达式。星号（*）匹配零个或多个任 意字符；[abc] 匹配任何一个列在方括号中的字符（这个例子要么匹配一个 a，要么匹配一 个 b，要么匹配一个 c）；问号（?）只匹配一个任意字符；如果在方括号中使用短划线分 隔两个字符，表示所有在这两个字符范围内的都可以匹配（比如 [0-9] 表示匹配所有 0 到 9 的数字）。 我们再看一个 .gitignore 文件的例子：</p>
+<pre><code>    # 此为注释 – 将被 Git 忽略
+    *.a # 忽略所有 .a 结尾的文件
+    !lib.a # 但 lib.a 除外
+    /TODO # 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO
+    build/ # 忽略 build/ 目录下的所有文件
+    doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+</code></pre></blockquote>
+<p>不过貌似像博主这样后来才编辑<code>.gitignore</code>文件貌似不是很好。很容易误操作把不需要的文件加入到暂存区里，或者把不该忽略的目录全部忽略掉。于是博主发现一个很巧(tou)妙(lan)的方法就是在『GitHub for Windows』的GUI版本里创建一个新的 Repo 然后在<code>Git ignore</code>中选择“Visual studio”这样就可以使用预设的<code>.gitignore</code>文件自动忽略掉不该显示的文件类型和目录了。当然如果大家使用其他的语言的IDE什么的都可以自己选择需要的，非常方便。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2014082301.png" alt="创建visual Studio默认.gitgnore"></p>
+<h2 id="PART-3-Git的分支系统"><a href="#PART-3-Git的分支系统" class="headerlink" title="PART 3 Git的分支系统"></a>PART 3 Git的分支系统</h2><p>在 git 中新建分支、删除分支、合并分支等等操作的时间代价非常小，因此我们在开发的过程中可以尽可能的利用这个优势。</p>
+<p>有时候会遇到这样的情景，我们的“HelloGit”项目主要功能已经趋于稳定并且投入运行。正在开发一个新的功能“输出Developer”、然而在新功能尚未完成的时候突然发现当前已经运行的版本有一个bug需要尽快修复。但是为了开发新功能原始的项目已经改的面目全非编译都不能通过了。难道必须等到新功能完成再回头去修复bug或者试图手动把改的乱七八糟的代码再改回来么。</p>
+<p>在 git 的辅助下科学的做法是这样。首先我们的<code>Program.cs</code>文件如下。该版本已经基本稳定并投入运行。该版本位于默认的 master 分支。</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Hello Git!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Console<span class="token punctuation">.</span><span class="token function">ReadKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="创建新的分支"><a href="#创建新的分支" class="headerlink" title="创建新的分支"></a>创建新的分支</h3><p>在我们开发新功能”输出developer“之前应该新建分支“develop”(名字随便取自己最后能认识就行)</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master]</span>> git branch develop
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这样就成功建立了新的分支但该分支目前与 master 分支内容一致</p>
+<h3 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h3><p>虽然建立了新的分支但是我们依然在 master 分支上工作。需要用<code>git checkout</code>命令来切换到新建的分支</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master]</span>> git checkout develop
+Switched to branch <span class="token string">'develop'</span>
+F:\dev\HelloGit <span class="token namespace">[develop]</span>>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>我们发现方括号里的 master 已经变成 develop。意味着我们现在开始进行的所有修改都是在develop分支进行的了。</p>
+<p>接下来。在我们的辛勤劳动下，新功能的实现指日可待了。。(用这么大篇幅贴我写出来的渣代码这样真的好吗？)</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token keyword">class</span> <span class="token class-name">Program</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Hello Git!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Console<span class="token punctuation">.</span><span class="token function">ReadKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Developer me <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Developer</span><span class="token punctuation">(</span><span class="token string">"sNaticY"</span><span class="token punctuation">,</span><span class="token string">"www.snatic.tk"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        me<span class="token punctuation">.</span><span class="token function">Output</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Console<span class="token punctuation">.</span><span class="token function">ReadKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Developer</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">string</span> Name<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">string</span> Blog<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">Developer</span><span class="token punctuation">(</span><span class="token keyword">string</span> n<span class="token punctuation">,</span> <span class="token keyword">string</span> b<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Name <span class="token operator">=</span> n<span class="token punctuation">;</span>
+        Blog <span class="token operator">=</span> b<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Output</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Console<span class="token punctuation">.</span>
+        <span class="token comment" spellcheck="true">//这的代码还没写完，编译不通过</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>就在这即将完成的关键时刻我们突然发现必须马上修复已经在运行的那个版本的一个错误。但是又不能等到新功能开发完成以后再修复。而且现在程序也不能运行了就算强行修复了也无法调试。怎么办，辛亏我们之前已经切换到了新的分支。果断提交以后再说。</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[develop +0 ~1 -0]</span>> git commit <span class="token operator">-</span>a <span class="token operator">-</span>m <span class="token string">"Unfinished updates"</span>
+<span class="token namespace">[develop 3a04743]</span> Unfinished updates
+ 1 file changed<span class="token punctuation">,</span> 18 insertions<span class="token punctuation">(</span><span class="token operator">+</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="创建新分支并切换到该分支"><a href="#创建新分支并切换到该分支" class="headerlink" title="创建新分支并切换到该分支"></a>创建新分支并切换到该分支</h3><p>先切换到 master 分支。再在 master 分支的基础上新建一个分支用于修复 bug，使用<code>git checkout -b</code></p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[develop]</span>> git checkout master
+Switched to branch <span class="token string">'master'</span>
+F:\dev\HelloGit <span class="token namespace">[master]</span>> git checkout <span class="token operator">-</span>b debug
+Switched to a new branch <span class="token string">'debug'</span>
+F:\dev\HelloGit <span class="token namespace">[debug]</span>>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>该命令相当于<code>git branch debug</code>+<code>git checkout debug</code>。然后我们回到 visual studio 发现文件已经恢复新功能开发之前的样子了。我们来修复这个“必须马上修改晚一秒会死人”的”bug”</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Hello Git!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"按任意键继续..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Console<span class="token punctuation">.</span><span class="token function">ReadKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>嗯，终于改好了人生从此圆满了。经过一系列复杂的测试以后你确信本次 debug 工作非常成功，所以我们接下来要将它合并到 master 分支以便发布并投入运行。</p>
+<h3 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h3><p>首先切换到 master 分支，然后使用<code>git merge</code>命令将 debug 分支合并进来。</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[debug]</span>> git checkout master
+Switched to branch <span class="token string">'master'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master]</span>> git merge debug
+Updating 152e89c<span class="token punctuation">.</span><span class="token punctuation">.</span>f15ab97
+Fast<span class="token operator">-</span>forward
+ HelloGit<span class="token operator">/</span>Program<span class="token punctuation">.</span>cs <span class="token punctuation">|</span> 1 <span class="token operator">+</span>
+ 1 file changed<span class="token punctuation">,</span> 1 insertion<span class="token punctuation">(</span><span class="token operator">+</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>请注意，合并时出现了 “Fast forward”（快进）提示。由于当前 master 分支所在的 commit 是要并入的 hotfix 分支的直接上游，Git 只需把指针直接右移。换句话说，如果 顺着一个分支走下去可以到达另一个分支，那么 Git 在合并两者时，只会简单地把指针前 移，因为没有什么分歧需要解决，所以这个过程叫做快进（Fast forward）。 –《progit》</p>
+</blockquote>
+<p>合并以后我们位于 master 分支。回到 visual studio 发现新的代码已经被添加我们的debug顺利完成。</p>
+<h3 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h3><p>现在我们貌似分支分了几个而且合并几个操作感觉很混乱。来尝试查看一下当前项目分支信息吧<code>git brance -v</code></p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master]</span>> git branch <span class="token operator">-</span>v
+  debug   f15ab97 debug over
+  develop 3a04743 Unfinished updates
+<span class="token operator">*</span> master  f15ab97 debug over
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们发现已经合并了的 debug 分支依然存在。而且与 master 分支指向了同一次 commit 。好像也没什么用处了</p>
+<h3 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h3><p>既然 debug 分支没什么用了就删掉好了。等到下次有 Bug 再新建也不迟。不然项目显得乱糟糟的。</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master]</span>> git branch <span class="token operator">-</span>d debug
+Deleted branch debug <span class="token punctuation">(</span>was f15ab97<span class="token punctuation">)</span><span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="继续开发新功能"><a href="#继续开发新功能" class="headerlink" title="继续开发新功能"></a>继续开发新功能</h3><p>删除分支以后心情非常愉快，继续刚才未完成的工作吧。回到 develop 分支继续工作。</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">Output</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Developer: {0}"</span><span class="token punctuation">,</span>Name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Blog: http://{0}/"</span><span class="token punctuation">,</span> Blog<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>经过一系列测试发现新功能实现了，我们把提交然后合并到 master 分支吧。</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[develop]</span>> git commit <span class="token operator">-</span>a <span class="token operator">-</span>m <span class="token string">"update finished"</span>
+<span class="token namespace">[develop 047c04a]</span> update finished
+F:\dev\HelloGit <span class="token namespace">[develop]</span>> git checkout master
+Switched to branch <span class="token string">'master'</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master]</span>> git merge develop
+Auto<span class="token operator">-</span>merging HelloGit<span class="token operator">/</span>Program<span class="token punctuation">.</span>cs
+Merge made by the <span class="token string">'recursive'</span> strategy<span class="token punctuation">.</span>
+ HelloGit<span class="token operator">/</span>Program<span class="token punctuation">.</span>cs <span class="token punctuation">|</span> 19 <span class="token operator">++</span>+<span class="token operator">++</span>+<span class="token operator">++</span>+<span class="token operator">++</span>+<span class="token operator">++</span>+<span class="token operator">++</span>+<span class="token operator">+</span>
+ 1 file changed<span class="token punctuation">,</span> 19 insertions<span class="token punctuation">(</span><span class="token operator">+</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>嗯嗯不错，并没有出现合并冲突的情况。而是成功的把以旧版 master 为原型的 develop 分支和已经进化了的 master 分支合并在一起。如下</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Hello Git!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"按任意键继续..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Console<span class="token punctuation">.</span><span class="token function">ReadKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Developer me <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Developer</span><span class="token punctuation">(</span><span class="token string">"sNaticY"</span><span class="token punctuation">,</span><span class="token string">"www.snatic.tk"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    me<span class="token punctuation">.</span><span class="token function">Output</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Console<span class="token punctuation">.</span><span class="token function">ReadKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="合并冲突"><a href="#合并冲突" class="headerlink" title="合并冲突"></a>合并冲突</h3><p>但是有时候合并操作并不会这么顺利。如果修改了两个分支里同一部分，那么就会出现合并冲突的情况。比如我们在 master 分支中的<code>Hello Git!</code>后多加一个”!”，而在 develop 分支中去掉”!”。那么合并时就会出现如下状况。(前面一大堆修改提交省略)</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master]</span>> git merge develop
+Auto<span class="token operator">-</span>merging HelloGit<span class="token operator">/</span>Program<span class="token punctuation">.</span>cs
+CONFLICT <span class="token punctuation">(</span>content<span class="token punctuation">)</span>: Merge conflict in HelloGit<span class="token operator">/</span>Program<span class="token punctuation">.</span>cs
+Automatic merge failed<span class="token punctuation">;</span> fix conflicts and then commit the result<span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>提示我们<code>Program.cs</code>文件合并失败了。打开这个文件看看哪里失败了。</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token operator">&lt;</span><span class="token operator">&lt;</span><span class="token operator">&lt;</span><span class="token operator">&lt;</span><span class="token operator">&lt;</span><span class="token operator">&lt;</span><span class="token operator">&lt;</span> HEAD
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Hello Git!!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"按任意键继续..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">===</span><span class="token operator">===</span><span class="token operator">=</span>
+            Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Hello Git"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">></span><span class="token operator">></span><span class="token operator">></span><span class="token operator">></span><span class="token operator">></span><span class="token operator">></span><span class="token operator">></span> develop
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>git 为我们在冲突的地方使用一些符号标记。”=======“上半部分是HEAD(即master分支)中的内容，而下方是 develop 的内容，我们只需二选一或者用自己的方式将他们整合。像这样</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp">Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Hello Git"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"按任意键输出developer..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>总之删掉特殊的标记然后修改代码使其可以按照你的意愿运行，随后<code>commit</code>即可。最后贴一张我们的项目完全版运行结果。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2014082302.png" alt="HelloGit完整版运行结果"></p>
+<h2 id="PART-4-总结"><a href="#PART-4-总结" class="headerlink" title="PART 4 总结"></a>PART 4 总结</h2><p>终于，关于git shell的本地使用的大部分内容就这样学习了。结合上一篇博客『<a href="http://http://www.snatic.tk/blog/2014/08/21/start-by-git-shell/" target="_blank" rel="external">Git探索之路(1)-git初体验之git Shell</a>』中讲到的内容应该可以成功的使用『git shell』进行本地的版本管理了。接下来我们可能会继续探索 Github 与 Git shell 结合使用。以及GUI版本的『GitHub for Windows』的使用方法。敬请期待。</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2014/08/23/006-gitignore-and-git-branch/">http://snatix.com/2014/08/23/006-gitignore-and-git-branch/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> git探索之路 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> github </tag>
+            
+            <tag> git </tag>
+            
+            <tag> windows </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[探索Git(1)-初体验之Git Shell]]></title>
+      <url>/2014/08/21/005-start-by-git-shell/</url>
+      <content type="html"><![CDATA[<p>既然开始用 github 托管 octopress ，那么就少不了接触 git 这个分布式版本管理神器。当初选择在 ubuntu 下搭 octopress 是因为不想把我心爱的 windows 装一些麻烦的东西(主要还是 windows 下搭起来太麻烦了)。但是平时编码都是需要在 windows 下完成的。博主用不了 vim 这些高端的东西只习惯 visual studio 这类一键式神器。嗯那么我们就从最简单的”GitHub for Windows”开始学习。</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>好吧好吧请原谅博主土鳖没有使用 msysgit 或者 cygwin 。而是使用了未登录之前的 <a href="https://github.com" target="_blank" rel="external">github主页</a> 提供的“<a href="http://github-windows.s3.amazonaws.com/GitHubSetup.exe" target="_blank" rel="external">GitHub for windows</a>“。那么接下来我们就一边使用 git 一边用 visual studio 创建项目然后开始学习吧。篇目有限我们接下来应该会尝试这些内容。</p>
+<ul>
+<li>创建新项目</li>
+<li>初始化<code>git init</code></li>
+<li>跟踪文件或加入暂存区<code>git add</code></li>
+<li>检查当前项目状态<code>git status</code></li>
+<li>将暂存区内容提交到git<code>git commit -m</code></li>
+<li>查看当前状态与上次commit之间的差别<code>git diff</code></li>
+<li>直接将已跟踪的文件当前状态提交<code>git commit -a -m</code></li>
+<li>查看提交记录<code>git log</code></li>
+<li>回滚整个项目到之前的某次commit<code>git reset --hard</code>(慎用)</li>
+</ul>
+<h2 id="PART-2-开始"><a href="#PART-2-开始" class="headerlink" title="PART 2 开始"></a>PART 2 开始</h2><p>安装好『GitHub for Windows』就会发现桌面上有”Git shell”的快捷方式了。双击打开即可。然后我们开始尝试用 visual studio 创建一个 c# 控制台项目，然后使用git来管理他的版本</p>
+<h3 id="创建新项目"><a href="#创建新项目" class="headerlink" title="创建新项目"></a>创建新项目</h3><p>这个没什么可说的、博主新项目配置如下<br><img src="http://ojgpkbakj.bkt.clouddn.com/2014082101.png" alt="配置新项目"><br>完成以后发现<code>f:/dev/HelloGit</code>里已经创建了一些文件了，不过只有一个<code>Program.cs</code>是我们的代码文件，且内容未被修改。我们打开 git  尝试如何管理。</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev> cd <span class="token punctuation">.</span>\HelloGit
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="git初始化"><a href="#git初始化" class="headerlink" title="git初始化"></a>git初始化</h3><p>初始化会在当前文件夹下建立一个“.git”文件夹。该文件夹里将会用于保存整个项目的信息。整个项目文件夹的文件添加删除修改等操作都会被 git 捕捉到。<br>进入到我们要管理的目录以后使用<code>git init</code>命令初始化我们的 git</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit> git init
+Initialized empty Git repository in F:<span class="token operator">/</span>dev<span class="token operator">/</span>HelloGit<span class="token operator">/</span><span class="token punctuation">.</span>git<span class="token operator">/</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="跟踪文件"><a href="#跟踪文件" class="headerlink" title="跟踪文件"></a>跟踪文件</h3><p>git 会捕捉项目文件夹下每个文件的变动。但并不会记录他们。需要使用<code>git add</code>命令来告诉git 哪个文件需要被跟踪。事实上只有<code>Program.cs</code>需要被跟踪。该文件位于<code>HelloGit/Program.cs</code>因此我们使用命令<code>git add</code>来跟踪这个文件</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master +3 ~0 -0 !]</span>> git add <span class="token punctuation">.</span>\HelloGit\Program<span class="token punctuation">.</span>cs
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="查看项目状态"><a href="#查看项目状态" class="headerlink" title="查看项目状态"></a>查看项目状态</h3><p><code>git status</code>命令会输出当前项目的状态，如『修改了但并没有被跟踪的文件』『已跟踪且修改了但并没有添加到暂存区的文件』『已经被添加到暂存区等待提交的文件』等等许多信息。现在我们来尝试一下。</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master +1 ~0 -0 | +7 ~0 -0 !]</span>> git status
+<span class="token comment" spellcheck="true"># On branch master</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># Initial commit</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># Changes to be committed:</span>
+<span class="token comment" spellcheck="true">#   (use "git rm --cached &lt;file>..." to unstage)</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true">#       new file:   HelloGit/Program.cs</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># Untracked files:</span>
+<span class="token comment" spellcheck="true">#   (use "git add &lt;file>..." to include in what will be committed)</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true">#       HelloGit.sln</span>
+<span class="token comment" spellcheck="true">#       HelloGit.v12.suo</span>
+<span class="token comment" spellcheck="true">#       HelloGit/App.config</span>
+<span class="token comment" spellcheck="true">#       HelloGit/HelloGit.csproj</span>
+<span class="token comment" spellcheck="true">#       HelloGit/Properties/</span>
+<span class="token comment" spellcheck="true">#       HelloGit/bin/</span>
+<span class="token comment" spellcheck="true">#       HelloGit/obj/</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们发现上一条命令<code>git add</code>的作用是开始跟踪<code>Program.cs</code>并将其当前状态加入到暂存区。</p>
+<h3 id="将暂存区内容提交"><a href="#将暂存区内容提交" class="headerlink" title="将暂存区内容提交"></a>将暂存区内容提交</h3><p>我们发现”Changes to be committed”（暂存区）中出现了”new file”，正是我们需要跟踪的那个文件。以后每次执行<code>git commit</code>命令都会把整个『暂存区』提交为项目的一个版本。那些“Untracked files”暂时先不管了毕竟是visual studio自动生成的文件。</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master +1 ~0 -0 | +7 ~0 -0 !]</span>> git commit <span class="token operator">-</span>m <span class="token string">"initial project version"</span>
+<span class="token namespace">[master (root-commit) 0727b5a]</span> initial project version
+ 1 file changed<span class="token punctuation">,</span> 15 insertions<span class="token punctuation">(</span><span class="token operator">+</span><span class="token punctuation">)</span>
+ create mode 100644 HelloGit<span class="token operator">/</span>Program<span class="token punctuation">.</span>cs
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们使用<code>git status</code>命令看看现在的状态</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\TouchGit\HelloGit <span class="token namespace">[master +7 ~0 -0 !]</span>> git status
+<span class="token comment" spellcheck="true"># On branch master</span>
+<span class="token comment" spellcheck="true"># Untracked files:</span>
+<span class="token comment" spellcheck="true">#   (use "git add &lt;file>..." to include in what will be committed)</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true">#       HelloGit.sln</span>
+<span class="token comment" spellcheck="true">#       HelloGit.v12.suo</span>
+<span class="token comment" spellcheck="true">#       HelloGit/App.config</span>
+<span class="token comment" spellcheck="true">#       HelloGit/HelloGit.csproj</span>
+<span class="token comment" spellcheck="true">#       HelloGit/Properties/</span>
+<span class="token comment" spellcheck="true">#       HelloGit/bin/</span>
+<span class="token comment" spellcheck="true">#       HelloGit/obj/</span>
+nothing added to commit but untracked files present <span class="token punctuation">(</span>use <span class="token string">"git add"</span> to track<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样就成功的提交了我们项目的第一个版本。当然只跟踪了<code>Program.cs</code>这个文件。</p>
+<h3 id="文件被修改后git-status的变化"><a href="#文件被修改后git-status的变化" class="headerlink" title="文件被修改后git status的变化"></a>文件被修改后<code>git status</code>的变化</h3><p>接下来我们修改这个文件试试看</p>
+<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Hello Git!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"按任意键继续..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Console<span class="token punctuation">.</span><span class="token function">Read</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>运行一下，嗯没错我们的程序可以运行啦，赶快用<code>git status</code>看看发生了什么变化</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master +7 ~0 -0 !]</span>> git status
+<span class="token comment" spellcheck="true"># On branch master</span>
+<span class="token comment" spellcheck="true"># Changes not staged for commit:</span>
+<span class="token comment" spellcheck="true">#   (use "git add &lt;file>..." to update what will be committed)</span>
+<span class="token comment" spellcheck="true">#   (use "git checkout -- &lt;file>..." to discard changes in working directory)</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true">#       modified:   HelloGit/Program.cs</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true"># Untracked files:</span>
+<span class="token comment" spellcheck="true">#   (use "git add &lt;file>..." to include in what will be committed)</span>
+<span class="token comment" spellcheck="true">#</span>
+<span class="token comment" spellcheck="true">#       HelloGit.sln</span>
+<span class="token comment" spellcheck="true">#       HelloGit.v12.suo</span>
+<span class="token comment" spellcheck="true">#       HelloGit/App.config</span>
+<span class="token comment" spellcheck="true">#       HelloGit/HelloGit.csproj</span>
+<span class="token comment" spellcheck="true">#       HelloGit/Properties/</span>
+<span class="token comment" spellcheck="true">#       HelloGit/bin/</span>
+<span class="token comment" spellcheck="true">#       HelloGit/obj/</span>
+no changes added to commit <span class="token punctuation">(</span>use <span class="token string">"git add"</span> and<span class="token operator">/</span>or <span class="token string">"git commit -a"</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>哦~它提示我们<code>Program.cs</code>这个文件被修改了，需要用<code>git add</code>命令来更新。但在此之前我们可能需要确认一下到底被修改了什么。</p>
+<h3 id="使用git-diff进行比较"><a href="#使用git-diff进行比较" class="headerlink" title="使用git diff进行比较"></a>使用<code>git diff</code>进行比较</h3><p><code>git diff</code>命令会输出当前文件状态与上次提交之间的差别。</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master +7 ~1 -0 !]</span>> git <span class="token function">diff</span>
+<span class="token function">diff</span> <span class="token operator">--</span>git a<span class="token operator">/</span>HelloGit<span class="token operator">/</span>Program<span class="token punctuation">.</span>cs b<span class="token operator">/</span>HelloGit<span class="token operator">/</span>Program<span class="token punctuation">.</span>cs
+index 6932e36<span class="token punctuation">.</span><span class="token punctuation">.</span>bb42dc2 100644
+<span class="token operator">--</span><span class="token operator">-</span> a<span class="token operator">/</span>HelloGit<span class="token operator">/</span>Program<span class="token punctuation">.</span>cs
+<span class="token operator">++</span><span class="token operator">+</span> b<span class="token operator">/</span>HelloGit<span class="token operator">/</span>Program<span class="token punctuation">.</span>cs
+@@ <span class="token operator">-</span>10<span class="token punctuation">,</span>6 <span class="token operator">+</span>10<span class="token punctuation">,</span>9 @@ <span class="token keyword">class</span> Program
+     <span class="token punctuation">{</span>
+         static void Main<span class="token punctuation">(</span>string<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span>
+         <span class="token punctuation">{</span>
+<span class="token operator">+</span>            Console<span class="token punctuation">.</span>WriteLine<span class="token punctuation">(</span><span class="token string">"Hello Git!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span>            Console<span class="token punctuation">.</span>WriteLine<span class="token punctuation">(</span><span class="token string">"按任意键继续..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">+</span>            Console<span class="token punctuation">.</span>Read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token punctuation">}</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>嗯，就是添加这三行代码。确实是我们想要的，但我们需要使用<code>git add</code>命令将这个文件加入到『暂存区』，感觉很麻烦的样子。</p>
+<h3 id="直接提交已跟踪的文件。"><a href="#直接提交已跟踪的文件。" class="headerlink" title="直接提交已跟踪的文件。"></a>直接提交已跟踪的文件。</h3><p>这次并没有新文件需要跟踪所以直接使用一个命令把所有已跟踪的文件(就只有Program.cs)添加到『暂存区』然后提交。省去<code>add</code>过程稍微方便一些</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master +7 ~1 -0 !]</span>> git commit <span class="token operator">-</span>a <span class="token operator">-</span>m  <span class="token string">"HelloGit version 1.0"</span>
+<span class="token namespace">[master 944b367]</span> HelloGit version 1<span class="token punctuation">.</span>0
+ 1 file changed<span class="token punctuation">,</span> 3 insertions<span class="token punctuation">(</span><span class="token operator">+</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这样就已经提交成功了。</p>
+<h3 id="查看提交历史"><a href="#查看提交历史" class="headerlink" title="查看提交历史"></a>查看提交历史</h3><p><code>git log</code>命令会输出每次提交的历史。内容包括<code>commit ID</code>,『作者』，『提交时间』和每次提交时填写的『message』。那么我们来看看提交历史。</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master +7 ~0 -0 !]</span>> git log
+commit 944b3671b5ad2456089e73f29d3ee3a184d274ba
+Author: snatic &lt;snatic0@126<span class="token punctuation">.</span>com>
+Date:   Tue Aug 19 20:11:24 2014 <span class="token operator">+</span>0800
+
+    HelloGit version 1<span class="token punctuation">.</span>0
+
+commit 0727b5a638b0403c5ab82ba4fa8f249869351b12
+Author: snatic &lt;snatic0@126<span class="token punctuation">.</span>com>
+Date:   Tue Aug 19 19:36:56 2014 <span class="token operator">+</span>0800
+
+    initial project version
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="回滚版本-慎用"><a href="#回滚版本-慎用" class="headerlink" title="回滚版本(慎用)"></a>回滚版本(慎用)</h3><p>突然我发现其实整个”HelloGit”项目都有问题必须回滚到之前的某个版本。。怎么办呢？例如我们要回滚到”initial project version”。commit ID 是”0727b5a638b0403c5ab82ba4fa8f249869351b12”</p>
+<pre class="line-numbers language-powershell"><code class="language-powershell">F:\dev\HelloGit <span class="token namespace">[master +7 ~0 -0 !]</span>> git reset <span class="token operator">--</span>hard 0727b5a638b0403c5ab82ba4fa8f249869351b12
+HEAD is now at 0727b5a initial project version
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>回到vs提示文件有外部修改什么的。重新载入以后发现<code>Program.cs</code>真的回滚到以前的版本了。但是之前的『commit』都不见了，貌似不能再滚回去了。当然这个操作在 git 中并不提倡。正确的方法应该是进行分支。</p>
+<h2 id="PART-3-总结"><a href="#PART-3-总结" class="headerlink" title="PART 3 总结"></a>PART 3 总结</h2><p>这次探索结束了，应该基本掌握 git 的正常用法了可以在写完代码以后一次一次的提交确保每次的信息都被完完整整的记录下来防止意外。发生意外以后可以顺利恢复到以前的版本。但直接回滚貌似并不是非常好的办法。git 的最精髓的部分『分支』并没有涉及到。关于分支什么的内容等待下次探索~</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2014/08/21/005-start-by-git-shell/">http://snatix.com/2014/08/21/005-start-by-git-shell/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> git探索之路 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> github </tag>
+            
+            <tag> git </tag>
+            
+            <tag> windows </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Octopress(4)-为Octopress博客添加更多功能]]></title>
+      <url>/2014/08/15/004-add-tag-list-for-your-octopress/</url>
+      <content type="html"><![CDATA[<p>在本系列的第二篇『<a href="http://snatix.com/2014/08/12/002-customize-your-octopress-blog/">自定义你的octopress博客</a>』中我们为 octopress 做了一些自定义。但是博主发现如果没有标签系统来管理博文，仅仅依靠 categories 是远远不够的。所以这次我们来试试为 octopress 添加标签系统，顺便为博客做一些SEO让搜索引擎更容易的收录到我们的页面。最后优化以下rakefile以减少不必要的劳力。那么</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>这次要提到的内容比较少感觉已经不需要『概述』这个模块了，但是为了风格统一还是稍微写一些。那么我们大概要做以下几件事情。</p>
+<ul>
+<li>侧边栏添加Tag list并为博文添加标签</li>
+<li>优化 rakefile</li>
+</ul>
+<h2 id="PART-2-添加标签系统"><a href="#PART-2-添加标签系统" class="headerlink" title="PART 2 添加标签系统"></a>PART 2 添加标签系统</h2><p>随便搜一下就可以看到很多关于标签系统的博文了。但是貌似大家提到的都是中文支持有问题的那个。找来找去找到<a href="https://github.com/812lcl" target="_blank" rel="external">812lcl</a>大神的这篇博文『<a href="http://812lcl.com/blog/2013/10/26/octopressce-bian-lan-ji-ping-lun-xi-tong-ding-zhi/" target="_blank" rel="external">Octopress侧边栏及评论系统定制</a>』。感谢这位大神自改了一份『<a href="https://github.com/812lcl/category_tag" target="_blank" rel="external">支持中文的tag系统</a>』放到了 github 上。大神说下载下来 clone 到 octopress 目录即可。但经博主亲测还需要一些工作要做。</p>
+<p>注意备份我们之前改好的 <code>source/_includes/custom/category_list.html</code>，不然会覆盖掉。还有在<br><a href="https://github.com/robbyedwards/octopress-tag-pages" target="_blank" rel="external">原插件</a>里提到貌似还有两个文件需要创建。</p>
+<script src="//gist.github.com/d50e4ce598cedb393c9d.js?file=tag_index.html"></script>
+<p>在<code>source/_layout</code>中新建<code>tag_index.html</code>复制以上内容即可，然后在<code>source/_includes/custom/</code>中新建<code>tag_feed.xml</code>然后复制以下内容</p>
+<script src="//gist.github.com/d50e4ce598cedb393c9d.js?file=tag_feed.xml"></script>
+<p>最后在<code>_config.yml</code>中找到<code>default_asides</code>添加</p>
+<pre class="line-numbers language-text"><code class="language-text">custom/asides/tag_list.html
+#或者是你想添加的其他的比如tag_cloude.html
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>然后还要找到<code>_config.yml</code></p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">category_dir</span><span class="token punctuation">:</span> blog/categories
+<span class="token comment" spellcheck="true">#添加下面这一行</span>
+<span class="token key atrule">tag_dir</span><span class="token punctuation">:</span> blog/tags
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这样就可以preview一下看看效果了,怎么样效果有是有了不过跟我们的主题完全不符好吧需要好好改造一下。下面是博主自改的适合 octostrap3 这个主题的<code>tag_list.html</code>，需要标签云的也可以自己尝试改一下</p>
+<script src="//gist.github.com/d50e4ce598cedb393c9d.js?file=tag_list.html"></script>
+<p>最后我们的octopress支持tag了我们该怎么为文章添加tag呢，只要在每篇博文的最前自动生成的<code>categories:</code>下添加<code>tags: [tag1, tag2, tag3]</code>就可以添加了</p>
+<h2 id="PART-3-优化-Rakefile"><a href="#PART-3-优化-Rakefile" class="headerlink" title="PART 3 优化 Rakefile"></a>PART 3 优化 Rakefile</h2><p>我们可以在每篇博客中都为搜索引擎提供更多的信息来帮助搜索引擎更准确的捕捉到你的博客。方法呢就是在每篇博文的前面添加像这样的信息</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">layout</span><span class="token punctuation">:</span> post
+<span class="token key atrule">title</span><span class="token punctuation">:</span> <span class="token string">"Octopress(4)-为octopress博客添加更多功能"</span>
+<span class="token key atrule">date</span><span class="token punctuation">:</span> 2014<span class="token punctuation">-</span>08<span class="token punctuation">-</span>15 19<span class="token punctuation">:</span><span class="token number">39</span>
+<span class="token key atrule">comments</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span class="token key atrule">categories</span><span class="token punctuation">:</span> Octopress折腾之路
+<span class="token key atrule">description</span><span class="token punctuation">:</span> Octopress折腾之路(4)<span class="token punctuation">-</span>为octopress博客添加更多功能
+<span class="token key atrule">keywords</span><span class="token punctuation">:</span> octopress<span class="token punctuation">,</span> 添加， Tag<span class="token punctuation">,</span> 标签. SEO<span class="token punctuation">,</span> 自定义<span class="token punctuation">,</span> 新特性
+<span class="token key atrule">tags</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>octopress<span class="token punctuation">]</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>但是手动添加实在是太麻烦了，我们可以尝试修改Rakefile从而让每篇博文自动添加这些东西，刚好可以顺便解决<code>rake new_post</code>命令中处理中文会出bug的问题</p>
+<p>打开 Rakefile 在文件底部加入以下代码</p>
+<pre class="line-numbers language-ruby"><code class="language-ruby">desc <span class="token string">"Begin a new post in <span class="token interpolation"><span class="token delimiter tag">#{</span>source_dir<span class="token delimiter tag">}</span></span>/<span class="token interpolation"><span class="token delimiter tag">#{</span>posts_dir<span class="token delimiter tag">}</span></span> with Alias"</span>
+task <span class="token symbol">:post</span><span class="token punctuation">,</span> <span class="token symbol">:title</span><span class="token punctuation">,</span> <span class="token symbol">:title_alias</span> <span class="token keyword">do</span> <span class="token operator">|</span>t<span class="token punctuation">,</span> args<span class="token operator">|</span>
+  <span class="token keyword">raise</span> <span class="token string">"### You haven't set anything up yet. First run `rake install` to set up an Octopress theme."</span> <span class="token keyword">unless</span> <span class="token builtin">File</span><span class="token punctuation">.</span>directory<span class="token operator">?</span><span class="token punctuation">(</span>source_dir<span class="token punctuation">)</span>
+  mkdir_p <span class="token string">"<span class="token interpolation"><span class="token delimiter tag">#{</span>source_dir<span class="token delimiter tag">}</span></span>/<span class="token interpolation"><span class="token delimiter tag">#{</span>posts_dir<span class="token delimiter tag">}</span></span>"</span>
+  args<span class="token punctuation">.</span><span class="token function">with_defaults</span><span class="token punctuation">(</span><span class="token symbol">:title</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'new-post'</span><span class="token punctuation">)</span>
+  title <span class="token operator">=</span> args<span class="token punctuation">.</span>title
+  title_alias <span class="token operator">=</span> args<span class="token punctuation">.</span>title_alias
+  filename <span class="token operator">=</span> <span class="token string">"<span class="token interpolation"><span class="token delimiter tag">#{</span>source_dir<span class="token delimiter tag">}</span></span>/<span class="token interpolation"><span class="token delimiter tag">#{</span>posts_dir<span class="token delimiter tag">}</span></span>/<span class="token interpolation"><span class="token delimiter tag">#{</span>Time<span class="token punctuation">.</span>now<span class="token punctuation">.</span><span class="token function">strftime</span><span class="token punctuation">(</span><span class="token string">'%Y-%m-%d'</span><span class="token punctuation">)</span><span class="token delimiter tag">}</span></span>-<span class="token interpolation"><span class="token delimiter tag">#{</span>title<span class="token punctuation">.</span>to_url<span class="token delimiter tag">}</span></span>.<span class="token interpolation"><span class="token delimiter tag">#{</span>new_post_ext<span class="token delimiter tag">}</span></span>"</span>
+  <span class="token keyword">if</span> <span class="token builtin">File</span><span class="token punctuation">.</span>exist<span class="token operator">?</span><span class="token punctuation">(</span>filename<span class="token punctuation">)</span>
+    <span class="token function">abort</span><span class="token punctuation">(</span><span class="token string">"rake aborted!"</span><span class="token punctuation">)</span> <span class="token keyword">if</span> <span class="token function">ask</span><span class="token punctuation">(</span><span class="token string">"<span class="token interpolation"><span class="token delimiter tag">#{</span>filename<span class="token delimiter tag">}</span></span> already exists. Do you want to overwrite?"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'y'</span><span class="token punctuation">,</span> <span class="token string">'n'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">'n'</span>
+  <span class="token keyword">end</span>
+  puts <span class="token string">"Creating new post: <span class="token interpolation"><span class="token delimiter tag">#{</span>filename<span class="token delimiter tag">}</span></span>"</span>
+  <span class="token function">open</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span> <span class="token string">'w'</span><span class="token punctuation">)</span> <span class="token keyword">do</span> <span class="token operator">|</span>post<span class="token operator">|</span>
+    post<span class="token punctuation">.</span>puts <span class="token string">"---"</span>
+    post<span class="token punctuation">.</span>puts <span class="token string">"layout: post"</span>
+    post<span class="token punctuation">.</span>puts <span class="token string">"title: \"<span class="token interpolation"><span class="token delimiter tag">#{</span>title_alias<span class="token delimiter tag">}</span></span>\""</span>
+    post<span class="token punctuation">.</span>puts <span class="token string">"date: <span class="token interpolation"><span class="token delimiter tag">#{</span>Time<span class="token punctuation">.</span>now<span class="token punctuation">.</span><span class="token function">strftime</span><span class="token punctuation">(</span><span class="token string">'%Y-%m-%d %H:%M'</span><span class="token punctuation">)</span><span class="token delimiter tag">}</span></span>"</span>
+    post<span class="token punctuation">.</span>puts <span class="token string">"comments: true"</span>
+    post<span class="token punctuation">.</span>puts <span class="token string">"categories: "</span>
+    post<span class="token punctuation">.</span>puts <span class="token string">"description: <span class="token interpolation"><span class="token delimiter tag">#{</span>title_alias<span class="token delimiter tag">}</span></span>"</span>
+    post<span class="token punctuation">.</span>puts <span class="token string">"keywords: "</span>
+    post<span class="token punctuation">.</span>puts <span class="token string">"tags: "</span>
+    post<span class="token punctuation">.</span>puts <span class="token string">"---"</span>
+  <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>以后就可以使用<code>rake post[&#39;英文名&#39;,&#39;中文名&#39;]</code>这个命令来自动生成一个后缀为 md 的文件，打开以后很多信息已经写好了，稍微填一下就可以开始写博客了会比以前方便很多。</p>
+<h2 id="PART-4-总结"><a href="#PART-4-总结" class="headerlink" title="PART 4 总结"></a>PART 4 总结</h2><p>终于，我们的『Octopress折腾之路』告一段落了。折腾到现在也差不多该稳定一段时间了。等新的问题出现博主在解决的时候继续更新本专题吧。按照『<a href="http://snatic.tk/blog/categories/road-of-octopress/index.html" target="_blank" rel="external">Road of Octopress</a>』专题中的内容一步一步的执行下来就可以搭建一个像『<a href="http://snatic.tk" target="_blank" rel="external">安哥拉大胖兔的窝</a>』这样的 blog 了，最后还有一些尚未解决的问题不知道有没有大神可以告知。</p>
+<ul>
+<li>『<a href="https://github.com/kAworu/octostrap3" target="_blank" rel="external">Octostrap3</a>』 的作者自己写的适用于该主题的 categories 并不支持中文，虽然直接使用默认的 categories 可以支持。博主完全不懂 ruby 不懂 HTML 想稍微改一改也无从下手。</li>
+<li>在代码块中的｛% 各种不同的代码 code %｝语句无论怎样处理都一定会执行，博主不得不使用上传代码到gist然后再引用的方式解决，导致某些文章加载速度变慢影响体验。</li>
+<li>还没想到。。之后再补吧</li>
+</ul>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2014/08/15/004-add-tag-list-for-your-octopress/">http://snatix.com/2014/08/15/004-add-tag-list-for-your-octopress/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Octopress折腾之路 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> octopress </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Octopress(3)-使用Gitcafe提高访问速度]]></title>
+      <url>/2014/08/13/003-use-gitcafe-to-speed-up/</url>
+      <content type="html"><![CDATA[<p>在大家学习了上一篇博客『<a href="http://snatix.com/2014/08/12/002-customize-your-octopress-blog/">自定义你的octopress博客</a>』，那么大家会发现其实使用 GitHub Pages 访问速度并不是那么理想。今天发现了一个酷似 GitHub 的国内站点叫 “<a href="http://gitcafe.com" target="_blank" rel="external">Gitcafe</a>“，访问速度自然比 github 要快得多。而且 gitcafe 也提供了 gitcafe pages 可用于搭建 octopress 博客。那么我们如何同时使用 gitcafe 和 github托管我们的博客呢？</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>首先我们假设我们的ubuntu已经安装git和octopress并且我们的博客已经在 GitHub pages 中成功运行了。那么我们如何在 gitcafe pages 中创建完全同步的页面用于国内访问提速呢。</p>
+<ul>
+<li>注册 gitcafe 并创建 gitcafe pages 项目</li>
+<li>添加 gitcafe 的 SSH 公钥</li>
+<li>修改<code>Rakefile</code>使<code>rake deploy</code>命令可同时上传页面到 github 和 gitcafe。</li>
+<li>修改<code>/.git/config</code>使 <code>git push origin source</code> 可同时源代码提交到 github 和 gitcafe</li>
+<li>修改dns服务使我们使用国内网络连接到你的域名时默认访问 gitcafe pages 从而提高速度</li>
+</ul>
+<p>最后一条大家慎用，可能会严重破坏使用习惯，那是博主为了偷懒自己改的。正确方法可以参照『<a href="http:/blog.csdn.net/forever_wind/article/details/37506263/" target="_blank" rel="external">同步github上的项目到gitcafe</a>』</p>
+<h2 id="PART-2-注册-gitcafe-并创建项目"><a href="#PART-2-注册-gitcafe-并创建项目" class="headerlink" title="PART 2 注册 gitcafe 并创建项目"></a>PART 2 注册 gitcafe 并创建项目</h2><ol>
+<li>打开 <a href="http://gitcafe.com" target="_blank" rel="external">gitcafe</a> 并点击 sign up</li>
+<li>填入你的 EMAIL USERNAME PASSWORD 什么的。下方有语言选择实在不会的点一下简体中文应该没问题了- -</li>
+<li>点左侧的『 + 创建 』这个按钮可以创建一个新项目（我也不知道如果没有项目的时候这个按钮在哪。可能在更显眼的位置吧总之应该都能找到）</li>
+<li>项目名必须和用户名(就是上面的『拥有者』这一项)中的内容完全一致，这点与 github 不同</li>
+<li>完成</li>
+</ol>
+<p>感觉很简单应该不会出现问题</p>
+<h2 id="PART-3-添加-gitcafe-的-SSH-公钥"><a href="#PART-3-添加-gitcafe-的-SSH-公钥" class="headerlink" title="PART 3 添加 gitcafe 的 SSH 公钥"></a>PART 3 添加 gitcafe 的 SSH 公钥</h2><p>有很多教程可以找到但都涉及到要删除原来的公钥。嗯我们可不是以后再也不用 github 了只是想添加 gitcafe 作为国内的镜像。所以最终我在 gitcafe 官网找到『<a href="https://gitcafe.com/GitCafe/Help/wiki/如何同时使用多个公秘钥" target="_blank" rel="external">如何使用多个公密钥</a>』。基本步骤如下</p>
+<p>在终端输入以下命令。要把 YOUR_EMAIL@YOUREMAIL.COM 改成你自己在注册 gitcafe 时填写的邮箱</p>
+<pre class="line-numbers language-bash"><code class="language-bash">ssh-keygen -t rsa -C <span class="token string">"YOUR_EMAIL@YOUREMAIL.COM"</span> -f ~/.ssh/gitcafe
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>生成过程中会出现以下信息，按屏幕提示操作设置路径和口令</p>
+<pre class="line-numbers language-bash"><code class="language-bash">$ ssh-keygen -t rsa -C <span class="token string">"YOUR_EMAIL@YOUREMAIL.COM"</span> -f ~/.ssh/gitcafe
+Generating public/private rsa key pair.
+Enter passphrase <span class="token punctuation">(</span>empty <span class="token keyword">for</span> no passphrase<span class="token punctuation">)</span>:
+Enter same passphrase again:
+Your identification has been saved <span class="token keyword">in</span> /c/Users/username/.ssh/gitcafe.
+Your public key has been saved <span class="token keyword">in</span> /c/Users/username/.ssh/gitcafe.pub.
+The key fingerprint is:
+15:81:d2:7a:c6:6c:0f:ec:b0:b6:d4:18:b8:d1:41:48 YOUR_EMAIL@YOUREMAIL.COM
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>该过程将会在<code>~/.ssh/</code>目录下生成<code>gitcafe</code>和<code>gitcafe.pub</code>两个文件。然后打开<code>~/.ssh/config</code>并输入以下内容(没有就新建一个)</p>
+<pre class="line-numbers language-bash"><code class="language-bash">Host gitcafe.com www.gitcafe.com
+  IdentityFile ~/.ssh/gitcafe
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>然后打开<code>~/.ssh/gitcafe.pub</code>，复制全部内容。进入 gitcafe 右上角『账户设置』里的『SSH 公钥管理』，点击『添加新公钥』然后把之前复制的内容粘贴进去确定即可。</p>
+<p>完成以后可以通过以下命令测试连接</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">ssh</span> -T git@gitcafe.com
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>按照提示输入<code>yes</code>然后输入刚才创建 SSH 时设置的口令。如果出现以下信息就表示连接成功。</p>
+<pre class="line-numbers language-bash"><code class="language-bash">Hi USERNAME<span class="token operator">!</span> You've successfully authenticated, but GitCafe does not provide shell access.
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="PART-4-修改-Rakefile"><a href="#PART-4-修改-Rakefile" class="headerlink" title="PART 4 修改 Rakefile"></a>PART 4 修改 Rakefile</h2><p>修改 Rakefile 的目的在于我们只需要一条指令就是<code>rake deploy</code>即可将页面一次发布到 github 和 gitcafe 两个代码仓库，可以节省很多时间。当然有不怕麻烦的可以手动进入到<code>_deploy</code>文件夹然后 push 整个文件夹到 gitcafe 。</p>
+<p>找到 octopress 根目录的<code>Rakefile</code>文件并用文本编辑器打开。有如下代码</p>
+<pre class="line-numbers language-ruby"><code class="language-ruby">cd <span class="token string">"<span class="token interpolation"><span class="token delimiter tag">#{</span>deploy_dir<span class="token delimiter tag">}</span></span>"</span> <span class="token keyword">do</span>
+    system <span class="token string">"git add -A"</span>
+    message <span class="token operator">=</span> <span class="token string">"Site updated at <span class="token interpolation"><span class="token delimiter tag">#{</span>Time<span class="token punctuation">.</span>now<span class="token punctuation">.</span>utc<span class="token delimiter tag">}</span></span>\n\n[ci skip]"</span>
+    puts <span class="token string">"\n## Committing: <span class="token interpolation"><span class="token delimiter tag">#{</span>message<span class="token delimiter tag">}</span></span>"</span>
+    system <span class="token string">"git commit -m \"<span class="token interpolation"><span class="token delimiter tag">#{</span>message<span class="token delimiter tag">}</span></span>\""</span>
+    puts <span class="token string">"\n## Pushing generated <span class="token interpolation"><span class="token delimiter tag">#{</span>deploy_dir<span class="token delimiter tag">}</span></span> website"</span>
+    <span class="token constant">Bundler</span><span class="token punctuation">.</span>with_clean_env <span class="token punctuation">{</span> system <span class="token string">"git push origin <span class="token interpolation"><span class="token delimiter tag">#{</span>deploy_branch<span class="token delimiter tag">}</span></span>"</span> <span class="token punctuation">}</span>
+    puts <span class="token string">"\n## Github Pages deploy complete"</span>
+    <span class="token comment" spellcheck="true">#添加下面这两行代码，YOURNAME记得改</span>
+    system <span class="token string">"git remote add gitcafe git@gitcafe.com:YOURNAME/YOURNAME.git >> /dev/null 2>&amp;1"</span>
+    system <span class="token string">"git push -u gitcafe master:gitcafe-pages"</span>
+  <span class="token keyword">end</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样以后就可以还像以前一样使用<code>rake deploy</code>了。</p>
+<h2 id="PART-5-修改-git-config"><a href="#PART-5-修改-git-config" class="headerlink" title="PART 5 修改/.git/config"></a>PART 5 修改<code>/.git/config</code></h2><p>这一步是博主为了偷懒而自己改的。反正以后<code>push</code>到两边都可以通过一条指令来了。如果有需要单独 push 到 github 或者 gitcafe 的请按照『<a href="http:/blog.csdn.net/forever_wind/article/details/37506263/" target="_blank" rel="external">同步github上的项目到gitcafe</a>』的指导完成。</p>
+<p>同样还是找到 octopress 根目录的 <code>.git/config</code>文件用文本编辑器打开(找不到的话按ctrl+H可以显示隐藏文件)</p>
+<pre class="line-numbers language-text"><code class="language-text">[remote "origin"]
+  url = git@github.com:snatic0/snatic0.github.io.git
+    #添加下面这一行代码，同样要改 YOURNAME
+  url = git@gitcafe.com:YOURNAME/YOURNAME.git
+  fetch = +refs/heads/*:refs/remotes/origin/*
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>完成以后就可以还像博主的<a href="http://snatix.com/2014/08/09/001-how-to-create-octopress-blog/">第一篇博文</a>里介绍的那样通过下面三条指令把博客的 octopress 源代码 push 到两个代码仓库进行版本管理了。（貌似也没什么必要的样子）</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">git</span> add <span class="token keyword">.</span>  <span class="token comment" spellcheck="true">#注意add后面的空格和点</span>
+<span class="token function">git</span> commit -m <span class="token string">"some changes"</span>
+<span class="token function">git</span> push origin <span class="token function">source</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="PART-6-修改DNS服务"><a href="#PART-6-修改DNS服务" class="headerlink" title="PART 6 修改DNS服务"></a>PART 6 修改DNS服务</h2><p>修改DNS服务的目的在于我们可以通过以前的域名优先访问到我们位于 gitcafe pages 的博客从而提高访问速度。然后在国外则会默认访问 github pages 速度也很赞。可谓两全其美。</p>
+<p>首先进入到 gitcafe 中你的项目首页。然后点右上的『项目管理』。进入以后在左侧点击『自定义域名』。最后添加你的域名。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2014081303.png" alt="自定义域名"></p>
+<p>进入到你的域名的dns服务商的页面。博主使用的是『<a href="http://www.dnspod.cn/" target="_blank" rel="external">Dnspod</a>』将以前的 github pages 的 CNAME 记录的线路类型设为默认，然后新添加三条 A记录，线路类型分别是『电信』『联通』『教育网』，记录值都是<code>117.79.146.98</code>。等待一会儿就可以了。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2014081301.png" alt="DNSpod"></p>
+<p>想知道是否成功可以ping一下看看</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2014081302.png" alt="PING"></p>
+<p>速度是不是快了不少呢~</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2014/08/13/003-use-gitcafe-to-speed-up/">http://snatix.com/2014/08/13/003-use-gitcafe-to-speed-up/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Octopress折腾之路 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> octopress </tag>
+            
+            <tag> github </tag>
+            
+            <tag> gitcafe </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Octopress(2)-自定义你的Octopress博客]]></title>
+      <url>/2014/08/12/002-customize-your-octopress-blog/</url>
+      <content type="html"><![CDATA[<p>在上一篇博客『<a href="http://snatix.com/2014/08/09/001-how-to-create-octopress-blog/">在github上搭建octopress博客</a>』中讲到了如何在ubuntu环境下搭建octopress博客系统并装载到github上。那么相信大家都和我一样并不能满足于默认主题默认模板的博客。那么如何对我们的octopress博客进行定制呢？</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>想要让你的octopress博客与众不同大概有以下几种方法，首先最简单最直接的就是：</p>
+<ul>
+<li>使用<a href="https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes" target="_blank" rel="external">第三方主题</a></li>
+</ul>
+<p>当然第三方主题也就那么几十种总有要求比较严格的朋友希望更个性化一些的选择：</p>
+<ul>
+<li>在别人的主题基础上进行修改</li>
+</ul>
+<p>当然只修改主题是远远不能满足需求的。还希望有到访人数统计啊、分享到微博空间朋友圈、添加评论系统、日志分类、搜索引擎关键词等等更多更高端的功能</p>
+<ul>
+<li>添加第三方服务</li>
+</ul>
+<p>目前为止想到的就是这些。其他需求什么的以后遇到了再考虑吧。</p>
+<h2 id="PART-2-使用第三方主题"><a href="#PART-2-使用第三方主题" class="headerlink" title="PART 2 使用第三方主题"></a>PART 2 使用第三方主题</h2><p>使用第三方主题的方法非常简单。我在github上找到这个页面『<a href="https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes" target="_blank" rel="external">3rd Party Octopress Themes</a>』里边收录了很多octopress主题。而且提供了preview。迅速从里边找到你心仪的主题然后安装吧。怎么安装？</p>
+<ul>
+<li>点击你心仪的主题、进入到该主题的github页面。</li>
+<li>在README.md里找到安装方法。</li>
+</ul>
+<p>好吧有人看到这里要喷我了。这不是等于什么都没说么。好吧其实大部分主题可以通过以下方法来安装。以我写这篇博客时正在使用的octostrap3为例。</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cd</span> octopress
+<span class="token function">git</span> clone https://github.com/kAworu/octostrap3 .themes/octostrap3
+rake <span class="token string">'install[octostrap3]'</span>
+rake preview   <span class="token comment" spellcheck="true">#预览一下确认无误以后再generate然后上传什么的</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后第三方主题就安装成功了，怎么样效果还可以吧。有一些主题默认添加了某些在我大天朝会被墙的服务什么twitter facebook什么的导致页面载入非常慢。所以推荐像我一样不会自己动手修改主题的尽可能选择简洁一些的。缺什么功能等我们以后学会了再补上就好。</p>
+<h2 id="PART-3-修改主题样式"><a href="#PART-3-修改主题样式" class="headerlink" title="PART 3 修改主题样式"></a>PART 3 修改主题样式</h2><p>好吧其实到这我也什么都不会。所以机智的百度下发现这些</p>
+<ul>
+<li>『<a href="http://shanewfx.github.io/blog/2012/08/13/improve-blog-theme/" target="_blank" rel="external">Octopress主题改造</a>』</li>
+<li>『<a href="http://www.360doc.com/content/12/0215/22/1016783_186940749.shtml" target="_blank" rel="external">为Octopress修改主题和自定义样式</a>』</li>
+</ul>
+<p>关于主题主题改造这方面这两位博主在文章里说的很清楚了。但是经过我的一系列尝试发现里边提到的关于<code>sass/custom/</code>这个文件夹下的文件取消注释进行修改的方式仅限于使用默认主题或者以默认主题为基础的第三方主题。很遗憾我已经安装了bootstrap系列的主题所以都没有用，就没办法为大家做具体的演示了。有需要的请移步上述博客。</p>
+<h2 id="PART-4-添加第三方服务"><a href="#PART-4-添加第三方服务" class="headerlink" title="PART 4 添加第三方服务"></a>PART 4 添加第三方服务</h2><p>嗯重要的部分终于来了。当初选择octopress大多是被简洁的风格和强大的可定制性吸引，于是我决定做以下几件事</p>
+<ul>
+<li>在主页侧边栏添加 “about me”</li>
+<li>在每一篇博客底部添加『<a href="http://duoshuo.com/" target="_blank" rel="external">多说</a>』评论模块</li>
+<li>在所有页面侧边栏添加『Categories』模块</li>
+<li>在所有页面侧边栏添加 “GitHub Repos”</li>
+</ul>
+<blockquote>
+<p><strong>P.S: 以下内容都是在octostrap3主题的基础上进行的。如果是其他主题可能页面效果并不好，请大家根据需要自行修改。</strong></p>
+</blockquote>
+<h3 id="主页侧边栏添加-“about-me”"><a href="#主页侧边栏添加-“about-me”" class="headerlink" title="主页侧边栏添加 “about me”"></a>主页侧边栏添加 “about me”</h3><p>打开 <code>/source/_includes/custom/asides/about.html</code><br>编辑内容如下</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>section</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>panel panel-default<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>panel-heading<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>panel-title<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>About Me<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h3</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list-group<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list-group-item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/images/Me.png<span class="token punctuation">"</span></span> <span class="token attr-name">width</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>230<span class="token punctuation">"</span></span> <span class="token attr-name">height</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>230<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- 在source/images/放置你的头像"Me.png",调整宽高看起来舒服即可 --></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list-group-item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>你的自述1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list-group-item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>你的自述2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!--自述3，4，5什么的随意添加--></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>section</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>考虑需要在哪些页面显示这些内容，我决定只在首页侧边栏的顶部显示，那么就打开<code>_config.yml</code>,找到<code>blog_index_asides:</code>去掉前面的“#”，添加</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">blog_index_asides</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>custom/asides/about.html<span class="token punctuation">]</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>如果已有其他内容，注意用“,”和空格与后边的项目隔开。<br>保存后运行<code>rake preview</code>试试看效果吧。</p>
+<h3 id="添加『多说』评论模块"><a href="#添加『多说』评论模块" class="headerlink" title="添加『多说』评论模块"></a>添加『<a href="http://duoshuo.com/" target="_blank" rel="external">多说</a>』评论模块</h3><p>首先在多说首页 <a href="http://duoshuo.com/" target="_blank" rel="external">http://duoshuo.com/</a> 注册帐号，记住你所添的多说站点的域名，如 yourname.duoshuo.com</p>
+<p>在<code>source/_includes/post</code>目录下，新建文件 “duoshuo.html”</p>
+<script src="//gist.github.com/fcf0d3e2354bc663cb19.js?file=duoshuo.html"></script>
+<p>打开<code>source/_layouts/post.html</code>在<code>&lt;/article&gt;</code>下插入如下代码。</p>
+<script src="//gist.github.com/fcf0d3e2354bc663cb19.js?file=post.html"></script>
+<p>最后<code>rake preview</code>看下有没有生效吧。</p>
+<h3 id="添加-“Categories”-模块"><a href="#添加-“Categories”-模块" class="headerlink" title="添加 “Categories” 模块"></a>添加 “Categories” 模块</h3><p>这个问题着实让我蛋疼了很久，百度一下可以找到很多，例如</p>
+<ul>
+<li><a href="http://codemacro.com/2012/07/18/add-category-list-to-octopress/" target="_blank" rel="external">为octopress添加分类(category)列表</a></li>
+<li><a href="http://blog.eddie.com.tw/2011/12/05/add-catetories-to-sidebar-in-octopress/" target="_blank" rel="external">帮你的octopress增加文章分类</a></li>
+</ul>
+<p>但是这些并不符合要求，效果<strong>非常</strong>不美观。绝对无法容忍，然后就突然在octostrap主题的<a href="https://github.com/kAworu/octostrap3" target="_blank" rel="external">官方页面</a><br>的<a href="http://kaworu.github.io/octopress/" target="_blank" rel="external">demo页</a>发现，作者的侧边栏的 categories 好漂亮。正是我想要的，果断找到了这个网页位于github的<a href="https://github.com/kAworu/octopress/tree/octostrap3-demo" target="_blank" rel="external">源文件页面</a></p>
+<p>找到<code>/source/_includes/custom/asides/category_list.html</code><br>内容如下</p>
+<script src="//gist.github.com/fcf0d3e2354bc663cb19.js?file=category_list.html"></script>
+<p>然后在相同的目录下建立相同的文件全部copy进去。<br>然后打开<code>_config.yml</code>,找到<code>default_asides:</code>添加</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">default_asides</span><span class="token punctuation">:</span> custom/asides/cate gory_list.html
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>嗯，这样效果就圆满了。</p>
+<h3 id="添加-GitHub-Repos"><a href="#添加-GitHub-Repos" class="headerlink" title="添加 GitHub Repos"></a>添加 GitHub Repos</h3><p>这个就更简单了，直接打开<code>_config.yml</code>,修改如下：</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># Github repositories</span>
+<span class="token key atrule">github_user</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">#你的github用户名</span>
+<span class="token key atrule">github_repo_count</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">#要显示的repo的数量</span>
+<span class="token key atrule">github_show_profile_link</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span class="token key atrule">github_skip_forks</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在<code>default_asides:</code>添加</p>
+<pre class="line-numbers language-text"><code class="language-text">default_asides: asides/github.html
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><code>rake preview</code>一下看看是不是圆满了。</p>
+<h2 id="PART-5-总结"><a href="#PART-5-总结" class="headerlink" title="PART 5 总结"></a>PART 5 总结</h2><p>以上就是博主自己折腾的事情了。如果大家还有其他需要例如豆瓣、微博墙等等其他想要放进来的东西请参照以下几篇博客，应该可以找到满意的答案。</p>
+<ul>
+<li><a href="http://blog.csdn.net/biaobiaoqi/article/details/9289563" target="_blank" rel="external">定制Octopress</a></li>
+<li><a href="http://812lcl.com/blog/2013/10/26/octopressce-bian-lan-ji-ping-lun-xi-tong-ding-zhi/" target="_blank" rel="external">Octopress侧边栏定制及评论系统定制</a></li>
+<li><a href="http://yrzhll.com/blog/2012/12/12/comment/" target="_blank" rel="external">在octopress中添加多说的最新评论</a></li>
+</ul>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2014/08/12/002-customize-your-octopress-blog/">http://snatix.com/2014/08/12/002-customize-your-octopress-blog/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Octopress折腾之路 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> octopress </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Octopress(1)-在Github上搭建octopress博客]]></title>
+      <url>/2014/08/09/001-how-to-create-octopress-blog/</url>
+      <content type="html"><![CDATA[<p>马上就要毕业了。作为一个准挨踢攻城狮还是很有必要维护一个学习blog的。但是又不想使用各种广告满天飞的博客。所以自己搭一个才是高大上的选择。那么如何利用<a href="http://github.com" target="_blank" rel="external">github</a>搭建一个octopress博客呢。</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>接下来将详细讲述在ubuntu 14.04版本下安装octopress博客并生成静态页面并发布到GitHub Pages。如果大家刚开始使用ubuntu的话可能有以下工作要做。</p>
+<ul>
+<li>安装ruby和git</li>
+<li>配置github帐号</li>
+<li>安装javascript运行环境</li>
+<li>准备octopress</li>
+<li>发布到github主页</li>
+</ul>
+<h2 id="PART-2-开始"><a href="#PART-2-开始" class="headerlink" title="PART 2 开始"></a>PART 2 开始</h2><ul>
+<li>###安装git和ruby</li>
+</ul>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token function">git</span> ruby ruby-dev
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>修改gem的更新源。ruby官方源连接速度太慢。</p>
+<pre class="line-numbers language-bash"><code class="language-bash">gem sources -a http://ruby.taobao.org/
+gem sources -r http://rubygems.org/
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<ul>
+<li>###安装javascript运行环境</li>
+</ul>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python-software-properties
+<span class="token function">sudo</span> add-apt-repository ppa:chris-lea/node.js
+<span class="token function">sudo</span> <span class="token function">apt-get</span> update
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> nodejs
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="PART-3-配置"><a href="#PART-3-配置" class="headerlink" title="PART 3 配置"></a>PART 3 配置</h2><ul>
+<li>###配置github帐号</li>
+</ul>
+<p>登录<a href="http://github.com" target="_blank" rel="external">github</a>，注册。帐号名假设为yourname。</p>
+<p>在终端输入</p>
+<pre class="line-numbers language-bash"><code class="language-bash">ssh-keygen -t rsa -C <span class="token string">"YOUREMAIL@EMAIL.com"</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>换成自己注册github时使用的email然后按照提示确认。在生成密钥之后打开 ～/.ssh/id_rsa.pub文件并将里边全部内容复制。在github右上角打开account setting页面。左侧选择SSH keys然后点Add SSH keys。将之前复制的内容粘贴到key，点击Add key。Title部分不填。</p>
+<ul>
+<li>###配置octopress</li>
+</ul>
+<p>下载octopress</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/imathis/octopress.git octopress
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>下载完成以后开始配置</p>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">cd</span> octopress
+gem <span class="token function">install</span> bundler
+bundle <span class="token function">install</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>本地的octopress配置好以后进入github。右上角新建Repositories、命名为”yourname.github.io”.</p>
+<p>回到终端、进入octopress目录</p>
+<pre class="line-numbers language-bash"><code class="language-bash">rake setup_github_pages
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>按照提示输入刚才建好的Repo的SSH。</p>
+<pre class="line-numbers language-bash"><code class="language-bash">git@github.com:yourname/yourname.github.io.git
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="PART-4-发布"><a href="#PART-4-发布" class="headerlink" title="PART 4 发布"></a>PART 4 发布</h2><ul>
+<li>###生成并发布octopress到git</li>
+</ul>
+<p>在生成之前先配置一些基本信息。修改octopress根目录下的主配置文件_config.yml</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">url</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//yourname.github.io <span class="token comment" spellcheck="true">#你的博客地址</span>
+<span class="token key atrule">title</span><span class="token punctuation">:</span>   <span class="token comment" spellcheck="true">#你的博客的标题</span>
+<span class="token key atrule">subtitle</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">#博客副标题</span>
+<span class="token key atrule">author</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">#作者</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span>  <span class="token comment" spellcheck="true">#博客的简述</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以自定义的地方远不止这些、更多更高端的自定义的需求可以自行google相关信息。</p>
+<p>自定义完成以后可以开始生成静态页面了。</p>
+<pre class="line-numbers language-bash"><code class="language-bash">rake new_post<span class="token punctuation">[</span><span class="token string">"post title"</span><span class="token punctuation">]</span>  <span class="token comment" spellcheck="true">#生成一篇名为post title的博文</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>可在octopress/source/_posts文件夹中找到后缀为md的文件、在该文件末尾处填写博文正文</p>
+<pre class="line-numbers language-bash"><code class="language-bash">rake <span class="token function">install</span>                    <span class="token comment" spellcheck="true">#用于生成默认主题的页面模板</span>
+rake preview      <span class="token comment" spellcheck="true">#在浏览器中打开localhost:4000即可预览页面</span>
+rake generate                        <span class="token comment" spellcheck="true">#用于生成静态页面文件</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>预览页面确认无误以后即可发布到github上了</p>
+<pre class="line-numbers language-bash"><code class="language-bash">rake deploy
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>使用浏览器打开 <a href="http://yourname.github.com" target="_blank" rel="external">http://yourname.github.com</a> 尝试浏览。</p>
+<ul>
+<li>###顺便利用github管理博客源文件</li>
+</ul>
+<pre class="line-numbers language-bash"><code class="language-bash"><span class="token function">git</span> add <span class="token keyword">.</span>  <span class="token comment" spellcheck="true">#注意add后面的空格和点</span>
+<span class="token function">git</span> commit -m <span class="token string">"some changes"</span>
+<span class="token function">git</span> push origin <span class="token function">source</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="PART-5-总结"><a href="#PART-5-总结" class="headerlink" title="PART 5 总结"></a>PART 5 总结</h2><p>至此为止就成功的在本机上搭建octopress博客了。</p>
+<ul>
+<li>使用<code>rake new_post[&quot;Post Title&quot;]</code>生成一篇博客</li>
+<li>编辑生成的md文件</li>
+<li>使用<code>rake generate</code>生成静态页面</li>
+<li>使用<code>rake deploy</code>发布。</li>
+</ul>
+<p>可以看到整个过程总的来说还是很方便的。关于octopress的扩展将在以后的博客中进行更详细的介绍。</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2014/08/09/001-how-to-create-octopress-blog/">http://snatix.com/2014/08/09/001-how-to-create-octopress-blog/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Octopress折腾之路 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> octopress </tag>
+            
+            <tag> github </tag>
+            
+            <tag> Ubuntu </tag>
+            
+        </tags>
+        
+    </entry>
+    
+  
+  
+</search>

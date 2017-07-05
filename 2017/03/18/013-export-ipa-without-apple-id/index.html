@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.4.0 -->
+    <script>window.materialVersion = "1.4.0"</script>
+
+    <!-- Title -->
+    
+    <title>
+        
+            Unity自动化(2)-无需企业开发帐号密码打包Ipa | 
+        
+        大喵的新窝
+    </title>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="sNatic">
+    <meta name="description" itemprop="description" content="终于迎来一个不用加班的周六可以愉快的写文章了。换了工位换了两台一样的显示器心情无比舒爽觉得终于要开展全新生活啦～之前两台显示器型号高矮全都不一样让我这样的强迫症患者超级难受 - -。言归正传，接下来我们来到了导出 ipa 的环节。通常在稍微规模大一点的公司是不会给开发者提供他们的具有开发者账户权限的 Apple Id 和密码的，因此想要导出 ipa 就只能通过公司提供的 p12 证书和 mobileprovision 描述文件，那么具体要怎么操作呢？">
+    <meta name="keywords" content="null,mac,unity,ipa,ios">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/miao.png">
+    <link rel="icon" sizes="192x192" href="/img/miao.png">
+    <link rel="apple-touch-icon" href="/img/miao.png">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="大喵的新窝">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://snatix.com">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Unity自动化(2)-无需企业开发帐号密码打包Ipa | 大喵的新窝">
+    <meta property="og:image" content="/img/miao.png" />
+    <meta property="og:description" content="终于迎来一个不用加班的周六可以愉快的写文章了。换了工位换了两台一样的显示器心情无比舒爽觉得终于要开展全新生活啦～之前两台显示器型号高矮全都不一样让我这样的强迫症患者超级难受 - -。言归正传，接下来我们来到了导出 ipa 的环节。通常在稍微规模大一点的公司是不会给开发者提供他们的具有开发者账户权限的 Apple Id 和密码的，因此想要导出 ipa 就只能通过公司提供的 p12 证书和 mobileprovision 描述文件，那么具体要怎么操作呢？">
+    <meta property="og:article:tag" content="mac"> <meta property="og:article:tag" content="unity"> <meta property="og:article:tag" content="ipa"> <meta property="og:article:tag" content="ios"> 
+
+    
+        <meta property="article:published_time" content="3月 18, 2017" />
+        <meta property="article:modified_time" content="3月 22, 2017" />
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="Unity自动化(2)-无需企业开发帐号密码打包Ipa | 大喵的新窝">
+    <meta name="twitter:description" content="终于迎来一个不用加班的周六可以愉快的写文章了。换了工位换了两台一样的显示器心情无比舒爽觉得终于要开展全新生活啦～之前两台显示器型号高矮全都不一样让我这样的强迫症患者超级难受 - -。言归正传，接下来我们来到了导出 ipa 的环节。通常在稍微规模大一点的公司是不会给开发者提供他们的具有开发者账户权限的 Apple Id 和密码的，因此想要导出 ipa 就只能通过公司提供的 p12 证书和 mobileprovision 描述文件，那么具体要怎么操作呢？">
+    <meta name="twitter:image" content="/img/miao.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="http://snatix.com" />
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "大喵的新窝",
+        "logo": "/img/miao.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "sNatic",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/miao.png"
+        },
+        "description": "这只喵很懒，什么都没留下"
+    },
+    "headline": "Unity自动化(2)-无需企业开发帐号密码打包Ipa",
+    "url": "http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/index.html",
+    "datePublished": "3月 18, 2017",
+    "dateModified": "3月 22, 2017",
+    "description": "终于迎来一个不用加班的周六可以愉快的写文章了。换了工位换了两台一样的显示器心情无比舒爽觉得终于要开展全新生活啦～之前两台显示器型号高矮全都不一样让我这样的强迫症患者超级难受 - -。言归正传，接下来我们来到了导出 ipa 的环节。通常在稍微规模大一点的公司是不会给开发者提供他们的具有开发者账户权限的 Apple Id 和密码的，因此想要导出 ipa 就只能通过公司提供的 p12 证书和 mobileprovision 描述文件，那么具体要怎么操作呢？",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://snatix.com"
+    }
+}
+</script>
+
+
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import CSS & jQuery -->
+    
+        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        
+        
+            <style>
+    
+    
+    
+    
+    
+    .footer-sns-instagram {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xNDAuNiA3OGMtOS44IDIuMi0yOC40IDEzLjgtMzguNiAyNC0xMC42IDEwLjgtMjEuNiAyOC44LTI0LjIgMzkuNC0yLjYgMTEuNC0yLjQgNzE0LjguNCA3MjUuMiA1LjIgMjAuNCAyOSA0Ni4yIDUzLjIgNTcuNiA4LjIgMy44IDE1LjQgMy44IDM3MC42IDMuOCAzNTEuOCAwIDM2Mi44LS4yIDM3MS0zLjggMjEtOS4yIDM4LjgtMjcgNTAtNDkuMmw1LTEwLjItLjQtMzYzLjgtLjYtMzY0LTQuNC04Yy0xMC44LTE5LjYtMTgtMjguMi0zMi42LTM4LjQtOS4yLTYuMi0xOC44LTExLjItMjQuNi0xMi40LTExLjItMi42LTcxNC40LTIuOC03MjQuOC0uMnpNNjYyIDIwMi44YzEyLjYgMi44IDYwLjIgMjIuMiA2OC40IDI4IDQuNCAzIDMwLjIgMzEuNCAzOSA0Mi42IDIuOCAzLjYgOS42IDE5LjQgMTUuMiAzNWwxMCAyOC42LjggMTQ2Yy42IDEwNi40LjQgMTQ5LjItMS40IDE1Ny44LTEuMiA2LjYtNiAyMi4yLTEwLjQgMzQuNi05LjggMjcuOC0yMyA0Ni42LTQ4LjIgNjguOC0yMi4yIDE5LjQtMzYuOCAyNi44LTYxLjQgMzAuOC0xMC40IDEuNi0yMi42IDQtMjcgNS4yLTE1IDMuOC0xNDAuNiA2LjItMjEzLjQgNC0zNy44LTEuMi03My0zLTc4LjYtNC01LjQtMS4yLTE2LjItMi44LTIzLjgtNC0yNi44LTQtNjguOC0zMy42LTg5LjgtNjMuOC0xMC4yLTE0LjgtMTktMzYuMi0yNy42LTY4LjQtMy4yLTEyLTMtMjkyLjQuMi0zMDcuMiA0LjYtMjEuMiAxNi42LTUzIDIzLjYtNjMuMiA0LTUuOCAxNS0xOC40IDI0LjQtMjcuOCAxNC0xNC4yIDIwLjQtMTkgMzUuOC0yNi44IDI3LTEzLjQgNDIuOC0xNyA4NC4yLTE5IDU3LjItMi44IDI2NC40LS42IDI4MCAyLjh6Ii8+PHBhdGggZD0iTTM1NiAyNjIuMmMtMi44IDEtMTEuMiA0LjItMTguNiA3LjItMTIuNCA0LjYtMzUuNCAyMS00Mi44IDMwLjYtNi4yIDgtMjEgNDcuOC0yMi44IDYxLS44IDcuNi0xLjQgNzAuMi0xIDEzOSAuNiAxMDguNiAxLjIgMTI2LjQgNCAxMzUuNCA0LjQgMTMuOCAxOC42IDQ0LjYgMjIuOCA0OS40IDQuNCA0LjggMzAuMiAyNCAzNy42IDI3LjggMTMgNi42IDQ4IDguNCAxNjcuOCA4LjQgMTE1LjIgMCAxNTAuOC0xLjYgMTY2LTcuNCA2LjYtMi40IDMyLjgtMjEuNCAzOS4yLTI4LjIgNy42LTguMiAyMy44LTQ0IDI2LTU3LjYgMS4yLTcuOCAxLjgtNjUgMS40LTE0OWwtLjYtMTM2LjItMTItMjMuOGMtMTEuNC0yMi44LTEyLjYtMjQuNC0yNy0zNS4yLTguMi02LjQtMjAuOC0xNC0yOC0xN2wtMTMtNS42LTE0Ny0uNGMtOTEuMi0uMi0xNDkgLjQtMTUyIDEuNnptMzE1LjYgNDFjMTIuMiA2IDE5LjYgMTQuMiAyMi40IDI0LjggNi40IDI0LTE4LjggNTEuNi00MyA0Ny4yLTkuOC0yLTIzLjYtMTQuOC0zMC4yLTI4LjQtNC42LTkuMi00LjgtMTEuNC0zLTE3LjQgMi42LTcuOCAxNi40LTIyLjQgMjYuNC0yNy42IDkuNC01IDE1LjItNC42IDI3LjQgMS40ek01MzYuOCAzMzhjNSAxIDE4LjYgNyAzMC40IDEzLjQgMjUgMTMuMiA0Ny4yIDMyLjggNjMgNTUuNiA1LjQgNy42IDExLjYgMTYuMiAxMy44IDE5IDUuOCA3LjIgMTQuOCA1NSAxMy40IDcxLTEuNiAxNi42LTEwIDUzLjgtMTMuNiA1OC42LTEuNiAyLjItNy40IDEwLjYtMTMuMiAxOC42LTE2LjQgMjMuNi00OC42IDUyLTYzLjIgNTUuOC00LjYgMS40LTE1LjYgNS42LTI0LjQgOS42LTE1LjggNy4yLTE2LjQgNy40LTQwIDcuMi0yMy4yLS4yLTI0LjQtLjQtMzktNy40LTguMi00LTE5LjItOC4yLTI0LjQtOS40LTE2LjYtNC4yLTQ5LTM0LTY5LjItNjMuNi0xNi4yLTI0LTE5LTM1LTE5LTc0LjQgMC0zMyAzLjgtNTQuOCAxMS4yLTY0LjggMi42LTMuNCA3LjItMTAuNiAxMC40LTE2IDguNC0xNC40IDI0LjQtMzEuOCAzOC40LTQyIDIwLjItMTQuOCA1My44LTMxLjIgNjcuNi0zMyAxNC4yLTIgNDUuNi0xIDU3LjggMS44eiIvPjxwYXRoIGQ9Ik00OTEgMzk4Yy00LjQuOC0xNi40IDYtMjYuNiAxMS40LTE2IDguNC0yMCAxMS42LTMxLjQgMjUuNC03LjYgOS4yLTE0IDE5LjItMTUuNCAyNC0zLjIgMTEuMi0zLjIgNTIgMCA2Mi42IDMuMiAxMSAyNC40IDM2LjQgMzUgNDIgMTQuOCA4IDM3IDE2LjYgNDUuOCAxNy44IDYuMi44IDEyIDAgMjAuNi0zLjIgNi42LTIuMiAxNy44LTYuMiAyNC42LTguNiAxMC44LTMuNiAxNS02LjYgMjcuNC0xOS42IDEyLTEyLjYgMTUtMTcgMTcuMi0yNiAzLjQtMTMuMiAzLjYtNTUuNC4yLTY2LjgtNS0xNy40LTI5LjQtNDAuNC01OC40LTU1LjItOC40LTQuMi0yNy44LTYuMi0zOS0zLjh6Ii8+PC9zdmc+);
+    }
+    
+    
+    
+    .footer-sns-github {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNCA3OGMtNi40IDEuNC0yNi40IDE0LjItMzYgMjIuOC04IDcuMi0yMiAyOS44LTI0LjQgMzkuMi0xLjYgNi40LTIgMTEzLjItMS42IDM2OCAuNiAyOTkuNCAxIDM1OS44IDMuNCAzNjQgMTEgMjAuMiAyMS42IDMyLjQgMzcuMiA0MyAxNS42IDEwLjYgMTcuMiAxMS4yIDM0LjIgMTMuMiAxMC42IDEuMiA2My40IDEuNiAxMjcuNiAxLjRsMTA5LjYtLjYgNi02LjggNi4yLTYuOC0xLjItMjUuMmMtLjgtMTUuOC0uMi0zMy40IDEuNC00Ny4yIDMtMjUuNCAxLjQtMzYuMi02LTQzLjItNS00LjYtNi4yLTQuOC0zMC42LTQuMi0yNy42LjgtMjQgMS42LTY4LjgtMTYtOC42LTMuNC0yMi42LTE4LTI4LjQtMjkuOC0xMS40LTIyLjgtMjctNDUtMzkuMi01NS42LTE0LTEyLjItMTkuOC0yMC44LTE5LjgtMjguNiAwLTExLjYgMTMuNi0xMi42IDMzLjItMi40IDE2LjYgOC44IDIwLjggMTIuNCA0MC44IDM2LjIgMjQuMiAyOC42IDMxIDMzLjYgNTQgMzkuNiAxNS4yIDQgNDIuMiAzIDUxLjQtMS44IDktNC42IDE4LTE1LjIgMjQuNC0yOS4yIDExLjQtMjQuMiA3LjQtMzEuMi0yMC42LTM2LjgtOS44LTItMjkuMi04LTQzLjQtMTMuNC00MC40LTE1LjgtNjQuNi0zNy40LTg1LjQtNzYuMi0xMS42LTIxLjgtMTUuNC0zMy0xOC4yLTUzLjYtNC4yLTMyLjItNC44LTYwLjItMS40LTg0IDMuNC0yMy44IDYuOC0zMi44IDIwLjItNTQgNC02IDguOC0xNS42IDExLTIxLjQgMy44LTEwIDMuOC0xMS42IDEtMzAtNS4yLTM0LjItMy4yLTUyLjQgNy42LTcwLjIgNy4yLTEyLjIgMTUtMTcuMiAyNC4yLTE1LjggMTIuOCAyLjIgNTIgMTcuNCA2Ni44IDI2LjIgMjYgMTUgMjkgMTUuNCA4Mi40IDcuMiAyNC42LTMuOCAzMy44LTQuMiA2MC0zLjIgMTcgLjYgNDEuNCAzIDU0IDUuMiAzOC40IDYuNiA0OS42IDUuMiA3My0xMCA2LjYtNC4yIDE3LjQtOS40IDI0LTExLjYgNi42LTIuMiAxNi01LjggMjEtOC4yIDEzLTYgMjgtNS42IDM1LjYuOCAxMi40IDEwLjQgMTguNiA0MS40IDE0LjQgNzEuNi00LjQgMzAuNi0zIDM5LjQgOC40IDUzLjggMy40IDQuNCAxMS4yIDE5LjIgMTcuNCAzMy4yTDc3NSA0NDN2NzhsLTEwIDI4Yy0xNS4yIDQzLjItMzYuOCA3My4yLTY2LjIgOTIuOC0xMy40IDguOC01NyAyNS40LTc2LjggMjktMjguMiA1LjItMzMuMiAxMi42LTIyIDMyLjIgMTEuMiAxOS40IDEyLjQgMzIuOCAxMS42IDEyOS42bC0uNiA4NS44IDUuNCA0LjZjMy42IDMgOS4yIDUuMiAxNiA2IDUuOC44IDYwLjIgMSAxMjAuNi42IDEwOC40LS42IDExMC4yLS42IDExOS01IDI0LTExLjYgNDAtMjcuNCA1MS42LTUwLjZsNS40LTExIC42LTM0N2MuNC0yMjMtLjItMzUzLjQtMS40LTM2NS0yLTE3LTIuNi0xOC42LTEzLTM0LTEwLjYtMTUuNC0yMi44LTI2LjItNDMuMi0zNy4yLTQuMi0yLjQtNjQuNi0yLjgtMzY2LTMuMi0xOTguNiAwLTM2NCAuNC0zNjcuNiAxLjR6Ii8+PC9zdmc+);
+    }
+    
+    
+    
+    .footer-sns-zhihu {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzYuOCA3OC44Yy04LjYgMi44LTI0IDEyLjQtMzMuNiAyMS04LjYgNy44LTIxLjQgMjcuOC0yNC40IDM3LjgtNC4yIDE0LTQgNzIzLjQgMCA3MzMuNCA4LjYgMjAuNiAzNi44IDQ4LjYgNTYgNTUuNiA5IDMuNCA3NDcuNCAzLjQgNzU2LjQgMCAxOS44LTcuMiA0OS0zNi42IDU2LTU2LjIgMi4yLTYgMi42LTc1LjYgMi44LTM2Ni40IDAtMjMzLjgtLjYtMzYxLjQtMi0zNjYtMS4yLTMuOC02LjYtMTMuOC0xMi4yLTIyLjItOC4yLTEyLjItMTMuNC0xNy40LTI1LjgtMjUuNi04LjQtNS44LTE5LTExLjQtMjMuMi0xMi4yLTQuNi0xLjItMTYzLjItMS44LTM3NC44LTEuOC0yOTMgMC0zNjguNi42LTM3NS4yIDIuNnptMTkwIDE0NS42YzUuNCA3LjYgNCAxNy40LTQuOCAzMS42LTkuOCAxNi0xMC44IDI3LjQtMyAzNSAyLjYgMi44IDYuNCA1IDguNCA1czM3LjguNCA3OS42LjZjNjggLjQgNzYuNi44IDgyLjQgMy44IDkuMiA1IDEyLjYgMTEgMTIuNiAyMiAwIDctMS4yIDEwLjgtNC44IDE1bC00LjggNS40LTM4IC4yYy01My44IDAtNTMuOCAwLTU1LjQgNTEuMi0uNiAxOC0xLjYgNDIuOC0yLjIgNTUtMS4yIDIyLjguNiAzMS42IDcuNiAzNi4yIDEuNC44IDIyLjIgMiA0NiAyLjZsNDMuMiAxIDguOCA2YzE1LjQgMTAuOCAxNy44IDI5LjIgNSAzNy01LjggMy42LTEwLjIgNC01MS44IDQtMzEgMC00NyAuOC01MC42IDIuNC03IDMuMi0xNC4yIDE3LjYtMTcuMiAzNC40LTMuMiAxNi42LTEgMjEuOCA5LjYgMjUuMiAxMy40IDQuMiAyMS44IDExLjIgNDkgNDEuNCAzNSAzOC44IDM2LjYgNDEgNDEuOCA1OC44IDcgMjMuOCAyLjIgNDEuOC0xMS40IDQxLjgtNy42IDAtMTItMy0yMS0xNC42LTEzLjgtMTcuNC01NC40LTY1LjgtNjItNzMuOC0xNS4yLTE2LTI5LjQtNS44LTM4LjggMjcuNC0xLjggNi42LTguOCAyMy4yLTE1LjYgMzctMTAuOCAyMi0xNCAyNi44LTI3LjQgMzkuNi0xOS42IDE5LjItMjYuNCAyMy01My42IDI5LjYtMjcuMiA2LjQtMzcgNS42LTM4LTMuNi0xLTguNCA0LjQtMTYuNCAyMC0yOSAxNi0xMyAzNi44LTM2LjYgNDUuMi01MS40IDMtNS4yIDguMi0xMy44IDExLjYtMTkgMy40LTUgMTEuOC0yMC40IDE4LjYtMzQuMiAxMC0yMCAxMy42LTI5LjQgMTcuMi00NyAyLjYtMTIuMiA2LjItMjUuNCA3LjgtMjkuNCA0LTkuNCA0LTIxLjQuMi0yNy01LjItNy40LTE2LTguOC02Mi42LTguNC01MC40LjQtNTUuMi0uOC01Ny42LTEzLjItMS44LTEwLjQgNS44LTI0LjQgMTYuMi0yOS44IDcuNC0zLjggMTEuOC00LjIgNTYuMi00LjhsNDguNC0uOCA0LjYtNWM0LjgtNSA0LjgtNSA1LTYxLjYgMC0zNS4yLS44LTU5LjItMi02My4yLTMuOC0xMS4yLTExLTE0LjgtMzAuMi0xNC44cy0yMS40IDEuNC0zMS4yIDE4LjJjLTguMiAxNC40LTIwLjYgMjguOC0zMy4yIDM4LjgtMTMuMiAxMC40LTIxLjYgMTMtMjggOS04LjQtNS42LTUuMi0yMy4yIDguMi00My4yIDQtNi40IDkuMi0xOC42IDEyLjItMjkuNiAzLTEwLjIgNy40LTIzLjIgMTAtMjkgMi40LTUuNiA2LTE2LjggOC0yNC42IDUuNi0yMy42IDI0LTUwLjggMzkuNC01OC40IDExLjItNS40IDE4LjYtNS40IDIyLjQuMnptNDUyIDY4LjJjMTEuOCA3LjggMTEuNC0uOCAxMC44IDIxNi0uNiAxODEtLjggMTk4LjgtNCAyMDMtNy42IDEwLjgtOS44IDExLjQtNTMuNiAxMi40bC00MSAxLTE0IDcuOGMtNy42IDQuMi0yMS4yIDEzLTI5LjggMTkuNC0yNS44IDE5LjItMzUgMTkuOC00My40IDMuMi0xMS44LTIzLjItMjMuNi0zMy4yLTM5LjQtMzMuNC04LjggMC0xMy42LTIuOC0xNy4yLTkuOC0yLjYtNC44LTMtMzMuOC0yLjYtMjA4LjguNC0xOTkuOC40LTIwMyA0LjQtMjA3LjQgMi4yLTIuNCA1LjgtNS4yIDgtNi4yIDIuMi0uOCA1MS44LTEuNCAxMTAtMS4yIDk5IC40IDEwNi42LjYgMTExLjggNHoiLz48cGF0aCBkPSJNNjA2LjggMzM3LjRjLTIuNC40LTYuNCAzLTkgNS44bC00LjggNS4yLS42IDE1Ni40LS40IDE1Ni40IDYuNCA5LjRjMy42IDUuMiA5LjggMTUuMiAxMy42IDIxLjggOCAxNC4yIDE2LjggMjAuNiAyNS42IDE4LjYgMy4yLS42IDEzLjgtNyAyMy42LTE0LjIgMjMtMTcgMjcuOC0xOSA1MC4yLTIwLjIgMTYuNC0xIDE5LjItMS44IDIzLjYtNi4yIDIuOC0yLjggNS02LjQgNS4yLTguMlY1MDUuNmMwLTExNi0uNi0xNTQuNC0yLjYtMTU4LjYtNC44LTEwLjQtOC40LTExLTcwLTEwLjgtMzEuMi4yLTU4LjYuOC02MC44IDEuMnoiLz48L3N2Zz4=);
+    }
+    
+    
+    
+</style>
+
+        
+        <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+
+
+        <script>lsloader.load("js/jquery.min.js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+    
+    
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Analytics -->
+    
+
+    <!-- Custom Head -->
+    
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-1-概述"><span class="post-toc-text">PART 1 概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-2-将Unity工程导出xcode工程"><span class="post-toc-text">PART 2 将Unity工程导出xcode工程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-2-导入-p12证书和-mobileprovision"><span class="post-toc-text">PART 2 导入.p12证书和.mobileprovision</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-3-生成app文件"><span class="post-toc-text">PART 3 生成app文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-4-将app转换为ipa"><span class="post-toc-text">PART 4 将app转换为ipa</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#方法一-拖入iTunes"><span class="post-toc-text">方法一 拖入iTunes</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#方法二-手动压缩改后缀"><span class="post-toc-text">方法二 手动压缩改后缀</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-5-Inhouse发布"><span class="post-toc-text">PART 5 Inhouse发布</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-6-总结"><span class="post-toc-text">PART 6 总结</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Unity自动化(2)-无需企业开发帐号密码打包Ipa
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/miao.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>sNatic</strong>
+        <span>3月 18, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC2klEQVR42u3aUW4bMQwEUN//0u0BgrgzpBtspLdfRmKv9DZAaHL0+nPl9cLGxsbGxsbGxsZ+JPsVX18/9f518s7Nfeo9Y2NjYx/N/se//rfvSZbc3+39Q0lWwcbGxr6BnSzz3ZL5FtsymewnWhcbGxsbO24Y8pYj2Un+TmxsbGzszxawpCwl5SofTmFjY2NjJwOaWcOQl6i8KP7oLA0bGxv78ew8NH3O6x/Nt7GxsbEfzG6vWQCQ3Cdve4Y7x8bGxj6UnReGpGHIm4q2OM0GWNjY2Ng3sJOisoFFGyrf346TsLGxsc9mz0LZNmD47PAof3zY2NjYd7Lbwzptm5GPqNp26ANBLzY2NvavZSdbz5dpPzsrafUgDBsbG/tQdl5+ZkVlHwbkI616loaNjY19BPs1upKttGFtEldsyi02Njb2qex2TJM0A+0WN6vncTU2Njb2qeykAMzGPXkMnJTGPMyoWxFsbGzsX86eDfpnB31mD3ff9mBjY2Pfw85j1Hz5nNqGEPkoChsbG/sGdjvoyY/R5FFE3ni0R4iwsbGxb2BvQt929D8rP3mB/FaHjY2NfSi7/aI/i4E/VdhmITE2Njb22ex8iLMZRbUD/fa3UZyAjY2NfQ27jVdnsessBshbIGxsbOx72PvjNXkDs39kszEWNjY29g3sJChtf56XsU3DU4y9sLGxsS9gJ1/u24i3LXjtKGrVimBjY2Mfys6Lymws1d5/Fh7UBQwbGxv7CPbmcdSxazl+2hwDxcbGxj6b3V77QvX+QeftTR0qY2NjYx/KHhaDYLF203lD0o6ZsLGxsW9gb5ZMSt1nD3fOCio2Njb2Dez2UGN7OHI2+p8NkrCxsbGxk6/+s4B2Eyonx4mwsbGxsfMCtolm28cxC4axsbGxb2PnpWhWkNrH0f55/uMsDRsbG/vx7HZYE331D+7QBsOrcBobGxv7UPY9FzY2NjY2NjY2NvZjrr+Sj5rd8ZpbmwAAAABJRU5ErkJggg==">
+    
+</ul>
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/ios/">ios</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/ipa/">ipa</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/mac/">mac</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/unity/">unity</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Unity自动化(2)-无需企业开发帐号密码打包Ipa&url=http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Unity自动化(2)-无需企业开发帐号密码打包Ipa&url=http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/index.html&via=sNatic" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>终于迎来一个不用加班的周六可以愉快的写文章了。换了工位换了两台一样的显示器心情无比舒爽觉得终于要开展全新生活啦～之前两台显示器型号高矮全都不一样让我这样的强迫症患者超级难受 - -。言归正传，接下来我们来到了导出 ipa 的环节。通常在稍微规模大一点的公司是不会给开发者提供他们的具有开发者账户权限的 Apple Id 和密码的，因此想要导出 ipa 就只能通过公司提供的 p12 证书和 mobileprovision 描述文件，那么具体要怎么操作呢？</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>在「<a href="https://snatix.com/2017/03/12/012-export-unity-project-apk-on-mac/">上一期</a>」中我们介绍了在 mac 上导出 apk 的方法，那么现在来到了导出 ipa 的环节。正如引言所述，通常我们是没有企业开发帐号和密码的，只有 mobileprovision 和 p12 文件。目前 Xcode 版本已经达到 8.2 但是很多教程还停留在 7.x 甚至 6 的时代，有很多地方已经不适用了。所以接下来我们根据不同的 Xcode 版本来尝试打包一个带有企业证书的 inhouse 包并发布到服务器上可以允许任意用户远程安装。具体步骤如下：</p>
+<ol>
+<li>准备好一个 Unity 工程并将其导出 Xcode 工程</li>
+<li>导入 p12 证书和 mobileprovision 描述文件</li>
+<li>生成对应的 app 文件</li>
+<li>将 app 文件转换成 ipa 文件</li>
+<li>制作 plist 文件并发布到服务器</li>
+</ol>
+<h2 id="PART-2-将Unity工程导出xcode工程"><a href="#PART-2-将Unity工程导出xcode工程" class="headerlink" title="PART 2 将Unity工程导出xcode工程"></a>PART 2 将Unity工程导出xcode工程</h2><p>为了给大家演示又方便打包博主就简单的制作一个 Unity 工程吧，如图所示。。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032001.png" alt="示例工程"></p>
+<p>相信大家一眼就看出来了就只有一行代码把<code>Time.time</code>显示在屏幕中间。。好吧我们现在开始导出 xcode 工程。Build Settings 面板如下，点击<code>Build</code>再选一个路径就可以导出了，要注意的是<code>Run in Xcode as</code>必须要选择<code>Debug</code>才行，还有就是别忘了修改<code>Bundle Identifier</code>与证书一致，如果不知道的话可以留到 Xcode 工程中再修改。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032002.png" alt="BuildSettings"></p>
+<p>最后打开导出的目录双击<code>Unity-iPhone.xcodeproj</code>打开 Xcode 工程，成功！</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032004.png" alt="Xcode工程"></p>
+<h2 id="PART-2-导入-p12证书和-mobileprovision"><a href="#PART-2-导入-p12证书和-mobileprovision" class="headerlink" title="PART 2 导入.p12证书和.mobileprovision"></a>PART 2 导入.p12证书和.mobileprovision</h2><p>接下来的步骤可能不同版本的 Xcode 会不太一样，以博主的 Xcode 8.2.1 为例。打开以后如上图所示。可以看到有一个报错叫做<code>&quot;Signing for &quot;Unity-iPhone&quot; requires a development team&quot;</code>，一般来说如果自己拥有开发者帐号的话直接按照各种教程的步骤来就没问题了。但是很多时候我们并没有对应的企业开发者帐号的使用权限，只有如下图的两个文件。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032005.png" alt="证书"></p>
+<p>关于这两个文件的作用和来源这里就不再赘述了，总之很麻烦而且博主也没有企业级开发者帐号没有亲手操作过～通常公司的平台组会为我们准备好这两个文件。首先回到 Xcode 工程中，切换到<code>Signing</code>部分，取消<code>Automatically manage signing</code>。此时会出现多个要求导入<code>Provisioning Profile</code>的部分，如下图所示。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032006.png" alt="证书"></p>
+<p>接下来的操作很简单，只需要在每一个地方点击<code>Import Profile...</code>并选择之前的<code>example.mobileprovision</code>文件即可。如果之前没有修改<code>Bundle Identifier</code>的话，会有报错信息提示：<code>Provisioning profile &quot;xxxxxx&quot; has app ID &quot;com.xxx.xxx&quot;, which does not match the bundle ID &quot;com.snatic.example&quot;.</code> 按要求修改<code>Bundle Identifier</code>即可。</p>
+<p>那么修复了这条报错以后，还会提示<code>No &quot;iOS Distribution&quot; signing certificate matching team ID &quot;xxxxxxxxx&quot; with a private key was found.</code>那么此时我们需要导入的就是刚才的 .p12 文件了，双击以后输入密码即可导入很方便。那么目前为止所有的报错全都解决了可以安全导出 ipa 了么？</p>
+<h2 id="PART-3-生成app文件"><a href="#PART-3-生成app文件" class="headerlink" title="PART 3 生成app文件"></a>PART 3 生成app文件</h2><p>理论上此时我们就可以直接插上一台 iPhone 开始运行了，但是我们的目标是导出 ipa，因此按照正常流程往下走的话就是点击 Product -&gt; Archive 然后 Export 就好了，这个流程在 Xcode 7 中完全没有问题。但在 Xcode 8 中，会做如下提示。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032007.png" alt="添加帐号"></p>
+<p>在我们没有开发者帐号以及企业子帐号的情况下这一步没办法绕过了，在 Xcode 7 中可以直接选择<code>Use local signing assets</code>的选项但是这里并不会直接出现还是需要先登录。那么我们只能剑走偏锋了。</p>
+<p>插上一台 iPhone 直接点击运行，等待编译和安装完成以后确认在设备上运行无误，然后我们就会在左侧看到 <code>XXXX.app</code>，如图所示。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032008.png" alt="导出app"></p>
+<p>右键点击该文件，选择<code>Show in Finder</code>即可找到我们至关重要的 app 文件。</p>
+<h2 id="PART-4-将app转换为ipa"><a href="#PART-4-将app转换为ipa" class="headerlink" title="PART 4 将app转换为ipa"></a>PART 4 将app转换为ipa</h2><p>转换的方法有几种，限于篇幅(其实是太懒)博主就先介绍三种简单的方法，关于高级的自动化脚本的方法下次单独开一篇文章来介绍吧～</p>
+<h3 id="方法一-拖入iTunes"><a href="#方法一-拖入iTunes" class="headerlink" title="方法一 拖入iTunes"></a>方法一 拖入iTunes</h3><p>打开 iTunes 切换到应用页，然后直接将上一步得到的 app 文件拖进来，就能得到如下图的应用。</p>
+<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017032201.png" alt="导出app"></p>
+<p>右键点击应用 -&gt; 在 Finder 中显示 就可以得到我们所需要的 ipa 文件了。</p>
+<h3 id="方法二-手动压缩改后缀"><a href="#方法二-手动压缩改后缀" class="headerlink" title="方法二 手动压缩改后缀"></a>方法二 手动压缩改后缀</h3><ol>
+<li>新建“Payload”文件夹，注意大小写</li>
+<li>将 app 文件放到<code>Payload</code>文件夹中</li>
+<li>在<code>Payload</code>文件夹右键压缩成 zip 后将生成的 zip 文件后缀为 ipa</li>
+</ol>
+<p>感觉简单粗暴，这个过程明显可以写一个脚本来完成的。下次再慢慢讲脚本的问题～理想状态是可以不用打开 xcode 不用插手机就能直接导出，这样就可以一键导出 ipa 包了。</p>
+<h2 id="PART-5-Inhouse发布"><a href="#PART-5-Inhouse发布" class="headerlink" title="PART 5 Inhouse发布"></a>PART 5 Inhouse发布</h2><p>其实发布 Inhouse 下载非常简单，如果按照正常打包流程的话 Xcode 是会为我们自动生成所需要的 plist 文件的，但是我们的流程比较奇怪所以需要新建一个文件，粘贴以下内容最后修改后缀为<code>plist</code></p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token doctype">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plist</span> <span class="token attr-name">version</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>items<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>array</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>assets<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>array</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>kind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>software-package<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>url<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>THE URL FOR YOUR IPA: ex: https://go.com/appname.ipa<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>kind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>full-size-image<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>needs-shine<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>true</span><span class="token punctuation">/></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>url<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>THE URL FOR INSTALLATION @2x ICON: ex: https://go.com/Icon@2x.png<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>kind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>display-image<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>needs-shine<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>true</span><span class="token punctuation">/></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>url<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>THE URL FOR INSTALLATION ICON: ex: https://go.com/Icon.png<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>array</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>metadata<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dict</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>bundle-identifier<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>YOUR BUNDLE ID (Take it from your Xcode Project)<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>bundle-version<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>1.2.3 Your app version<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>kind<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>software<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>title<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>string</span><span class="token punctuation">></span></span>The Title To Present To The User installing the app<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>string</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>array</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dict</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plist</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>按照说明修改其中的字段以后将该文件与 ipa 一起上传支持 https 协议的服务器，没有的话就在 oschina 或者 coding,net 之类的新建一个 Git 仓库然后上传就没问题了，记得图标也要上传不然会有奇怪的无法下载的问题，图标大小不大于 500*500 就好。最后我们在任意一个网页上插入如下代码，在<code>url=</code>后面填写刚才上传的 plist 文件地址就好了。</p>
+<pre class="line-numbers language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>itms-services://?action<span class="token punctuation">=</span>download-manifest&amp;url<span class="token punctuation">=</span>https://mydomain.com/apps/MyInHouseApp.plist<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Install the In-House App<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>用手机打开这个页面试试。点击链接就可以下载了果然很方便的样子。</p>
+<h2 id="PART-6-总结"><a href="#PART-6-总结" class="headerlink" title="PART 6 总结"></a>PART 6 总结</h2><p>拖了小半周零零碎碎的总算是写完了，貌似没什么干货反而让截图占了很大的篇幅。但是为了把整个流程讲清楚多截几张图也还好。也许新版本的  Xcode 发布以后这篇教程就过期了～当前的 Xcode 版本是 8.2.1 不知道苹果会不会在以后的版本中采取更严格的方式限制打包。不过目前手动打包 ipa 的方法并不是我们的重点，下周我们一起研究自动打包脚本～</p>
+<hr>
+<p>原文链接：<a href="http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/">http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/</a></p>
+<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 DISQUS -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://snatix.com/2017/03/18/013-export-ipa-without-apple-id/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+<script type="text/ls-javascript" id="disqus-thread-script">
+    queue.offer(function() {
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//snatix.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/04/04/014-automatic-export-ipa-with-shell/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/03/12/012-export-unity-project-apk-on-mac/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/miao.png" alt="sNatic's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        Hi! I&#39;m snatic
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="/about" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">account_box</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2014/08/">八月 2014<span class="sidebar_archives-count">6</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/Hexo博客重启计划/">Hexo博客重启计划<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/Octopress折腾之路/">Octopress折腾之路<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Unity通用框架工程/">Unity通用框架工程<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/git探索之路/">git探索之路<span class="sidebar_archives-count">2</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                    <i class="material-icons sidebar-material-icons">label_outline</i>
+                
+                标签云
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">account_circle</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links" title="友情链接">
+                
+                    <i class="material-icons sidebar-material-icons">touch_app</i>
+                
+                友情链接
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+        <a href="https://www.instagram.com/snaticx/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-instagram">
+                <span class="visuallyhidden">Instagram</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/sNaticY" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/liu-yan-44-87" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-zhihu">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2014&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>大喵的新窝
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+
+    <script>lsloader.load("js/lazyload.min.js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
+    <script>lsloader.load("js/js.min.js","/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+
+
+
+    <script>lsloader.load("js/nprogress.js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- 使用 DISQUS js 代码 -->
+<script id="dsq-count-scr" src="//snatix.disqus.com/count.js" async></script>
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.4.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
