@@ -1,12 +1,43 @@
 <!DOCTYPE html>
 <html style="display: none;" lang="zh">
     <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
-        Version: 1.4.0 -->
-    <script>window.materialVersion = "1.4.0"</script>
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <!-- Title -->
     
@@ -17,115 +48,18 @@
         大喵的新窝
     </title>
 
-    <!-- dns prefetch -->
-    <meta http-equiv="x-dns-prefetch-control" content="on">
-    
-    
-    
-    
-    
-    
-        <link rel="dns-prefetch" href="https://s95.cnzz.com"/>
-    
-    
-    
-    
-    
-
-    <!-- Meta & Info -->
-    <meta http-equiv="X-UA-Compatible">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="theme-color" content="#0097A7">
-    <meta name="author" content="sNatic">
-    <meta name="description" itemprop="description" content="这理论上应该是一个冗长无比的系列，但是既然决定开这个深坑了就要好好填～其实一直以来都希望有一套自己熟悉的框架来自行维护，有什么想法的时候拿起来就能写，同时也有机会接触到 Unity 的方方面面而不是只会拼 UI 写业务系统。不管是 ulua 还是 slua，目的就是通过 AssetBundle 来更新，因此我们首先从 Assetbundle 开始。">
-    <meta name="keywords" content="null,unity,asset bundle">
-
-    <!-- Site Verification -->
-    
-    
-
     <!-- Favicons -->
     <link rel="icon shortcut" type="image/ico" href="/img/miao.png">
-    <link rel="icon" sizes="192x192" href="/img/miao.png">
-    <link rel="apple-touch-icon" href="/img/miao.png">
+    <link rel="icon" href="/img/miao.png">
 
-    <!--iOS -->
-    <meta name="apple-mobile-web-app-title" content="Title">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="480">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="这理论上应该是一个冗长无比的系列，但是既然决定开这个深坑了就要好好填～其实一直以来都希望有一套自己熟悉的框架来自行维护，有什么想法的时候拿起来就能写，同时也有机会接触到 Unity 的方方面面而不是只会拼 UI 写业务系统。不管是 ulua 还是 slua，目的就是通过 AssetBundle 来更新，因此我们首先从 Assetbundle 开始。">
+    <meta name="keywords" content=",unity,asset bundle">
+    <meta name="theme-color" content="#0097A7">
 
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="大喵的新窝">
-
-    <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://snatix.com">
-    <meta property="og:type" content="blog">
-    <meta property="og:title" content="Assetbundle(1)-初次接触 | 大喵的新窝">
-    <meta property="og:image" content="/img/miao.png" />
-    <meta property="og:description" content="这理论上应该是一个冗长无比的系列，但是既然决定开这个深坑了就要好好填～其实一直以来都希望有一套自己熟悉的框架来自行维护，有什么想法的时候拿起来就能写，同时也有机会接触到 Unity 的方方面面而不是只会拼 UI 写业务系统。不管是 ulua 还是 slua，目的就是通过 AssetBundle 来更新，因此我们首先从 Assetbundle 开始。">
-    <meta property="og:article:tag" content="unity"> <meta property="og:article:tag" content="asset bundle"> 
-
-    
-        <meta property="article:published_time" content="1月 15, 2017" />
-        <meta property="article:modified_time" content="2月 19, 2017" />
-    
-
-    <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="Assetbundle(1)-初次接触 | 大喵的新窝">
-    <meta name="twitter:description" content="这理论上应该是一个冗长无比的系列，但是既然决定开这个深坑了就要好好填～其实一直以来都希望有一套自己熟悉的框架来自行维护，有什么想法的时候拿起来就能写，同时也有机会接触到 Unity 的方方面面而不是只会拼 UI 写业务系统。不管是 ulua 还是 slua，目的就是通过 AssetBundle 来更新，因此我们首先从 Assetbundle 开始。">
-    <meta name="twitter:image" content="/img/miao.png">
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="http://snatix.com" />
-
-    <!-- Add canonical link for SEO -->
-    
-        <link rel="canonical" href="http://snatix.com/2017/01/15/009-start-with-asset-bundle/index.html" />
-    
-
-    <!-- Structured-data for SEO -->
-    
-        
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "publisher": {
-        "@type": "Organization",
-        "name": "大喵的新窝",
-        "logo": "/img/miao.png"
-    },
-    "author": {
-        "@type": "Person",
-        "name": "sNatic",
-        "image": {
-            "@type": "ImageObject",
-            "url": "/img/miao.png"
-        },
-        "description": "这只喵很懒，什么都没留下"
-    },
-    "headline": "Assetbundle(1)-初次接触",
-    "url": "http://snatix.com/2017/01/15/009-start-with-asset-bundle/index.html",
-    "datePublished": "1月 15, 2017",
-    "dateModified": "2月 19, 2017",
-    "description": "这理论上应该是一个冗长无比的系列，但是既然决定开这个深坑了就要好好填～其实一直以来都希望有一套自己熟悉的框架来自行维护，有什么想法的时候拿起来就能写，同时也有机会接触到 Unity 的方方面面而不是只会拼 UI 写业务系统。不管是 ulua 还是 slua，目的就是通过 AssetBundle 来更新，因此我们首先从 Assetbundle 开始。",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "http://snatix.com"
-    }
-}
-</script>
-
-
-    
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -136,47 +70,33 @@
     <![endif]-->
 
     <!-- Import lsloader -->
-    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
 
-    <!-- Import CSS & jQuery -->
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
     
-        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
-        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
-        
-        
-            <style>
-    
-    
-    
-    
-    
-    .footer-sns-instagram {
-        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xNDAuNiA3OGMtOS44IDIuMi0yOC40IDEzLjgtMzguNiAyNC0xMC42IDEwLjgtMjEuNiAyOC44LTI0LjIgMzkuNC0yLjYgMTEuNC0yLjQgNzE0LjguNCA3MjUuMiA1LjIgMjAuNCAyOSA0Ni4yIDUzLjIgNTcuNiA4LjIgMy44IDE1LjQgMy44IDM3MC42IDMuOCAzNTEuOCAwIDM2Mi44LS4yIDM3MS0zLjggMjEtOS4yIDM4LjgtMjcgNTAtNDkuMmw1LTEwLjItLjQtMzYzLjgtLjYtMzY0LTQuNC04Yy0xMC44LTE5LjYtMTgtMjguMi0zMi42LTM4LjQtOS4yLTYuMi0xOC44LTExLjItMjQuNi0xMi40LTExLjItMi42LTcxNC40LTIuOC03MjQuOC0uMnpNNjYyIDIwMi44YzEyLjYgMi44IDYwLjIgMjIuMiA2OC40IDI4IDQuNCAzIDMwLjIgMzEuNCAzOSA0Mi42IDIuOCAzLjYgOS42IDE5LjQgMTUuMiAzNWwxMCAyOC42LjggMTQ2Yy42IDEwNi40LjQgMTQ5LjItMS40IDE1Ny44LTEuMiA2LjYtNiAyMi4yLTEwLjQgMzQuNi05LjggMjcuOC0yMyA0Ni42LTQ4LjIgNjguOC0yMi4yIDE5LjQtMzYuOCAyNi44LTYxLjQgMzAuOC0xMC40IDEuNi0yMi42IDQtMjcgNS4yLTE1IDMuOC0xNDAuNiA2LjItMjEzLjQgNC0zNy44LTEuMi03My0zLTc4LjYtNC01LjQtMS4yLTE2LjItMi44LTIzLjgtNC0yNi44LTQtNjguOC0zMy42LTg5LjgtNjMuOC0xMC4yLTE0LjgtMTktMzYuMi0yNy42LTY4LjQtMy4yLTEyLTMtMjkyLjQuMi0zMDcuMiA0LjYtMjEuMiAxNi42LTUzIDIzLjYtNjMuMiA0LTUuOCAxNS0xOC40IDI0LjQtMjcuOCAxNC0xNC4yIDIwLjQtMTkgMzUuOC0yNi44IDI3LTEzLjQgNDIuOC0xNyA4NC4yLTE5IDU3LjItMi44IDI2NC40LS42IDI4MCAyLjh6Ii8+PHBhdGggZD0iTTM1NiAyNjIuMmMtMi44IDEtMTEuMiA0LjItMTguNiA3LjItMTIuNCA0LjYtMzUuNCAyMS00Mi44IDMwLjYtNi4yIDgtMjEgNDcuOC0yMi44IDYxLS44IDcuNi0xLjQgNzAuMi0xIDEzOSAuNiAxMDguNiAxLjIgMTI2LjQgNCAxMzUuNCA0LjQgMTMuOCAxOC42IDQ0LjYgMjIuOCA0OS40IDQuNCA0LjggMzAuMiAyNCAzNy42IDI3LjggMTMgNi42IDQ4IDguNCAxNjcuOCA4LjQgMTE1LjIgMCAxNTAuOC0xLjYgMTY2LTcuNCA2LjYtMi40IDMyLjgtMjEuNCAzOS4yLTI4LjIgNy42LTguMiAyMy44LTQ0IDI2LTU3LjYgMS4yLTcuOCAxLjgtNjUgMS40LTE0OWwtLjYtMTM2LjItMTItMjMuOGMtMTEuNC0yMi44LTEyLjYtMjQuNC0yNy0zNS4yLTguMi02LjQtMjAuOC0xNC0yOC0xN2wtMTMtNS42LTE0Ny0uNGMtOTEuMi0uMi0xNDkgLjQtMTUyIDEuNnptMzE1LjYgNDFjMTIuMiA2IDE5LjYgMTQuMiAyMi40IDI0LjggNi40IDI0LTE4LjggNTEuNi00MyA0Ny4yLTkuOC0yLTIzLjYtMTQuOC0zMC4yLTI4LjQtNC42LTkuMi00LjgtMTEuNC0zLTE3LjQgMi42LTcuOCAxNi40LTIyLjQgMjYuNC0yNy42IDkuNC01IDE1LjItNC42IDI3LjQgMS40ek01MzYuOCAzMzhjNSAxIDE4LjYgNyAzMC40IDEzLjQgMjUgMTMuMiA0Ny4yIDMyLjggNjMgNTUuNiA1LjQgNy42IDExLjYgMTYuMiAxMy44IDE5IDUuOCA3LjIgMTQuOCA1NSAxMy40IDcxLTEuNiAxNi42LTEwIDUzLjgtMTMuNiA1OC42LTEuNiAyLjItNy40IDEwLjYtMTMuMiAxOC42LTE2LjQgMjMuNi00OC42IDUyLTYzLjIgNTUuOC00LjYgMS40LTE1LjYgNS42LTI0LjQgOS42LTE1LjggNy4yLTE2LjQgNy40LTQwIDcuMi0yMy4yLS4yLTI0LjQtLjQtMzktNy40LTguMi00LTE5LjItOC4yLTI0LjQtOS40LTE2LjYtNC4yLTQ5LTM0LTY5LjItNjMuNi0xNi4yLTI0LTE5LTM1LTE5LTc0LjQgMC0zMyAzLjgtNTQuOCAxMS4yLTY0LjggMi42LTMuNCA3LjItMTAuNiAxMC40LTE2IDguNC0xNC40IDI0LjQtMzEuOCAzOC40LTQyIDIwLjItMTQuOCA1My44LTMxLjIgNjcuNi0zMyAxNC4yLTIgNDUuNi0xIDU3LjggMS44eiIvPjxwYXRoIGQ9Ik00OTEgMzk4Yy00LjQuOC0xNi40IDYtMjYuNiAxMS40LTE2IDguNC0yMCAxMS42LTMxLjQgMjUuNC03LjYgOS4yLTE0IDE5LjItMTUuNCAyNC0zLjIgMTEuMi0zLjIgNTIgMCA2Mi42IDMuMiAxMSAyNC40IDM2LjQgMzUgNDIgMTQuOCA4IDM3IDE2LjYgNDUuOCAxNy44IDYuMi44IDEyIDAgMjAuNi0zLjIgNi42LTIuMiAxNy44LTYuMiAyNC42LTguNiAxMC44LTMuNiAxNS02LjYgMjcuNC0xOS42IDEyLTEyLjYgMTUtMTcgMTcuMi0yNiAzLjQtMTMuMiAzLjYtNTUuNC4yLTY2LjgtNS0xNy40LTI5LjQtNDAuNC01OC40LTU1LjItOC40LTQuMi0yNy44LTYuMi0zOS0zLjh6Ii8+PC9zdmc+);
-    }
-    
-    
-    
-    .footer-sns-github {
-        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNCA3OGMtNi40IDEuNC0yNi40IDE0LjItMzYgMjIuOC04IDcuMi0yMiAyOS44LTI0LjQgMzkuMi0xLjYgNi40LTIgMTEzLjItMS42IDM2OCAuNiAyOTkuNCAxIDM1OS44IDMuNCAzNjQgMTEgMjAuMiAyMS42IDMyLjQgMzcuMiA0MyAxNS42IDEwLjYgMTcuMiAxMS4yIDM0LjIgMTMuMiAxMC42IDEuMiA2My40IDEuNiAxMjcuNiAxLjRsMTA5LjYtLjYgNi02LjggNi4yLTYuOC0xLjItMjUuMmMtLjgtMTUuOC0uMi0zMy40IDEuNC00Ny4yIDMtMjUuNCAxLjQtMzYuMi02LTQzLjItNS00LjYtNi4yLTQuOC0zMC42LTQuMi0yNy42LjgtMjQgMS42LTY4LjgtMTYtOC42LTMuNC0yMi42LTE4LTI4LjQtMjkuOC0xMS40LTIyLjgtMjctNDUtMzkuMi01NS42LTE0LTEyLjItMTkuOC0yMC44LTE5LjgtMjguNiAwLTExLjYgMTMuNi0xMi42IDMzLjItMi40IDE2LjYgOC44IDIwLjggMTIuNCA0MC44IDM2LjIgMjQuMiAyOC42IDMxIDMzLjYgNTQgMzkuNiAxNS4yIDQgNDIuMiAzIDUxLjQtMS44IDktNC42IDE4LTE1LjIgMjQuNC0yOS4yIDExLjQtMjQuMiA3LjQtMzEuMi0yMC42LTM2LjgtOS44LTItMjkuMi04LTQzLjQtMTMuNC00MC40LTE1LjgtNjQuNi0zNy40LTg1LjQtNzYuMi0xMS42LTIxLjgtMTUuNC0zMy0xOC4yLTUzLjYtNC4yLTMyLjItNC44LTYwLjItMS40LTg0IDMuNC0yMy44IDYuOC0zMi44IDIwLjItNTQgNC02IDguOC0xNS42IDExLTIxLjQgMy44LTEwIDMuOC0xMS42IDEtMzAtNS4yLTM0LjItMy4yLTUyLjQgNy42LTcwLjIgNy4yLTEyLjIgMTUtMTcuMiAyNC4yLTE1LjggMTIuOCAyLjIgNTIgMTcuNCA2Ni44IDI2LjIgMjYgMTUgMjkgMTUuNCA4Mi40IDcuMiAyNC42LTMuOCAzMy44LTQuMiA2MC0zLjIgMTcgLjYgNDEuNCAzIDU0IDUuMiAzOC40IDYuNiA0OS42IDUuMiA3My0xMCA2LjYtNC4yIDE3LjQtOS40IDI0LTExLjYgNi42LTIuMiAxNi01LjggMjEtOC4yIDEzLTYgMjgtNS42IDM1LjYuOCAxMi40IDEwLjQgMTguNiA0MS40IDE0LjQgNzEuNi00LjQgMzAuNi0zIDM5LjQgOC40IDUzLjggMy40IDQuNCAxMS4yIDE5LjIgMTcuNCAzMy4yTDc3NSA0NDN2NzhsLTEwIDI4Yy0xNS4yIDQzLjItMzYuOCA3My4yLTY2LjIgOTIuOC0xMy40IDguOC01NyAyNS40LTc2LjggMjktMjguMiA1LjItMzMuMiAxMi42LTIyIDMyLjIgMTEuMiAxOS40IDEyLjQgMzIuOCAxMS42IDEyOS42bC0uNiA4NS44IDUuNCA0LjZjMy42IDMgOS4yIDUuMiAxNiA2IDUuOC44IDYwLjIgMSAxMjAuNi42IDEwOC40LS42IDExMC4yLS42IDExOS01IDI0LTExLjYgNDAtMjcuNCA1MS42LTUwLjZsNS40LTExIC42LTM0N2MuNC0yMjMtLjItMzUzLjQtMS40LTM2NS0yLTE3LTIuNi0xOC42LTEzLTM0LTEwLjYtMTUuNC0yMi44LTI2LjItNDMuMi0zNy4yLTQuMi0yLjQtNjQuNi0yLjgtMzY2LTMuMi0xOTguNiAwLTM2NCAuNC0zNjcuNiAxLjR6Ii8+PC9zdmc+);
-    }
-    
-    
-    
-    .footer-sns-zhihu {
-        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzYuOCA3OC44Yy04LjYgMi44LTI0IDEyLjQtMzMuNiAyMS04LjYgNy44LTIxLjQgMjcuOC0yNC40IDM3LjgtNC4yIDE0LTQgNzIzLjQgMCA3MzMuNCA4LjYgMjAuNiAzNi44IDQ4LjYgNTYgNTUuNiA5IDMuNCA3NDcuNCAzLjQgNzU2LjQgMCAxOS44LTcuMiA0OS0zNi42IDU2LTU2LjIgMi4yLTYgMi42LTc1LjYgMi44LTM2Ni40IDAtMjMzLjgtLjYtMzYxLjQtMi0zNjYtMS4yLTMuOC02LjYtMTMuOC0xMi4yLTIyLjItOC4yLTEyLjItMTMuNC0xNy40LTI1LjgtMjUuNi04LjQtNS44LTE5LTExLjQtMjMuMi0xMi4yLTQuNi0xLjItMTYzLjItMS44LTM3NC44LTEuOC0yOTMgMC0zNjguNi42LTM3NS4yIDIuNnptMTkwIDE0NS42YzUuNCA3LjYgNCAxNy40LTQuOCAzMS42LTkuOCAxNi0xMC44IDI3LjQtMyAzNSAyLjYgMi44IDYuNCA1IDguNCA1czM3LjguNCA3OS42LjZjNjggLjQgNzYuNi44IDgyLjQgMy44IDkuMiA1IDEyLjYgMTEgMTIuNiAyMiAwIDctMS4yIDEwLjgtNC44IDE1bC00LjggNS40LTM4IC4yYy01My44IDAtNTMuOCAwLTU1LjQgNTEuMi0uNiAxOC0xLjYgNDIuOC0yLjIgNTUtMS4yIDIyLjguNiAzMS42IDcuNiAzNi4yIDEuNC44IDIyLjIgMiA0NiAyLjZsNDMuMiAxIDguOCA2YzE1LjQgMTAuOCAxNy44IDI5LjIgNSAzNy01LjggMy42LTEwLjIgNC01MS44IDQtMzEgMC00NyAuOC01MC42IDIuNC03IDMuMi0xNC4yIDE3LjYtMTcuMiAzNC40LTMuMiAxNi42LTEgMjEuOCA5LjYgMjUuMiAxMy40IDQuMiAyMS44IDExLjIgNDkgNDEuNCAzNSAzOC44IDM2LjYgNDEgNDEuOCA1OC44IDcgMjMuOCAyLjIgNDEuOC0xMS40IDQxLjgtNy42IDAtMTItMy0yMS0xNC42LTEzLjgtMTcuNC01NC40LTY1LjgtNjItNzMuOC0xNS4yLTE2LTI5LjQtNS44LTM4LjggMjcuNC0xLjggNi42LTguOCAyMy4yLTE1LjYgMzctMTAuOCAyMi0xNCAyNi44LTI3LjQgMzkuNi0xOS42IDE5LjItMjYuNCAyMy01My42IDI5LjYtMjcuMiA2LjQtMzcgNS42LTM4LTMuNi0xLTguNCA0LjQtMTYuNCAyMC0yOSAxNi0xMyAzNi44LTM2LjYgNDUuMi01MS40IDMtNS4yIDguMi0xMy44IDExLjYtMTkgMy40LTUgMTEuOC0yMC40IDE4LjYtMzQuMiAxMC0yMCAxMy42LTI5LjQgMTcuMi00NyAyLjYtMTIuMiA2LjItMjUuNCA3LjgtMjkuNCA0LTkuNCA0LTIxLjQuMi0yNy01LjItNy40LTE2LTguOC02Mi42LTguNC01MC40LjQtNTUuMi0uOC01Ny42LTEzLjItMS44LTEwLjQgNS44LTI0LjQgMTYuMi0yOS44IDcuNC0zLjggMTEuOC00LjIgNTYuMi00LjhsNDguNC0uOCA0LjYtNWM0LjgtNSA0LjgtNSA1LTYxLjYgMC0zNS4yLS44LTU5LjItMi02My4yLTMuOC0xMS4yLTExLTE0LjgtMzAuMi0xNC44cy0yMS40IDEuNC0zMS4yIDE4LjJjLTguMiAxNC40LTIwLjYgMjguOC0zMy4yIDM4LjgtMTMuMiAxMC40LTIxLjYgMTMtMjggOS04LjQtNS42LTUuMi0yMy4yIDguMi00My4yIDQtNi40IDkuMi0xOC42IDEyLjItMjkuNiAzLTEwLjIgNy40LTIzLjIgMTAtMjkgMi40LTUuNiA2LTE2LjggOC0yNC42IDUuNi0yMy42IDI0LTUwLjggMzkuNC01OC40IDExLjItNS40IDE4LjYtNS40IDIyLjQuMnptNDUyIDY4LjJjMTEuOCA3LjggMTEuNC0uOCAxMC44IDIxNi0uNiAxODEtLjggMTk4LjgtNCAyMDMtNy42IDEwLjgtOS44IDExLjQtNTMuNiAxMi40bC00MSAxLTE0IDcuOGMtNy42IDQuMi0yMS4yIDEzLTI5LjggMTkuNC0yNS44IDE5LjItMzUgMTkuOC00My40IDMuMi0xMS44LTIzLjItMjMuNi0zMy4yLTM5LjQtMzMuNC04LjggMC0xMy42LTIuOC0xNy4yLTkuOC0yLjYtNC44LTMtMzMuOC0yLjYtMjA4LjguNC0xOTkuOC40LTIwMyA0LjQtMjA3LjQgMi4yLTIuNCA1LjgtNS4yIDgtNi4yIDIuMi0uOCA1MS44LTEuNCAxMTAtMS4yIDk5IC40IDEwNi42LjYgMTExLjggNHoiLz48cGF0aCBkPSJNNjA2LjggMzM3LjRjLTIuNC40LTYuNCAzLTkgNS44bC00LjggNS4yLS42IDE1Ni40LS40IDE1Ni40IDYuNCA5LjRjMy42IDUuMiA5LjggMTUuMiAxMy42IDIxLjggOCAxNC4yIDE2LjggMjAuNiAyNS42IDE4LjYgMy4yLS42IDEzLjgtNyAyMy42LTE0LjIgMjMtMTcgMjcuOC0xOSA1MC4yLTIwLjIgMTYuNC0xIDE5LjItMS44IDIzLjYtNi4yIDIuOC0yLjggNS02LjQgNS4yLTguMlY1MDUuNmMwLTExNi0uNi0xNTQuNC0yLjYtMTU4LjYtNC44LTEwLjQtOC40LTExLTcwLTEwLjgtMzEuMi4yLTU4LjYuOC02MC44IDEuMnoiLz48L3N2Zz4=);
-    }
-    
-    
-    
-</style>
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
-        <!-- Config CSS -->
+
+    
+
+    
+
+    <!-- Config CSS -->
 
 <!-- Other Styles -->
 <style>
   body, html {
     font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   }
 
   a {
@@ -274,6 +194,7 @@
 
 
 <!-- Import Font -->
+<!-- Import Roboto -->
 
     <style>
         @font-face {
@@ -299,36 +220,133 @@
             src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot);
             src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.svg#Roboto) format('svg')
         }
-
-        @font-face {
-            font-family: 'Material Icons';
-            font-style: normal;
-            font-weight: 400;
-            src: url(https://lib.baomitu.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.eot);
-            src: url(https://lib.baomitu.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff2) format('woff2'),url(https://lib.baomitu.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff) format('woff'),url(https://lib.baomitu.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.ttf) format('truetype')
-        }
     </style>
 
 
-        <script>lsloader.load("js/jquery.min.js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="大喵的新窝">
+    <meta name="msapplication-starturl" content="https://snatix.com/2017/01/15/009-start-with-asset-bundle/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="大喵的新窝">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/miao.png">
+
+    <!-- Site Verification -->
     
     
-    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- RSS -->
+    
+        
+            <link rel=alternate type="application/atom+xml" href="/atom.xml">
+        
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://snatix.com/2017/01/15/009-start-with-asset-bundle/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Assetbundle(1)-初次接触 | 大喵的新窝">
+    <meta property="og:image" content="/img/miao.png">
+    <meta property="og:description" content="这理论上应该是一个冗长无比的系列，但是既然决定开这个深坑了就要好好填～其实一直以来都希望有一套自己熟悉的框架来自行维护，有什么想法的时候拿起来就能写，同时也有机会接触到 Unity 的方方面面而不是只会拼 UI 写业务系统。不管是 ulua 还是 slua，目的就是通过 AssetBundle 来更新，因此我们首先从 Assetbundle 开始。">
+    <meta property="og:article:tag" content="unity"> <meta property="og:article:tag" content="asset bundle"> 
+
+    
+        <meta property="article:published_time" content="Sun Jan 15 2017 15:01:25 GMT+0100">
+        <meta property="article:modified_time" content="Thu Jan 16 2020 02:51:21 GMT+0100">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="https://snatix.com/2017/01/15/009-start-with-asset-bundle/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "https://snatix.com/2017/01/15/009-start-with-asset-bundle/index.html",
+    "headline": "Assetbundle(1)-初次接触",
+    "datePublished": "Sun Jan 15 2017 15:01:25 GMT+0100",
+    "dateModified": "Thu Jan 16 2020 02:51:21 GMT+0100",
+    "author": {
+        "@type": "Person",
+        "name": "sNatic",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/miao.png"
+        },
+        "description": "这只喵很懒，什么都没留下"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "大喵的新窝",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/miao.png"
+        }
+    },
+    "keywords": ",unity,asset bundle",
+    "description": "这理论上应该是一个冗长无比的系列，但是既然决定开这个深坑了就要好好填～其实一直以来都希望有一套自己熟悉的框架来自行维护，有什么想法的时候拿起来就能写，同时也有机会接触到 Unity 的方方面面而不是只会拼 UI 写业务系统。不管是 ulua 还是 slua，目的就是通过 AssetBundle 来更新，因此我们首先从 Assetbundle 开始。",
+}
+</script>
+
+
+    
 
     <!-- Analytics -->
-    <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1262667793&web_id=1262667793" language="JavaScript"></script>
-</div>
-
-    <!-- Custom Head -->
     
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+        <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-120660091-1', 'auto');ga('send', 'pageview');
+</script>
+    
+    
+        <script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?b00efe9609c7d625c1a23758b10a56c8';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
 
 
     
         <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+            <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="material-layout  mdl-js-layout has-drawer is-upgraded">
                 
 
                 <!-- Main Container -->
@@ -363,18 +381,19 @@
     </div>
     -->
 
+
     <!-- Left aligned menu below button -->
+    
+    
     <button id="post-toc-trigger-btn"
         class="mdl-button mdl-js-button mdl-button--icon">
         <i class="material-icons">format_list_numbered</i>
     </button>
 
-    
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
         <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-1-概述"><span class="post-toc-text">PART 1 概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-2-Assetbundle-介绍"><span class="post-toc-text">PART 2 Assetbundle 介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是-Assetbundle"><span class="post-toc-text">什么是 Assetbundle</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#为什么要用-Assetbundle"><span class="post-toc-text">为什么要用 Assetbundle</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-3-简单的尝试-Assetbundle"><span class="post-toc-text">PART 3 简单的尝试 Assetbundle</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#写一句生成-Assetbundle-的代码"><span class="post-toc-text">写一句生成 Assetbundle 的代码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#随便制作一个-Prefab-做实验"><span class="post-toc-text">随便制作一个 Prefab 做实验</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#生成一个-Assetbundle-并放在服务器上"><span class="post-toc-text">生成一个 Assetbundle 并放在服务器上</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#加载-Assetbundle-中的-Prefab"><span class="post-toc-text">加载 Assetbundle 中的 Prefab</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-4-自动依赖管理"><span class="post-toc-text">PART 4 自动依赖管理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-5-总结"><span class="post-toc-text">PART 5 总结</span></a></li></ol>
     </ul>
     
-
 
 
 
@@ -445,9 +464,10 @@
 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
     <li class="mdl-menu__item">在其它设备中阅读本文章</li>
     
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAACzklEQVR42u3aW3LbMBAEQN3/0s4BHFMzCyqhgeaXS+YDTVV5vLt4fR15vLCxsbGxsbGxsbEfyX7Fx/er/nLrH87/ftX1na+fOFwzNjY29tbsN3/6y3PyBV2z86uSNWNjY2OfwE4e04ZcDsvjsF0zNjY2Nnb+CpKSo8W0YYmNjY2NPQuwtkhIgu16ndjY2NjYKw2jZLnt0h/dS8PGxsZ+PHvW0P+/P//T+TY2Njb2g9n1Fsa4rZ9s7pkNlYcrx8bGxt6UvTLEbce3eUCu3wcbGxv7HHa+9HwQm58za13lRQs2Njb2Cey7ts601LxcWYlSbGxs7NPYKxHSDnfb19o2m7CxsbFPY6+MUZOlfyLSkqYYNjY29gnstnEf/dMft/vzFn8SlvV8GxsbG3sL9l3DgDpORgOGlUDFxsbG3pWdvIIkrmZjhmLDzehMbGxs7BPYK2XArK2ft4RmG3eKLTvY2NjYm7Jn7f48rvJm02ycgI2NjX0yO38deXQln8wGFW1hg42Njb03e7ZpZtYkmoXlyheAjY2NvTd7pSzJX0rR+omvbQsYbGxs7F3ZswBrG/r5sGFltPDmK8HGxsbemv2J1lIeMHeFWV2BYWNjY2/EXm8YtaS7NgZhY2NjYydto+tRa14ezF5xG2l1KYKNjY29Ebtt4rSfJC2q/LdtTGJjY2PvzZ4NevNhcBuB60PipQoMGxsb+9ey81snBUMeUbNz6mEDNjY29sHsWRGSv5r2BSVBe0OAYWNjY/8Sdnuss/MtOPl2n6gcwsbGxt6U3QZD/uC8LdVu6Jk1wrCxsbH3Zs8euRJIeVMpD7A3pQ42Njb2Aex8S+V6CTEbBrQHNjY2NnY7uF0ZAOdROgs8bGxsbOy2VfSJEe9sgIGNjY19DjsvGFYCrB1CrFyFjY2NfQ673dQ4K1ryYPvEaBkbGxt7V/Y5BzY2NjY2NjY2NvZjjj+z7nvuuYKIFgAAAABJRU5ErkJggg==">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC3UlEQVR42u3awW7jMAwE0Pz/T+9eCyyazpDewpGfTwGiOnrqgeBQrz+PfF7Y2NjY2NjY2NjYt2S/4id69ZeVyRv+XT97c7JnbGxs7LPZOea7b7/7yffg/DjyA/puDTY2NvYT2MnWN+tnB7rfAzY2NjZ2+7nFJ0Vrs2dsbGxs7DbQacOjKBK6QwHDxsbGvj17E83Xm4jHD++P4JeyNGxsbOzbs/OydJ/PvzrfxsbGxr4xu32S0rVvMGax1A87x8bGxj6UnReG9jj28VBy3adoabCxsbEPZV8c3JQFaXbRJwmqsLGxsbHbQWwbVLVD3/ZCTxQqYWNjYx/Bnl15TH6sbSTale1usbGxsc9mvw+A8ui/HdNuqBfPt7GxsbE/nN0Oemf4trC1odJw0IuNjY394ew8rG+30jYnm7KaHC42Njb22exkWDsrTnmZacOsVaiEjY2NfRD7quuS71cmbUw0rF1c9MHGxsZ+DruNkGZj47xwtuUqunyJjY2NfRD7qp/chPub5idvUbCxsbGfwM5jo/aCTn6gbbuSR1TY2NjYp7JnxakYr5YrrzruogPDxsbGPoK9GqCW222Dqlm5wsbGxn4Oux3Q5lHOVZj8+S9ZGjY2Nvbt2fvLkfvWZXPRZ3X5EhsbG/sI9qZUtI1Kvj45prZkYmNjY5/KnpGSBmBTivbjhGIqgo2NjX0EOy9mmyI0uxLUDo+HoRI2Njb2cexkAJC0NG3bs4moVlkaNjY29kHsC+Kbt4Xq/V/lTcsFoRI2Njb2Eez2yce9+5FAWw5/+EdiY2NjH8reD3f3gf61n4eDXmxsbOwPZ+ekthnIw/2clxQwbGxs7Geykws0+bezEfJr9EQtEDY2NjZ2XDBm49j2zfmwARsbGxs7XzNrGNr3zC4MYWNjYz+BPRvNtkfWjmmT9ibaMzY2NvbR7Da4yYfBs1Fxsr7dDzY2Nvap7Oc82NjY2NjY2NjY2Ld5/gJiNLnMpK6x4QAAAABJRU5ErkJggg==">
     
 </ul>
+
     
 
     <!-- Tags (bookmark) -->
@@ -463,7 +483,8 @@
     
 
     <!-- Share -->
-    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
     <i class="material-icons" role="presentation">share</i>
     <span class="visuallyhidden">share</span>
 </button>
@@ -474,7 +495,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Assetbundle(1)-初次接触&url=http://snatix.com/2017/01/15/009-start-with-asset-bundle/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Assetbundle(1)-初次接触&url=https://snatix.com/2017/01/15/009-start-with-asset-bundle/index.html&pic=https://snatix.com/img/miao.png&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -483,7 +504,7 @@
 
     <!-- Share Twitter -->
     
-        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Assetbundle(1)-初次接触&url=http://snatix.com/2017/01/15/009-start-with-asset-bundle/index.html&via=sNatic" target="_blank">
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Assetbundle(1)-初次接触&url=https://snatix.com/2017/01/15/009-start-with-asset-bundle/index.html&via=sNatic" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Twitter
             </li>
@@ -492,7 +513,7 @@
 
     <!-- Share Facebook -->
     
-        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://snatix.com/2017/01/15/009-start-with-asset-bundle/index.html" target="_blank">
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://snatix.com/2017/01/15/009-start-with-asset-bundle/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Facebook
             </li>
@@ -501,7 +522,7 @@
 
     <!-- Share Google+ -->
     
-        <a class="post_share-link" href="https://plus.google.com/share?url=http://snatix.com/2017/01/15/009-start-with-asset-bundle/index.html" target="_blank">
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://snatix.com/2017/01/15/009-start-with-asset-bundle/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Google+
             </li>
@@ -518,6 +539,7 @@
     
 </ul>
 
+    
 </div>
 
                 
@@ -534,13 +556,13 @@
 <li>据说可以自动处理依赖，试一试</li>
 </ol>
 <p>不知道为什么今天的文风比较随意，大家将就看吧~</p>
-<h2 id="PART-2-Assetbundle-介绍"><a href="#PART-2-Assetbundle-介绍" class="headerlink" title="PART 2 Assetbundle 介绍"></a>PART 2 Assetbundle 介绍</h2><p>其实我很讨厌长篇大论的写东西来介绍某个概念，一是读起来太麻烦，二是我也写不出来。但是考虑到完整性，介绍一下又是不得不做的事情，我就不复制那些随便一搜一大堆的东西了，大概用自己的语言讲一下，讲的不对大家就当没看见就好了或者在评论区稍微提醒我修改～真想了解精准定义和概念的请移步「<a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html" target="_blank" rel="external">官方文档</a>」</p>
+<h2 id="PART-2-Assetbundle-介绍"><a href="#PART-2-Assetbundle-介绍" class="headerlink" title="PART 2 Assetbundle 介绍"></a>PART 2 Assetbundle 介绍</h2><p>其实我很讨厌长篇大论的写东西来介绍某个概念，一是读起来太麻烦，二是我也写不出来。但是考虑到完整性，介绍一下又是不得不做的事情，我就不复制那些随便一搜一大堆的东西了，大概用自己的语言讲一下，讲的不对大家就当没看见就好了或者在评论区稍微提醒我修改～真想了解精准定义和概念的请移步「<a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html" target="_blank" rel="noopener">官方文档</a>」</p>
 <h3 id="什么是-Assetbundle"><a href="#什么是-Assetbundle" class="headerlink" title="什么是 Assetbundle"></a>什么是 Assetbundle</h3><p>Asset 大家都知道是什么其实就是游戏用到的模型，贴图，场景，Prefab之类的资源。那么 Assetbundle 顾名思义就是把这些东西打成一个 Bundle。。。所以其实就是 Unity 官方提供了一种机制允许开发者把这些游戏资源打包放在自己的服务器，然后运行时再把 bundle 下载下来，把 Asset 解出来再使用。</p>
 <h3 id="为什么要用-Assetbundle"><a href="#为什么要用-Assetbundle" class="headerlink" title="为什么要用 Assetbundle"></a>为什么要用 Assetbundle</h3><p>首先就是可以减少包体大小，有些公司的产品很在意这些因为某商店的安装包超过 100M 时就默认不允许玩家使用流量下载，因此可以把很大的模型场景贴图之类的移出去，然后玩家安装好游戏以后在游戏里继续下载直到全部资源都下载完毕才可以开始玩。</p>
-<p>其次就是更新资源了，贴图模型和 Prefab 全都可以更新，用上 <a href="https://github.com/pangweiwei/slua" target="_blank" rel="external">slua</a> 或 <a href="https://github.com/topameng/tolua" target="_blank" rel="external">tolua</a> 的话连代码都可以更新，麻麻再也不怕我写出 bug 了~而且可以热更新的话就不需要每次修复 bug 或添加新特性都要更整包了有效提高玩家的用户体验。</p>
-<p>大概的概念介绍到此结束，想了解更多的同学请自行翻阅「<a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html" target="_blank" rel="external">官方文档</a>」，俗话说 Talk is cheap, show me the code。所以我们接下来就用代码说话。</p>
+<p>其次就是更新资源了，贴图模型和 Prefab 全都可以更新，用上 <a href="https://github.com/pangweiwei/slua" target="_blank" rel="noopener">slua</a> 或 <a href="https://github.com/topameng/tolua" target="_blank" rel="noopener">tolua</a> 的话连代码都可以更新，麻麻再也不怕我写出 bug 了~而且可以热更新的话就不需要每次修复 bug 或添加新特性都要更整包了有效提高玩家的用户体验。</p>
+<p>大概的概念介绍到此结束，想了解更多的同学请自行翻阅「<a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html" target="_blank" rel="noopener">官方文档</a>」，俗话说 Talk is cheap, show me the code。所以我们接下来就用代码说话。</p>
 <h2 id="PART-3-简单的尝试-Assetbundle"><a href="#PART-3-简单的尝试-Assetbundle" class="headerlink" title="PART 3 简单的尝试 Assetbundle"></a>PART 3 简单的尝试 Assetbundle</h2><p>首先做实验的第一步是生成 Assetbundle，那么新建工程新建场景脚本什么不说了直接观察目录结构</p>
-<pre class="line-numbers language-tex"><code class="language-tex">|---AssetManager    //Unity工程目录
+<pre><code class="lang-tex">|---AssetManager    //Unity工程目录
     |---Assets    //资源目录
     |    |---AssetManager    //插件目录(博主最终想要把整个作成插件的形式)
     |        |---Editor        //Editor脚本放置目录
@@ -552,101 +574,102 @@
     |        |---Scripts        //插件脚本
     |    
     |---Bundls    //放置生成的AssetBundle的目录
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <h3 id="写一句生成-Assetbundle-的代码"><a href="#写一句生成-Assetbundle-的代码" class="headerlink" title="写一句生成 Assetbundle 的代码"></a>写一句生成 Assetbundle 的代码</h3><p>那么如何生成 Assetbundle 呢？超级简单，核心就一个函数<code>BuildPipeline.BuildAssetBundles</code>。</p>
-<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token keyword">using</span> UnityEditor<span class="token punctuation">;</span>
-<span class="token keyword">namespace</span> AssetManager
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Menu</span>
-    <span class="token punctuation">{</span>
-        <span class="token punctuation">[</span><span class="token function">MenuItem</span><span class="token punctuation">(</span><span class="token string">"AssetManager/Build AssetBundles"</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">BuildAssetBundles</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">{</span>
-            BuildPipeline<span class="token punctuation">.</span><span class="token function">BuildAssetBundles</span><span class="token punctuation">(</span><span class="token string">"outputPath"</span><span class="token punctuation">,</span> BuildAssetBundleOptions<span class="token punctuation">.</span>None<span class="token punctuation">,</span> BuildTarget<span class="token punctuation">.</span>StandaloneOSXUniversal<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="lang-csharp">using UnityEditor;
+namespace AssetManager
+{
+    public class Menu
+    {
+        [MenuItem(&quot;AssetManager/Build AssetBundles&quot;)]
+        public static void BuildAssetBundles()
+        {
+            BuildPipeline.BuildAssetBundles(&quot;outputPath&quot;, BuildAssetBundleOptions.None, BuildTarget.StandaloneOSXUniversal);
+        }
+    }
+}
+</code></pre>
 <p>在<code>AssetManager/Editor</code>下放置该文件就可以了。简单的说这样做可以让标题栏出现一个菜单<code>AssetManager/Build AssetBundles</code>，点一下就会自动生成 Assetbundle 了。是不是很方便，第一个参数是输出的路径，如我们项目结构的规划放置在与<code>Assets</code>同级的<code>Bundles</code>目录下，不出意外的话这个目录以后应该会反复用到，为了方便以后扩展最好做一个静态类 config 作为配置。</p>
-<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token keyword">using</span> UnityEngine<span class="token punctuation">;</span>
-<span class="token keyword">namespace</span> AssetManager
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Config</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">string</span> ABRootName <span class="token operator">=</span> <span class="token string">"Bundles"</span><span class="token punctuation">;</span>
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">string</span> ABOutputPath <span class="token operator">=</span> Application<span class="token punctuation">.</span>dataPath <span class="token operator">+</span> <span class="token string">"/../"</span> <span class="token operator">+</span> ABRootName<span class="token punctuation">;</span>
-        <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">string</span> ABServerRootPath <span class="token operator">=</span> <span class="token string">"http://192.168.31.40/"</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="lang-csharp">using UnityEngine;
+namespace AssetManager
+{
+    public static class Config
+    {
+        public static string ABRootName = &quot;Bundles&quot;;
+        public static string ABOutputPath = Application.dataPath + &quot;/../&quot; + ABRootName;
+        public static string ABServerRootPath = &quot;http://192.168.31.40/&quot;;
+    }
+}
+</code></pre>
 <p>这样就可以把第一段代码中的<code>&quot;outputPath&quot;</code>替换成<code>Config.ABOutputPath</code>了。那么生成的代码写完了，下一步就是做个 prefab 生成一下 Assetbundle 试试~</p>
 <h3 id="随便制作一个-Prefab-做实验"><a href="#随便制作一个-Prefab-做实验" class="headerlink" title="随便制作一个 Prefab 做实验"></a>随便制作一个 Prefab 做实验</h3><p>制作 Prefab 的过程不多说了，大概就是随便放一张图在<code>Example/Textures</code>然后在做一个把一个带有 Sprite 的 GameObject 做成 Prefab，再把图片拖进去就行了，像是这样</p>
-<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017012101.png" alt="制作一个Prefab"></p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2017012101.png" alt="制作一个Prefab"></p>
 <p>为了等一下观察生成的 Assetbundle 的大小，我特意放了一张很大的图（博主的壁纸，在 Unity 中显示大小为 2.2M ）。最后把 Prefab 放在了<code>Example/Prefabs</code>文件夹，设置<code>Assetbundle Name</code>为<code>prefab_1</code>。这样这一步就完成了。</p>
 <h3 id="生成一个-Assetbundle-并放在服务器上"><a href="#生成一个-Assetbundle-并放在服务器上" class="headerlink" title="生成一个 Assetbundle 并放在服务器上"></a>生成一个 Assetbundle 并放在服务器上</h3><p>第一步顺利完成的话，应该会看到菜单栏出现了名为<code>AssetManager</code>的菜单，点击<code>AssetManager/Build AssetBundles</code>，等待几秒钟就生成好了。</p>
-<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017012102.png" alt="生成中"></p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2017012102.png" alt="生成中"></p>
 <p>生成好了以后应该可以在<code>Bundles</code>这个文件夹下看到四个文件，观察一下发现名为<code>prefab_1</code>的文件很大大约有1.4M，而<code>Bundles</code>这个文件却很小只有不到1K。为什么一个 Prefab 打成的 Assetbundle 会这么大呢？答案是这个 Bundle 里包含了 Prefab 依赖的全部资源，因此那张很大的壁纸也被包含在里面了。我们把两个不带<code>.manifest</code>后缀的文件上传到自己的 http 服务器上确保用浏览器可以访问到。</p>
 <p>启动 Http 服务的方法很多，博主在局域网内另一台 Ubuntu 上某个文件夹直接运行以下命令：</p>
-<pre class="line-numbers language-bash"><code class="language-bash">$ <span class="token function">sudo</span> python -m SimpleHTTPServer 80
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre><code class="lang-bash">$ sudo python -m SimpleHTTPServer 80
+</code></pre>
 <p>就可以在当前文件夹下开启 Http 服务了，mac 想模拟的话大家自行寻找方法。上传文件也不说了博主就随便开启了个 ftp 就传了反正只是做实验。下一步是写一些代码把这个 Prefab 加载进来。</p>
 <h3 id="加载-Assetbundle-中的-Prefab"><a href="#加载-Assetbundle-中的-Prefab" class="headerlink" title="加载 Assetbundle 中的 Prefab"></a>加载 Assetbundle 中的 Prefab</h3><p>新建一个场景<code>Example_1</code>，保存在<code>Example/Scenes</code>中，再新建一个 GameObject 名为<code>Example_1</code>，新建一个脚本名为<code>Example_1</code>，保存在<code>Example/Scripts</code>中，再挂在上一步创建好的 Prefab 上，开始写代码。</p>
 <p>首先思路是使用<code>www</code>把这个文件下载下来，再把里面的内容 Load 进来，最后在场景中 Instanciate 这个 Prefab。实现这一套思路最简单的代码是这样的。</p>
-<pre class="line-numbers language-csharp"><code class="language-csharp"><span class="token keyword">using</span> System<span class="token punctuation">.</span>Collections<span class="token punctuation">;</span>
-<span class="token keyword">using</span> UnityEngine<span class="token punctuation">;</span>
+<pre><code class="lang-csharp">using System.Collections;
+using UnityEngine;
 
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Example_1</span> <span class="token punctuation">:</span> MonoBehaviour
-<span class="token punctuation">{</span>
-    <span class="token keyword">void</span> <span class="token function">Start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token function">StartCoroutine</span><span class="token punctuation">(</span><span class="token function">LoadPrefabFromAssetBundle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+public class Example_1 : MonoBehaviour
+{
+    void Start()
+    {
+        StartCoroutine(LoadPrefabFromAssetBundle());
+    }
 
-    IEnumerator <span class="token function">LoadPrefabFromAssetBundle</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        WWW www <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WWW</span><span class="token punctuation">(</span> Config<span class="token punctuation">.</span>ABServerRootPath <span class="token operator">+</span> <span class="token string">"prefab_1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">yield</span> <span class="token keyword">return</span> www<span class="token punctuation">;</span>
+    IEnumerator LoadPrefabFromAssetBundle()
+    {
+        WWW www = new WWW( Config.ABServerRootPath + &quot;prefab_1&quot;);
+        yield return www;
 
-        GameObject prefab <span class="token operator">=</span> www<span class="token punctuation">.</span>assetBundle<span class="token punctuation">.</span><span class="token generic-method function">LoadAsset<span class="token punctuation">&lt;</span>GameObject<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token string">"prefab_1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        GameObject<span class="token punctuation">.</span><span class="token function">Instantiate</span><span class="token punctuation">(</span>prefab<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        GameObject prefab = www.assetBundle.LoadAsset&lt;GameObject&gt;(&quot;prefab_1&quot;);
+        GameObject.Instantiate(prefab);
+    }
+}
+</code></pre>
 <p>运行一下，等待几秒后成功的把该显示的加载出来了~（可能有10秒）图就不截了大家应该都想象得出来，就跟上面制作的一模一样。到此为止我们的 Assetbundle 最基础的用法已经掌握了。</p>
 <h2 id="PART-4-自动依赖管理"><a href="#PART-4-自动依赖管理" class="headerlink" title="PART 4 自动依赖管理"></a>PART 4 自动依赖管理</h2><p>为什么会有依赖的问题呢？大家应该都发现了，把一个 Prefab 打成 Assetbundle 是会在生成的 Assetbundle 文件中包含所有依赖的资源，那么如果博主的壁纸在两个 Prefab 中使用呢？简单测试一下会发现生成的两个 Assetbundle 大小都约为1.4M。那么就会对玩家的流量造成极大的浪费，而且加载速度也会变慢。所以我们需要把他们依赖的公共资源单独打包至一个 Assetbundle 中。好的现在开始动手试试～</p>
 <p>首先放一张新的图在<code>Examples/Textures</code>下随便放两张完全一样的贴图命名为<code>texture_2</code>和<code>texture_3</code>，然后设置<code>texture_2</code>的 AssetBundle Name 为<code>texrure_2</code>，<code>texture_3</code>不进行任何设置作为对照组，然后做两个 prefab 分别引用这张图片，再给 prefab 分别设置 AssetBundle Name 为 <code>prefab_2</code>和<code>prefab_3</code>。最后生成一下，好的具体步骤就不演示了~生成结果如下图所示</p>
-<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017012601.png" alt="生成结果"></p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2017012601.png" alt="生成结果"></p>
 <p>大家可以观察到生成的名为<code>prefab_2</code>的文件大小为 2KB ，小于<code>prefab_3</code>的 3KB，这充分表明他所依赖的资源已经被分离出去了因此打好的 Assetbundle 大小会变小。那么如果用之前加载 prefab 的方法把 prefab_2 加载出来会发生什么事情呢？简单的修改代码尝试一下会发现，结果如图所示</p>
-<p><img src="http://ojgpkbakj.bkt.clouddn.com/2017012602.png" alt="丢失Sprite"></p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2017012602.png" alt="丢失Sprite"></p>
 <p>我们的 Sprite 丢失了~那么正确的处理方式是怎样呢？答案是要先把他所依赖的 Assetbundle 加载好。那么如何获取依赖的 Assetbundle 呢？</p>
-<pre class="line-numbers language-csharp"><code class="language-csharp">IEnumerator <span class="token function">LoadDependenciesAndPrefab</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    WWW www <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WWW</span><span class="token punctuation">(</span>Config<span class="token punctuation">.</span>ABServerRootPath <span class="token operator">+</span> Config<span class="token punctuation">.</span>ABRootName<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">yield</span> <span class="token keyword">return</span> www<span class="token punctuation">;</span>
+<pre><code class="lang-csharp">IEnumerator LoadDependenciesAndPrefab()
+{
+    WWW www = new WWW(Config.ABServerRootPath + Config.ABRootName);
+    yield return www;
 
-    AssetBundleManifest manifest <span class="token operator">=</span> www<span class="token punctuation">.</span>assetBundle<span class="token punctuation">.</span><span class="token generic-method function">LoadAsset<span class="token punctuation">&lt;</span>AssetBundleManifest<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token string">"AssetBundleManifest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    AssetBundleManifest manifest = www.assetBundle.LoadAsset&lt;AssetBundleManifest&gt;(&quot;AssetBundleManifest&quot;);
 
-    <span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span> dependenceBundleName <span class="token operator">=</span> manifest<span class="token punctuation">.</span><span class="token function">GetAllDependencies</span><span class="token punctuation">(</span><span class="token string">"prefab_2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token keyword">string</span> name <span class="token keyword">in</span> dependenceBundleName<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        www <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WWW</span><span class="token punctuation">(</span>Config<span class="token punctuation">.</span>ABServerRootPath <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">yield</span> <span class="token keyword">return</span> www<span class="token punctuation">;</span>
-        www<span class="token punctuation">.</span>assetBundle<span class="token punctuation">.</span><span class="token function">LoadAllAssets</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span>
+    string[] dependenceBundleName = manifest.GetAllDependencies(&quot;prefab_2&quot;);
+    foreach (string name in dependenceBundleName)
+    {
+        www = new WWW(Config.ABServerRootPath + name);
+        yield return www;
+        www.assetBundle.LoadAllAssets();
+      }
 
-      www <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WWW</span><span class="token punctuation">(</span>Config<span class="token punctuation">.</span>ABServerRootPath <span class="token operator">+</span> <span class="token string">"prefab_2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">yield</span> <span class="token keyword">return</span> www<span class="token punctuation">;</span>
+      www = new WWW(Config.ABServerRootPath + &quot;prefab_2&quot;);
+      yield return www;
 
-     GameObject prefab <span class="token operator">=</span> www<span class="token punctuation">.</span>assetBundle<span class="token punctuation">.</span><span class="token generic-method function">LoadAsset<span class="token punctuation">&lt;</span>GameObject<span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token string">"prefab_2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    GameObject<span class="token punctuation">.</span><span class="token function">Instantiate</span><span class="token punctuation">(</span>prefab<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+     GameObject prefab = www.assetBundle.LoadAsset&lt;GameObject&gt;(&quot;prefab_2&quot;);
+    GameObject.Instantiate(prefab);
+}
+</code></pre>
 <p>在<code>Start()</code>里开启一个协程调用以上函数试试～这应该是可以把一层依赖关系的 Assetbundle 解出来的最直观的代码了，不管好不好看至少可以非常清晰的理解思路。事实上不管多层依赖都只需要递归地把所有有依赖关系的 AssetBundle 用同样地方法解出来最后加载你想要的 Prefab 就可以了。</p>
-<h2 id="PART-5-总结"><a href="#PART-5-总结" class="headerlink" title="PART 5 总结"></a>PART 5 总结</h2><p>这一篇写的非常基础也非常水，其实这也算是博主自己探索 Assetbundle 的过程的一个笔记～希望可以对像博主一样完全初次接触 Assetbundle 的同学有帮助。文章配套的工程已经放在博主的 <a href="https://github.com/sNaticY/unity-asset-manager" target="_blank" rel="external">github</a> 了。接下来就要随着学习的进行一步一步的构建我们的插件，希望最终可以实现配置好路径就可以完成自动设置 Assetbundle Name，生成和上传 Assetbundle，下载和加载资源等等操作而不需要过多的关注这些细节。不知道最终多久可以完成，希望不会太久远～加油！</p>
+<h2 id="PART-5-总结"><a href="#PART-5-总结" class="headerlink" title="PART 5 总结"></a>PART 5 总结</h2><p>这一篇写的非常基础也非常水，其实这也算是博主自己探索 Assetbundle 的过程的一个笔记～希望可以对像博主一样完全初次接触 Assetbundle 的同学有帮助。文章配套的工程已经放在博主的 <a href="https://github.com/sNaticY/unity-asset-manager" target="_blank" rel="noopener">github</a> 了。接下来就要随着学习的进行一步一步的构建我们的插件，希望最终可以实现配置好路径就可以完成自动设置 Assetbundle Name，生成和上传 Assetbundle，下载和加载资源等等操作而不需要过多的关注这些细节。不知道最终多久可以完成，希望不会太久远～加油！</p>
 <hr>
-<p>原文链接：<a href="http://snatix.com/2017/01/15/009-start-with-asset-bundle/">http://snatix.com/2017/01/15/009-start-with-asset-bundle/</a></p>
-<p>本文由 sNatic 发布于『<a href="http://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+<p>原文链接：<a href="https://snatix.com/2017/01/15/009-start-with-asset-bundle/">https://snatix.com/2017/01/15/009-start-with-asset-bundle/</a></p>
+<p>本文由 <a href="https://github.com/sNaticY" target="_blank" rel="noopener">sNatic</a> 发布于『<a href="https://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
 
+        
     
 
     
@@ -658,30 +681,31 @@
                 <!-- Post Comments -->
                 
                     
-    <!-- 使用 DISQUS -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'http://snatix.com/2017/01/15/009-start-with-asset-bundle/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://snatix.com/2017/01/15/009-start-with-asset-bundle/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-<script type="text/ls-javascript" id="disqus-thread-script">
-    queue.offer(function() {
-            (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document;
-                var s = d.createElement('script');
-                s.src = '//snatix.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', + new Date());
-                (d.head || d.body).appendChild(s);
-            })();
-        });
-</script>
+    <!-- 使用 Gitalk -->
+<div id="gitalk-comment">
+    <!-- Gitalk 评论框 -->
+<div id="gitalk-container"></div>
 
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script>
+    var gitalk = new Gitalk({
+            id: 'Sun Jan 15 2017 15:01:25 GMT+0100',
+            clientID: '2ed6908a49c9d9b463a2',
+            clientSecret: '1c7ed40bc6c9c95e3e682ca3544846403d37115c',
+            repo: 'hexo-blog',
+            owner: 'sNaticY',
+            admin: ['sNaticY'],
+            // facebook-like distraction free mode
+            distractionFreeMode: true
+        })
+   gitalk.render('gitalk-container')
+</script>
 </div>
 <style>
-    #disqus-comment{
+    #gitalk-comment {
         background-color: #eee;
         padding: 2pc;
     }
@@ -800,7 +824,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2014/08/">八月 2014<span class="sidebar_archives-count">6</span></a>
+                <a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/08/">八月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2014/08/">八月 2014<span class="sidebar_archives-count">6</span></a>
             </ul>
         </li>
         
@@ -818,7 +842,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/Hexo博客重启计划/">Hexo博客重启计划<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/Octopress折腾之路/">Octopress折腾之路<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Unity通用框架工程/">Unity通用框架工程<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/git探索之路/">git探索之路<span class="sidebar_archives-count">2</span></a>
+                <a class="sidebar_archives-link" href="/categories/Catlike学习笔记/">Catlike学习笔记<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Hexo博客重启计划/">Hexo博客重启计划<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Octopress折腾之路/">Octopress折腾之路<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Unity通用框架工程/">Unity通用框架工程<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/git探索之路/">git探索之路<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/快节奏多人游戏同步/">快节奏多人游戏同步<span class="sidebar_archives-count">4</span></a>
             </ul>
         </li>
         
@@ -854,6 +878,16 @@
                     <i class="material-icons sidebar-material-icons">touch_app</i>
                 
                 友情链接
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/timeline" title="时间轴">
+                
+                    <i class="material-icons sidebar-material-icons">event_node</i>
+                
+                时间轴
             </a>
         </li>
         
@@ -979,12 +1013,16 @@ It will not impact the appearance and can give developers a lot of support :)
 
     <!-- Telegram -->
     
+    
+    <!-- V2EX -->
+    
 </div>
 
 
         <!--Copyright-->
         <div id="copyright">
             Copyright&nbsp;©&nbsp;2014&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>大喵的新窝
+            
         </div>
 
         <!-- Paradox Footer Right Section -->
@@ -999,6 +1037,7 @@ It will not impact the appearance and can give developers a lot of support :)
 
         <div class="mdl-mini-footer--right-section">
             <div>
+                <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
                 <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
                 <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
             </div>
@@ -1007,15 +1046,17 @@ It will not impact the appearance and can give developers a lot of support :)
 </footer>
 
 
-                    <!-- Import File -->
+                    <!-- Import JS File -->
 
-
-    <script>lsloader.load("js/lazyload.min.js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
-    <script>lsloader.load("js/js.min.js","/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
 
 
 
-    <script>lsloader.load("js/nprogress.js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
 
 
 <script type="text/ls-javascript" id="NProgress-script">
@@ -1047,8 +1088,7 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
 
-   <!-- 使用 DISQUS js 代码 -->
-<script id="dsq-count-scr" src="//snatix.disqus.com/count.js" async></script>
+   <!-- GitTalk -->
 
 
 
@@ -1063,15 +1103,35 @@ It will not impact the appearance and can give developers a lot of support :)
 	}
 </script>
 
-<!-- Window Load-->
+<!-- Import prettify js  -->
+
+
+    
+        <script>lsloader.load("hanabi","/js/hanabi-browser-bundle.js?Pki5+pzkluqu53g+ouMWpA==", true)</script>
+    
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
 <script type="text/ls-javascript" id="window-load">
     $(window).on('load', function() {
         // Post_Toc parent position fixed
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
+
+    
+    
+        
+        
+        HanabiBrowser.start('pre code',false);
+    
 </script>
 
 <!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
 
 <script type="text/ls-javascript" id="lazy-load">
     // Offer LazyLoad
@@ -1089,7 +1149,8 @@ It will not impact the appearance and can give developers a lot of support :)
     });
 </script>
 
-<!-- Bing Background -->
+<!-- Custom Footer -->
+
 
 
 <script>
@@ -1101,11 +1162,26 @@ It will not impact the appearance and can give developers a lot of support :)
             lsloader.runInlineScript(item.id,item.id);
         }
     })()
-console.log('\n %c © Material Theme | Version: 1.4.0 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
 </script>
 
                 </main>
             </div>
-        </body>
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
     
 </html>

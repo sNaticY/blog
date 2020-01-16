@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            Catlike学习笔记(2.3)-Unity对象池与重用 | 
+        
+        大喵的新窝
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/miao.png">
+    <link rel="icon" href="/img/miao.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="在 Unity 中使用对象池，使用 UGUI 创建和销毁对象。">
+    <meta name="keywords" content=",unity,教程,csharp,对象管理">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <style>
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 300;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: regular;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 500;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.svg#Roboto) format('svg')
+        }
+    </style>
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="大喵的新窝">
+    <meta name="msapplication-starturl" content="https://snatix.com/2018/08/19/027-reusing-objects/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="大喵的新窝">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/miao.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+        
+            <link rel=alternate type="application/atom+xml" href="/atom.xml">
+        
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://snatix.com/2018/08/19/027-reusing-objects/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Catlike学习笔记(2.3)-Unity对象池与重用 | 大喵的新窝">
+    <meta property="og:image" content="/img/miao.png">
+    <meta property="og:description" content="在 Unity 中使用对象池，使用 UGUI 创建和销毁对象。">
+    <meta property="og:article:tag" content="unity"> <meta property="og:article:tag" content="教程"> <meta property="og:article:tag" content="csharp"> <meta property="og:article:tag" content="对象管理"> 
+
+    
+        <meta property="article:published_time" content="Sun Aug 19 2018 18:34:48 GMT+0200">
+        <meta property="article:modified_time" content="Thu Jan 16 2020 02:51:21 GMT+0100">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="https://snatix.com/2018/08/19/027-reusing-objects/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "https://snatix.com/2018/08/19/027-reusing-objects/index.html",
+    "headline": "Catlike学习笔记(2.3)-Unity对象池与重用",
+    "datePublished": "Sun Aug 19 2018 18:34:48 GMT+0200",
+    "dateModified": "Thu Jan 16 2020 02:51:21 GMT+0100",
+    "author": {
+        "@type": "Person",
+        "name": "sNatic",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/miao.png"
+        },
+        "description": "这只喵很懒，什么都没留下"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "大喵的新窝",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/miao.png"
+        }
+    },
+    "keywords": ",unity,教程,csharp,对象管理",
+    "description": "在 Unity 中使用对象池，使用 UGUI 创建和销毁对象。",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+        <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-120660091-1', 'auto');ga('send', 'pageview');
+</script>
+    
+    
+        <script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?b00efe9609c7d625c1a23758b10a56c8';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-1-概述"><span class="post-toc-text">PART 1 概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-2-添加一键删除随机对象"><span class="post-toc-text">PART 2 添加一键删除随机对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-3-自动化创建和销毁对象"><span class="post-toc-text">PART 3 自动化创建和销毁对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-4-对象池"><span class="post-toc-text">PART 4 对象池</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-5-总结"><span class="post-toc-text">PART 5 总结</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Catlike学习笔记(2.3)-Unity对象池与重用
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/miao.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>sNatic</strong>
+        <span>8月 19, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACXElEQVR42u3aQXLCMAwF0Nz/0u0BKJkv2RYp87JiIBA/LSwh+fr56uvCw8PDw8PDw8N7GO+Krz9+6OXTd3e+fuv+d1bWhoeHhzfDqy7onpeEJtrie8HCw8PDG+S9W9a7e/Jv9d5pPgUPDw/vkbz8dbLFV8OKh4eH9x95K4nhvvWwsjY8PDy8eV7yhz9ZYg+QJJjjvRY8PDy8mJcPmeZfj8738PDw8ALeylCq2jhIiuOVgRkeHh7eDC/fiHvD/t5BrpX14OHh4Z3mJUOp6oaejLvysVn1WXh4eHinebsSQ7K4PIjVQODh4eF9ltfb3PO2QnLnSmmOh4eHd5qXPOb0IYBdh7rw8PDwZng5IPk0bx/sClnhZAQeHh7eJl5SsFabuSsHtvL00Mx7eHh4eJt4K4Vvvoi87F45mIWHh4c3z+s1ZFeGakkKKRTieHh4eB/lrYcgb8WuJx48PDy8GV7SkM235up2n4djw6ErPDw8vK28aCQfX+vlde9+PDw8vBledZvutVl7IaiW+3h4eHgzvN54Pk8tV/HqtYnx8PDwPsXL2wHr7YMkcElYN/da8PDw8Fq86oGA3rA/v6c8osPDw8Mb5+UlbHX0VQU3Q4CHh4d3mNcrZPNBfh6UXlrCw8PDm+f1NuV8bHbPqB4jiJ6Lh4eHN8LrbetJAV1tZ+RtZTw8PLwn8KobdF4052V0L0Xh4eHhPZ+XH1etJoyVEhwPDw/v+by8EK8mj17ZjYeHhzfP6y30dNtitNeCh4eHd2AAVj2iWh2k9Z6Oh4eHN8n7vgsPDw8PDw8PD+8B1y/1nu05IUc4LwAAAABJRU5ErkJggg==">
+    
+</ul>
+
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/csharp/">csharp</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/unity/">unity</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/对象管理/">对象管理</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/教程/">教程</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Catlike学习笔记(2.3)-Unity对象池与重用&url=https://snatix.com/2018/08/19/027-reusing-objects/index.html&pic=https://snatix.com/img/miao.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Catlike学习笔记(2.3)-Unity对象池与重用&url=https://snatix.com/2018/08/19/027-reusing-objects/index.html&via=sNatic" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://snatix.com/2018/08/19/027-reusing-objects/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://snatix.com/2018/08/19/027-reusing-objects/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>短暂又美好的假期瞬间就过去了，已经上班 3 天了感觉每天早上都很困很想睡懒觉～而且也没有按照原计划在假期内完成「<a href="https://catlikecoding.com/unity/tutorials/object-management/" target="_blank" rel="noopener">对象管理</a>」的部分感觉好像有那么一点点惭愧（<del>其实完全不惭愧反正已经不知道拖延过多少次弃坑过更多次早就习惯了</del>)咳咳，然后最近几天沉迷『<a href="https://store.steampowered.com/app/281990/Stellaris/" target="_blank" rel="noopener">群星(Stellaris)</a>』（<del>睿智的P社玩家+1</del>） 话说为什么自从开始要求自己每个礼拜更新一篇博客以后比以前更容易沉迷游戏了。。。不管那些总之这一篇来到了 <a href="https://catlikecoding.com/unity/tutorials/object-management/reusing-objects/" target="_blank" rel="noopener">Reusing Object</a> ，主要讲了简单的对象池实现和使用，希望可以给大家带来一点点启发～</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>虽然主角是对象池但是如果没有一个好的可以跑起来的工程用来测试的话也不能发挥出对象池的威力～所以接『<a href="https://snatix.com/2018/08/08/026-object-variety/">上一篇</a>』和『<a href="https://snatix.com/2018/08/05/025-persisting-objects/">上上篇</a>』我们完成了一键创建随机材质颜色和形状的 GameObject 还可以实现保存和重新加载，最后还开启了 GPU Instancing，如果直接看这一篇有点莫名其妙的同学可以从第一篇过一遍～当然不关心场景是怎么创建出来的只想看看对象池的简单实现的话可以直接跳到「PART 4 对象池」。总之本篇的目标大概是以下这些：</p>
+<ul>
+<li>销毁对象</li>
+<li>自动创建与销毁</li>
+<li>创建简单的 UI 控制自动创建和销毁的速度</li>
+<li>使用 Profiler 追踪内存分配</li>
+<li>使用对象池回收</li>
+</ul>
+<h2 id="PART-2-添加一键删除随机对象"><a href="#PART-2-添加一键删除随机对象" class="headerlink" title="PART 2 添加一键删除随机对象"></a>PART 2 添加一键删除随机对象</h2><p>在之前的教程中我们完成了一键创建随机材质颜色和形状的 GameObject 并保存在<code>_objectList</code>中，那么相应的删除对象也很简单，大概就是从 List 中随机一个 index，销毁后再从 List 中删除即可，因此我们添加如下代码：</p>
+<pre><code class="lang-csharp">
+public class ReusingDemo : PersistableObject
+{
+    ...
+    public KeyCode CreateKey = KeyCode.C;
+    public KeyCode DestroyKey = KeyCode.X;
+    ...
+
+    private void Update()
+    {
+        ...
+        else if (Input.GetKeyDown(DestroyKey))
+        {
+            DestroyObject();
+        }
+    }
+
+    ...
+
+    private void DestroyObject()
+    {
+        if (_objectList.Count &gt; 0)
+        {
+            int index = Random.Range(0, _objectList.Count);
+            Destroy(_objectList[index].gameObject);
+            _objectList.RemoveAt(index);
+        }
+    }
+
+    ...
+}
+</code></pre>
+<p>简单的来说就是添加一个新的按键叫<code>DestroyKey</code>，在<code>Update()</code>中检测到该按键被按下时从<code>_objectList</code>中取出相应的 GameObject 并销毁，最后从<code>_objectList</code>中移除。不过这样有一个小小的不足之处，学过数据结构的同学都知道，在我们从 List / Array 之类的结构中移除一个对象的时候，会依次将后面的对象往前移动，这样就造成了不必要的性能开销～那么我们还可以稍微优化一下，代码如下：</p>
+<pre><code class="lang-csharp">
+public class ReusingDemo : PersistableObject
+{
+    ...
+    private void DestroyObject()
+    {
+        if (_objectList.Count &gt; 0)
+        {
+            int index = Random.Range(0, _objectList.Count);
+            Destroy(_objectList[index].gameObject);
+            int lastIndex = _objectList.Count - 1;
+            _objectList[index] = _objectList[lastIndex];
+            _objectList.RemoveAt(lastIndex);
+        }
+    }
+    ...
+}
+</code></pre>
+<p>大概思路就是下面这样，假设当前 List 中有 9 个对象<code>A-I</code>然后 <code>\0</code>代表结尾的话。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+<th style="text-align:center">8</th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">D</td>
+<td style="text-align:center">E</td>
+<td style="text-align:center">F</td>
+<td style="text-align:center">G</td>
+<td style="text-align:center">H</td>
+<td style="text-align:center">I</td>
+<td style="text-align:center">\0</td>
+</tr>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">D</td>
+<td style="text-align:center">/</td>
+<td style="text-align:center">F</td>
+<td style="text-align:center">G</td>
+<td style="text-align:center">H</td>
+<td style="text-align:center"><strong>I</strong></td>
+<td style="text-align:center">\0</td>
+</tr>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">D</td>
+<td style="text-align:center"><strong>I</strong></td>
+<td style="text-align:center">F</td>
+<td style="text-align:center">G</td>
+<td style="text-align:center">H</td>
+<td style="text-align:center">I</td>
+<td style="text-align:center">\0</td>
+</tr>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">D</td>
+<td style="text-align:center"><strong>I</strong></td>
+<td style="text-align:center">F</td>
+<td style="text-align:center">G</td>
+<td style="text-align:center">H</td>
+<td style="text-align:center">\0</td>
+<td style="text-align:center">-</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>所以大概思路就是将<code>E</code>销毁掉以后，把 List 中的最后一个也就是<code>I</code>放到<code>E</code>原来的位置，然后再把<code>List</code>的最后一个移除这样。避免了大量的对象移动操作。完成以后看看效果～</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018081900.gif" alt=""></p>
+<h2 id="PART-3-自动化创建和销毁对象"><a href="#PART-3-自动化创建和销毁对象" class="headerlink" title="PART 3 自动化创建和销毁对象"></a>PART 3 自动化创建和销毁对象</h2><p>目前为止可以一键创建和销毁对象了，但是如果我们想要持续化的反复创建和销毁的话，一直敲键盘感觉会很累的样子，所以做一个小功能来自动化的创建和销毁比较好～所以我们可能需要创建一个拉杆允许我们调整生成和销毁的速度，总之随便用 UGUI 做一下就可以了～就像这样。</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018081901.png" alt=""></p>
+<p>然后我们需要做一些设置再添加一些代码让这个进度条工作起来。那么首先在<code>Game</code>中添加</p>
+<pre><code class="lang-csharp">public class ReusingDemo : PersistableObject
+{
+    ...
+    public float CreationSpeed { get; set; }
+    public float DestructionSpeed { get; set; }
+    ...
+}
+</code></pre>
+<p>我们需要设置这两个属性来接收 Slider 的值。像这样设置</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018081902.png" alt=""></p>
+<p>除了下方的 On Value Changed 的地方设置好以外还要记得把 Max Value 改成 10，不然拖到最大每秒也只能生成一个就很慢。。。把两个 Slider 分别绑定到<code>CreationSpeed</code>和<code>DestructionSpeed</code>以后，继续添加代码：</p>
+<pre><code class="lang-csharp">
+public class ReusingDemo : PersistableObject
+{
+    ...
+    public float CreationSpeed { get; set; }
+    public float DestructionSpeed { get; set; }
+
+    private float _creationProgress;
+    private float _destructionProgress;
+    ...
+
+    private void Update()
+    {
+        ...
+
+        _creationProgress += Time.deltaTime * CreationSpeed;
+        while (_creationProgress &gt;= 1f)
+        {
+            _creationProgress -= 1f;
+            CreateObject();
+        }
+
+        _destructionProgress += Time.deltaTime * DestructionSpeed;
+        while (_destructionProgress &gt;= 1f)
+        {
+            _destructionProgress -= 1f;
+            DestroyObject();
+        }
+    }
+    ...
+}
+</code></pre>
+<p>大概思路。。。不用解释了吧这个代码也太简单了总之就累加到大于 1 就创建或者销毁就这样。。。那么运行一下看看效果吧～</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018081903.gif" alt=""></p>
+<h2 id="PART-4-对象池"><a href="#PART-4-对象池" class="headerlink" title="PART 4 对象池"></a>PART 4 对象池</h2><p>目前为止我们的准备工作终于完成了。在使用对象池之前，我们先打个包然后观察一下 Profiler 看看。</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018081906.png" alt=""></p>
+<p>跟之前一样打包并且勾选 Autoconnect Profiler 并且运行起来，把自动生成和销毁速度都调成最高，我们可以观察到每次 Instantiate 对象的时候都会导致 GC Alloc 的产生。因此我们要做的是使用对象池把要被销毁的对象保存起来以便下次再重用从而避免 GC Alloc。</p>
+<p>众所周知对象池就是一个“池子”里面放着我们所需要的对象，在需要使用的时候从里面取出，发现取空的时候才创建对象。用完以后通过某个接口把对象重新放回池里。按照这个思路，我们针对<code>ShapeFactory</code>进行修改：</p>
+<pre><code class="lang-csharp">[CreateAssetMenu]
+public class ShapeFactory : ScriptableObject
+{
+    ...
+    [SerializeField] private bool _recycle;
+    private List&lt;Shape&gt;[] _pools;
+
+    public Shape Get(int shapeId, int materialId)
+    {
+        Shape instance;
+        if (_recycle)
+        {
+            if (_pools == null)
+            {
+                CreatePools();
+            }
+
+            var pool = _pools[shapeId];
+            var lastIndex = pool.Count - 1;
+            if (lastIndex &gt;= 0)
+            {
+                instance = pool[lastIndex];
+                instance.gameObject.SetActive(true);
+                pool.RemoveAt(lastIndex);
+            }
+            else
+            {
+                instance = Instantiate(_prefabs[shapeId]);
+                instance.ShapeId = shapeId;
+            }
+        }
+        else
+        {
+            instance = Instantiate(_prefabs[shapeId]);
+            instance.ShapeId = shapeId;
+        }
+
+        instance.SetMaterial(_materials[materialId], materialId);
+        instance.SetColor(Random.ColorHSV(0f, 1f, 0.4f, 0.6f, 0.7f, 0.9f, 1f, 1f));
+
+        return instance;
+    }
+    ...
+
+    public void Reclaim(Shape shapeToRecycle)
+    {
+        if (_recycle)
+        {
+            if (_pools == null)
+            {
+                CreatePools();
+            }
+
+            _pools[shapeToRecycle.ShapeId].Add(shapeToRecycle);
+            shapeToRecycle.gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(shapeToRecycle.gameObject);
+        }
+    }
+
+    private void CreatePools()
+    {
+        _pools = new List&lt;Shape&gt;[_prefabs.Length];
+        for (int i = 0; i &lt; _pools.Length; i++)
+        {
+            _pools[i] = new List&lt;Shape&gt;();
+        }
+    }
+}
+</code></pre>
+<p>简单来说，就是我们为每种形状准备一个对象池，每次调用<code>Get()</code>获取一个新的 GameObject 的时候先检查对象池是否存在，确保对象池存在以后将 List 的最后一个对象返回。调用<code>Reclaim()</code>将一个正在被使用的对象放回 List 中，并设置<code>SetActive(false)</code>。</p>
+<p>最后再修改本来销毁对象的地方，改成调用<code>Reclaim()</code>即可：</p>
+<pre><code class="lang-csharp">public class ReusingDemo : PersistableObject
+{    
+    ...
+    private void DestroyObject()
+    {
+        if (_objectList.Count &gt; 0)
+        {
+            int index = Random.Range(0, _objectList.Count);
+            shapeFactory.Reclaim(_objectList[index]);
+            int lastIndex = _objectList.Count - 1;
+            _objectList[index] = _objectList[lastIndex];
+            _objectList.RemoveAt(lastIndex);
+        }
+    }
+
+    private void BeginNewGame()
+    {
+        for (int i = 0; i &lt; _objectList.Count; i++)
+        {
+            shapeFactory.Reclaim(_objectList[i]);
+        }
+
+        _objectList.Clear();
+    }
+    ...
+}
+</code></pre>
+<p>完成以后运行一下看看，发现运行一小段时间后不再有新的对象产生，而是通过已创建对象的反复开启和关闭来模拟创建和删除对象。</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018081907.gif" alt=""></p>
+<h2 id="PART-5-总结"><a href="#PART-5-总结" class="headerlink" title="PART 5 总结"></a>PART 5 总结</h2><p>嗯就这样完成了，话说之前好像有同学提醒说要再写详细一点不知道这一篇够不够详细，再贴一遍非常详细的『<a href="https://catlikecoding.com/unity/tutorials/object-management/reusing-objects/" target="_blank" rel="noopener">原文链接</a>』和我的『<a href="https://github.com/sNaticY/CatlikePractice" target="_blank" rel="noopener">项目地址</a>』方便大家看更详细的教程和下载代码直接跑～如果有需要交流的同学可以直接在我的<a href="https://snatix.com/2018/07/17/023-frames-per-second/">博客</a>的评论区留言这样我会更容易看到回复也会更快一些～好了不多说了我要继续跟室友联机群星继续我的银河帝国的征程了就酱～</p>
+<hr>
+<p>原文链接：<a href="https://snatix.com/2018/08/19/027-reusing-objects/">https://snatix.com/2018/08/19/027-reusing-objects/</a></p>
+<p>本文由 <a href="https://github.com/sNaticY" target="_blank" rel="noopener">sNatic</a> 发布于『<a href="https://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 Gitalk -->
+<div id="gitalk-comment">
+    <!-- Gitalk 评论框 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script>
+    var gitalk = new Gitalk({
+            id: 'Sun Aug 19 2018 18:34:48 GMT+0200',
+            clientID: '2ed6908a49c9d9b463a2',
+            clientSecret: '1c7ed40bc6c9c95e3e682ca3544846403d37115c',
+            repo: 'hexo-blog',
+            owner: 'sNaticY',
+            admin: ['sNaticY'],
+            // facebook-like distraction free mode
+            distractionFreeMode: true
+        })
+   gitalk.render('gitalk-container')
+</script>
+</div>
+<style>
+    #gitalk-comment {
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2018/09/02/028-multiple-scenes/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/08/08/026-object-variety/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/miao.png" alt="sNatic's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        Hi! I&#39;m snatic
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="/about" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">account_box</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/08/">八月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2014/08/">八月 2014<span class="sidebar_archives-count">6</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/Catlike学习笔记/">Catlike学习笔记<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Hexo博客重启计划/">Hexo博客重启计划<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Octopress折腾之路/">Octopress折腾之路<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Unity通用框架工程/">Unity通用框架工程<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/git探索之路/">git探索之路<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/快节奏多人游戏同步/">快节奏多人游戏同步<span class="sidebar_archives-count">4</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                    <i class="material-icons sidebar-material-icons">label_outline</i>
+                
+                标签云
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">account_circle</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links" title="友情链接">
+                
+                    <i class="material-icons sidebar-material-icons">touch_app</i>
+                
+                友情链接
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/timeline" title="时间轴">
+                
+                    <i class="material-icons sidebar-material-icons">event_node</i>
+                
+                时间轴
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+        <a href="https://www.instagram.com/snaticx/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-instagram">
+                <span class="visuallyhidden">Instagram</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/sNaticY" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/snatiz" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-zhihu">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2014&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>大喵的新窝
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- GitTalk -->
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+    
+        <script>lsloader.load("hanabi","/js/hanabi-browser-bundle.js?Pki5+pzkluqu53g+ouMWpA==", true)</script>
+    
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+        
+        
+        HanabiBrowser.start('pre code',false);
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+    
+</html>

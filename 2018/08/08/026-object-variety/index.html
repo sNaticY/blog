@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            Catlike学习笔记(2.2)-为不同颜色的GameObejct开启GPU Instancing | 
+        
+        大喵的新窝
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/miao.png">
+    <link rel="icon" href="/img/miao.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="使用 Unity 生成并保存 GameObject 并为不同形状和颜色的 GameObject 开启 GPU Instancing">
+    <meta name="keywords" content=",unity,教程,csharp,对象管理,shader">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <style>
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 300;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: regular;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 500;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.svg#Roboto) format('svg')
+        }
+    </style>
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="大喵的新窝">
+    <meta name="msapplication-starturl" content="https://snatix.com/2018/08/08/026-object-variety/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="大喵的新窝">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/miao.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+        
+            <link rel=alternate type="application/atom+xml" href="/atom.xml">
+        
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://snatix.com/2018/08/08/026-object-variety/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Catlike学习笔记(2.2)-为不同颜色的GameObejct开启GPU Instancing | 大喵的新窝">
+    <meta property="og:image" content="/img/miao.png">
+    <meta property="og:description" content="使用 Unity 生成并保存 GameObject 并为不同形状和颜色的 GameObject 开启 GPU Instancing">
+    <meta property="og:article:tag" content="unity"> <meta property="og:article:tag" content="教程"> <meta property="og:article:tag" content="csharp"> <meta property="og:article:tag" content="对象管理"> <meta property="og:article:tag" content="shader"> 
+
+    
+        <meta property="article:published_time" content="Wed Aug 08 2018 16:40:48 GMT+0200">
+        <meta property="article:modified_time" content="Thu Jan 16 2020 02:51:21 GMT+0100">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="https://snatix.com/2018/08/08/026-object-variety/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "https://snatix.com/2018/08/08/026-object-variety/index.html",
+    "headline": "Catlike学习笔记(2.2)-为不同颜色的GameObejct开启GPU Instancing",
+    "datePublished": "Wed Aug 08 2018 16:40:48 GMT+0200",
+    "dateModified": "Thu Jan 16 2020 02:51:21 GMT+0100",
+    "author": {
+        "@type": "Person",
+        "name": "sNatic",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/miao.png"
+        },
+        "description": "这只喵很懒，什么都没留下"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "大喵的新窝",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/miao.png"
+        }
+    },
+    "keywords": ",unity,教程,csharp,对象管理,shader",
+    "description": "使用 Unity 生成并保存 GameObject 并为不同形状和颜色的 GameObject 开启 GPU Instancing",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+        <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-120660091-1', 'auto');ga('send', 'pageview');
+</script>
+    
+    
+        <script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?b00efe9609c7d625c1a23758b10a56c8';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-1-概述"><span class="post-toc-text">PART 1 概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-2-生成不同形状的-GameObject"><span class="post-toc-text">PART 2 生成不同形状的 GameObject</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-3-支持保存和加载不同形状"><span class="post-toc-text">PART 3 支持保存和加载不同形状</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-4-支持多种材质和随机颜色"><span class="post-toc-text">PART 4 支持多种材质和随机颜色</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#重构版本管理部分"><span class="post-toc-text">重构版本管理部分</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加多材质和多颜色"><span class="post-toc-text">添加多材质和多颜色</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-5-开启-GPU-Instancing"><span class="post-toc-text">PART 5 开启 GPU Instancing</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-6-总结"><span class="post-toc-text">PART 6 总结</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Catlike学习笔记(2.2)-为不同颜色的GameObejct开启GPU Instancing
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/miao.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>sNatic</strong>
+        <span>8月 08, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACXElEQVR42u3aQXLjMAwEQP//05sHbFkZACKsuFonl62IbB4IZcDXv6++Xnh4eHh4eHh4eA/jveLr7eOCe/6/P3lCb254eHh4O7zqhPJJT57cHBcPDw9vkfduw72+J9/ok6KSj4uHh4f3TbxeAaiOi4eHh/fXeYWw4PL7ydzw8PDw9nnJtv5uyORlukdazVrw8PDwYl6+ue9/Xu3v4eHh4QW86pUfJrje3KtFpTBDPDw8vMO8fCOutq+qIcJ8Pnh4eHjP4V1PNP81/5wXj1FKjYeHh9fi5WFrtf2fh7a9gtH8jwEPDw9vzMubVcmE5ht9cucNRwfw8PDwxrzq4+bfVA8QFEoIHh4e3iKvF9HmBWOyZMmIeHh4eM/h5VPPJ9eLP6K2HB4eHt5hXjUwrU46Lw/VNtsNKTUeHh7egNcLC6oHswpR7CTIwMPDwzvMSw4E5HfmyKR51iwteHh4eCu8eQvqxKtz9WAWHh4e3g6v2sKvBhM9di9QxsPDw9vhVTfu6uSqy9RreuHh4eHt86rtq0kMkQS7o1KEh4eH9yFeNarI2115CcmjEDw8PLxP8fJDqPmi9O4clRM8PDy8j/Kq230PPBkLDw8Pb59XvfIDBHlQ2wuCo8KAh4eHd4A3D1jnf1VduOaZMjw8PLxbeUkxmAcW81fnKODAw8PDW+QlraY8sJi8Uk/iDzw8PLxn8q6nm/xajSRGYQQeHh7eY3g9WLJk+UIcLAx4eHh4N4URycCTo1S9mAMPDw9vn1cduPfimxSA5JX9l+/x8PDwDvO+78LDw8PDw8PDw3vA9QOLi13JLfB9RgAAAABJRU5ErkJggg==">
+    
+</ul>
+
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/csharp/">csharp</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/shader/">shader</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/unity/">unity</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/对象管理/">对象管理</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/教程/">教程</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Catlike学习笔记(2.2)-为不同颜色的GameObejct开启GPU Instancing&url=https://snatix.com/2018/08/08/026-object-variety/index.html&pic=https://snatix.com/img/miao.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Catlike学习笔记(2.2)-为不同颜色的GameObejct开启GPU Instancing&url=https://snatix.com/2018/08/08/026-object-variety/index.html&via=sNatic" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://snatix.com/2018/08/08/026-object-variety/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://snatix.com/2018/08/08/026-object-variety/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>20180808 过生日一大早就收到超级大红包开心～中午难得跟家人一起过生日所以晚上才开始写文章，今天来到了 <a href="https://catlikecoding.com/unity/tutorials/object-management/" target="_blank" rel="noopener">Object Management</a> 的第二篇 Object variety，在「<a href="https://snatix.com/2018/08/05/025-persisting-objects/">上一篇</a>」的基础上继续扩展，需要我们的存档文件支持保存不同形状和材质以及颜色的对象，并且在完成一系列功能后尝试开启 GPU Instancing 对比性能开销差异。</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>首先我们要对之前已经完成的工程进行一系列改进，当然如果只对 GPU Instancing 感兴趣的同学可以直接跳到 PART 5，我们需要逐步支持保存和加载不同形状，不同材质以及不同颜色的 GameObject，最终可以对比开启 GPU Instancing 以后的差异～所以大概有以下任务</p>
+<ul>
+<li>生成不同形状的 GameObject</li>
+<li>支持保存和加载不同形状</li>
+<li>支持多种材质和随机颜色</li>
+<li>开启 GPU Instancing</li>
+</ul>
+<h2 id="PART-2-生成不同形状的-GameObject"><a href="#PART-2-生成不同形状的-GameObject" class="headerlink" title="PART 2 生成不同形状的 GameObject"></a>PART 2 生成不同形状的 GameObject</h2><p>那么为了实现这个需求我们需要继承在「<a href="https://snatix.com/2018/08/05/025-persisting-objects/">上一篇</a>」文章中实现的<code>PersistableObject</code>类，在上一篇中就有提到</p>
+<blockquote>
+<p>接下来<code>PersistableObject</code>的作用是挂载在 Perfab 上从而使得外部可以简单的通过<code>Save()</code>和<code>Load()</code>接口来将一个对象的所有数据一次性的保存或读取出来。后续如果我们不同种类的游戏对象需要保存和读取的数据更复杂的话就可以继承这个类并重写相关接口来实现而无需改动外部调用代码</p>
+</blockquote>
+<p>那么在这里因为多了一个定义形状的属性所以我们可以放心的继承这个类并且无需对以前的代码进行修改，为了符合「开闭原则」什么的就不提了～总之创建如下代码：</p>
+<pre><code class="lang-csharp">public class Shape : PersistableObject
+{
+}
+</code></pre>
+<p>新的<code>Shape</code>里面可以暂时什么都不需要添加等到我们需要加载和保存不同形状的时候再做。接下来我们创建一些各种形状的 Prefab 然后给他们挂上这个脚本，比如 Cube, Sphere 和 Capsule 像这样的三个 Prefab ～</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018080801.png" alt=""></p>
+<p>然后我们还需要一个<code>ShapeFactory</code>类从而让我们可以通过调用一个接口生成不同的形状：</p>
+<pre><code class="lang-csharp">using UnityEngine;
+
+[CreateAssetMenu]
+public class ShapeFactory : ScriptableObject
+{
+    [SerializeField] Shape[] prefabs;
+
+    public Shape Get (int shapeId) {
+        return Instantiate(prefabs[shapeId]);
+    }
+
+    public Shape GetRandom () {
+        return Get(Random.Range(0, prefabs.Length));
+    }
+}
+</code></pre>
+<p>这个代码就很简单了大概就是 Instantiate 指定 Id 或者随机 Id 的形状，需要注意的是<code>CreateAssetMenu</code>选项可以让我们在 Project 窗口中任意文件夹点击右键创建这样的一个<code>ScriptableObject</code>。如果不是非常理解<code>ScriptableObject</code>的话大家可以简单的认为这个跟 Prefab 差不多只不过没有 GameObject 只有脚本中的各种属性被保存其中～更详细的解释大家可以参见「<a href="https://docs.unity3d.com/ScriptReference/ScriptableObject.html" target="_blank" rel="noopener">官方文档</a>」</p>
+<p>然后我们右键创建一个<code>Shape Factory</code>然后把我们之前创建的 Prefab 拖进去如下图～</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018080802.png" alt=""></p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018080803.png" alt=""></p>
+<p>最后我们还需要稍微对之前写的<code>PersistentDemo</code>修改一下，博主为了方便在同一个工程中可以看到每一期的代码就新建一份名为<code>VarietyDemo</code>内容如下：</p>
+<pre><code class="lang-csharp">public class VarietyDemo : PersistableObject
+{
+    public ShapeFactory shapeFactory;
+
+    ...
+
+    private void CreateObject()
+    {
+        Shape instance = shapeFactory.GetRandom();
+        var t = instance.transform;
+        t.localPosition = Random.insideUnitSphere * 5f;
+        t.localRotation = Random.rotation;
+        t.localScale = Vector3.one * Random.Range(0.1f, 1f);
+        _objectList.Add(instance);
+    }
+
+    private void BeginNewGame()
+    {
+        ...
+    }
+
+    public override void Save(GameDataWriter writer)
+    {
+        ...
+    }
+
+    public override void Load(GameDataReader reader)
+    {
+        int count = reader.ReadInt();
+        for (int i = 0; i &lt; count; i++)
+        {
+            Shape instance = shapeFactory.Get(0);
+            instance.Load(reader);
+            _objectList.Add(instance);
+        }
+    }
+}
+</code></pre>
+<p>大家可以注意到，代码与昨天的<code>PersistentDemo</code>相差无无几，只有创建对象和加载的函数内部稍作修改，引用到了我们刚才写好的<code>ShapeFactory</code>和其函数<code>Get()</code>以及<code>GetRandom()</code>。那么此时我们运行一下会发现～</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018080804.gif" alt=""></p>
+<p>虽然可以随机生成了但是我们只是保存了位置旋转和缩放信息，并没有保存具体是哪种形状，因此保存后再加载会发现所有的形状全都变成了 Cube。那么我们接下来该如何解决这个问题呢？</p>
+<h2 id="PART-3-支持保存和加载不同形状"><a href="#PART-3-支持保存和加载不同形状" class="headerlink" title="PART 3 支持保存和加载不同形状"></a>PART 3 支持保存和加载不同形状</h2><p>那么首先为了支持旧版本的存档，也就是只有位置旋转和缩放信息的保存文件，需要引入版本号的概念～那么我们假设现在的版本号是1，我们需要做的是把版本号写到文件头部，加载存档的时候也先加载出来。所以修改<code>VarietyDemo</code>如下</p>
+<pre><code class="lang-csharp">public class VarietyDemo : PersistableObject
+{
+    public int SaveVersion = 1;
+
+    ...
+
+    public override void Save(GameDataWriter writer)
+    {
+        writer.Write(-SaveVersion);
+        writer.Write(_objectList.Count);
+        ...
+    }
+
+    public override void Load(GameDataReader reader)
+    {
+        var version = -reader.ReadInt();
+        if (version &gt; SaveVersion) {
+            Debug.LogError(&quot;Unsupported future save version &quot; + version);
+            return;
+        }
+        int count = version &lt;= 0 ? -version : reader.ReadInt();
+        ...
+    }
+}
+</code></pre>
+<p>因为我们之前的版本写入的是保存的对象的数量，因此为了方便区分版本号与数量，我们将版本号乘以<code>-1</code>以后再写入，这样就可以通过读出来的第一个数据是否大于<code>0</code>来确定是否是之前不带有版本号的版本，从而决定时候读取下一个 int 作为保存的对象的数量。那么有了版本号，接下来我们该把物体的形状保存下来～首先在<code>Shape</code>中添加以下代码</p>
+<pre><code class="lang-csharp">public class Shape : PersistableObject
+{
+    private int _shapeId = int.MinValue;
+
+    public int ShapeId
+    {
+        get { return _shapeId; }
+        set
+        {
+            if (_shapeId == int.MinValue)
+            {
+                _shapeId = value;
+            }
+            else
+            {
+                Debug.LogError(&quot;Not allowed to change shapeId.&quot;);
+            }
+        }
+    }
+}
+</code></pre>
+<p>总之就是在<code>Shape</code>中保存<code>ShapeId</code>，而且这个 Id 只能被赋值一次～完成以后继续修改<code>VarietyDemo</code>让我们每次在保存的时候把<code>ShapeId</code>写入文件，读取的时候根据<code>ShapeId</code>读取不同形状的 Prefab，代码如下</p>
+<pre><code class="lang-csharp">public class VarietyDemo : PersistableObject
+{
+    ...
+    private List&lt;Shape&gt; _objectList;
+
+    ...
+
+    public override void Save(GameDataWriter writer)
+    {
+        writer.Write(-SaveVersion);
+        writer.Write(_objectList.Count);
+        for (int i = 0; i &lt; _objectList.Count; i++)
+        {
+            writer.Write(_objectList[i].ShapeId);
+            _objectList[i].Save(writer);
+        }
+    }
+
+    public override void Load(GameDataReader reader)
+    {
+        var version = -reader.ReadInt();
+        if (version &gt; SaveVersion) {
+            Debug.LogError(&quot;Unsupported future save version &quot; + version);
+            return;
+        }
+        int count = version &lt;= 0 ? -version : reader.ReadInt();
+        for (int i = 0; i &lt; count; i++)
+        {
+            var shapeId = version &lt;= 0 ? 0 : reader.ReadInt();
+            Shape instance = shapeFactory.Get(shapeId);
+            instance.Load(reader);
+            _objectList.Add(instance);
+        }
+    }
+}
+</code></pre>
+<p>需要注意的是读取<code>ShapeId</code>之前先检查版本号，如果是负的版本号就表示我们并没有保存形状，所以就按照默认值 0 来处理～完成后我们运行一下看看，为了验证多版本支持功能正常运作，我们可以先运行一次上一篇文章创建的场景，保存一次再在新版本中载入试试。</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018080805.gif" alt=""></p>
+<p>大家可以看到～我首先载入了旧版本的存档文件，生成出来的全是立方体，然后再按 C 创建了很多新的球体等其他形状的物体，保存后再加载，原来的立方体还是立方体，但是新的球体和胶囊体都保存下来了～</p>
+<h2 id="PART-4-支持多种材质和随机颜色"><a href="#PART-4-支持多种材质和随机颜色" class="headerlink" title="PART 4 支持多种材质和随机颜色"></a>PART 4 支持多种材质和随机颜色</h2><p>在支持多材质和颜色之前，我们需要先重构一下存档版本的部分，因为方便起见我们最好可以在<code>Shape</code>类内部访问到要加载的存档版本，否则就被迫在<code>VarietyDemo</code>里面写处理所有版本相关的事情，非常的不直观。重构好以后我们就可以添加多个材质，在<code>ShapeFactory</code>中与形状一起处理，然后再在<code>Shape</code>中按照版本信息读取颜色，大概思路就是这样。</p>
+<h3 id="重构版本管理部分"><a href="#重构版本管理部分" class="headerlink" title="重构版本管理部分"></a>重构版本管理部分</h3><p>，所以先修改<code>GameDataReader</code>使其在初始化的时候携带当前读取存档文件的版本号。当然还顺便加上了读颜色的接口方便后续操作。</p>
+<pre><code class="lang-csharp">public class GameDataReader
+{
+    public int Version { get; private set; }
+    private BinaryReader _reader;
+
+    public GameDataReader(BinaryReader reader, int version)
+    {
+        _reader = reader;
+        Version = version;
+    }
+    ...
+
+    public Color ReadColor () {
+        Color value;
+        value.r = _reader.ReadSingle();
+        value.g = _reader.ReadSingle();
+        value.b = _reader.ReadSingle();
+        value.a = _reader.ReadSingle();
+        return value;
+    } 
+}
+</code></pre>
+<p>然后再修改<code>PersistentStorage</code>让我们每次保存的时候都先写入版本号，以及每次读取的时候都优先把版本号读出来。</p>
+<pre><code class="lang-csharp">public class PersistentStorage : MonoBehaviour
+{
+    ...
+    public void Save(PersistableObject o, int version)
+    {
+        using (var writer = new BinaryWriter(File.Open(_savePath, FileMode.Create)))
+        {
+            writer.Write(-version);
+            o.Save(new GameDataWriter(writer));
+        }
+    }
+
+    public void Load(PersistableObject o)
+    {
+        using (var reader = new BinaryReader(File.Open(_savePath, FileMode.Open)))
+        {
+            o.Load(new GameDataReader(reader, -reader.ReadInt32()));
+        }
+    }
+}
+</code></pre>
+<p>最后在<code>VarietyDemo</code>做相应的修改，大概在调用<code>Storage.Svae()</code>的时候把当前的版本号传入，然后去掉在保存时写入的版本号直接写对象数量，最后在<code>Load()</code>时可以从<code>reader.Version</code>读出版本号而无需自行<code>ReadInt()</code></p>
+<pre><code class="lang-csharp">public class VarietyDemo : PersistableObject
+{
+    ...
+
+    private void Update()
+    {
+        ...
+        else if (Input.GetKeyDown(SaveKey))
+        {
+            Storage.Save(this, _saveVersion);
+        }
+        else if (Input.GetKeyDown(LoadKey))
+        {
+            BeginNewGame();
+            Storage.Load(this);
+        }
+    }
+    ...
+
+    public override void Save(GameDataWriter writer)
+    {
+        writer.Write(_objectList.Count);
+        ...
+    }
+
+    public override void Load(GameDataReader reader)
+    {
+        var version = reader.Version;
+        ...
+    }
+}
+</code></pre>
+<p>总之一顿操作下来重构完成，运行一下试试有没有问题～博主这边表示完全正常。</p>
+<h3 id="添加多材质和多颜色"><a href="#添加多材质和多颜色" class="headerlink" title="添加多材质和多颜色"></a>添加多材质和多颜色</h3><p>有了前面的铺垫这一步就很简单。那么首先我们需要在<code>GameDataReader</code>和<code>GameDataWriter</code>中分别添加读写<code>Color</code>的接口，从而我们可以在<code>Shape</code>中读写<code>Color</code>对象。</p>
+<pre><code class="lang-csharp">public class GameDataReader
+{
+    ...
+    public Color ReadColor () {
+        Color value;
+        value.r = _reader.ReadSingle();
+        value.g = _reader.ReadSingle();
+        value.b = _reader.ReadSingle();
+        value.a = _reader.ReadSingle();
+        return value;
+    }
+}
+</code></pre>
+<pre><code class="lang-csharp">
+public class GameDataWriter
+{
+    ...
+    public void Write (Color value) {
+        _writer.Write(value.r);
+        _writer.Write(value.g);
+        _writer.Write(value.b);
+        _writer.Write(value.a);
+    }
+}
+</code></pre>
+<p>接下来在<code>Shape</code>中添加设置材质<code>SetMaterial()</code>和设置颜色<code>SetColor()</code>接口。从而可以在<code>ShapeFactory</code>中生成一个对象的时候为其设置随机材质和颜色。同时我们还需要 override <code>Save()</code>和<code>Load()</code>两个接口，从而读取和保存位于「位置」「旋转」和「缩放」之后的颜色属性。</p>
+<pre><code class="lang-csharp">
+public class Shape : PersistableObject
+{
+    ...
+
+    public int MaterialId { get; private set; }
+    public Color Color { get; private set; }
+
+    public void SetMaterial(Material material, int materialId)
+    {
+        GetComponent&lt;MeshRenderer&gt;().material = material;
+        MaterialId = materialId;
+    }
+
+    public void SetColor(Color color)
+    {
+        GetComponent&lt;MeshRenderer&gt;().material.color = color;
+        Color = color;
+    }
+
+    public override void Save(GameDataWriter writer)
+    {
+        base.Save(writer);
+        writer.Write(Color);
+    }
+
+    public override void Load(GameDataReader reader)
+    {
+        base.Load(reader);
+        SetColor(reader.Version &lt;= 0 ? Color.white : reader.ReadColor());
+    }
+}
+</code></pre>
+<p>然后创建三个材质球看起来不一样即可，博主按照「<a href="https://catlikecoding.com/unity/tutorials/object-management/object-variety/" target="_blank" rel="noopener">原文链接</a>」的指示选择了 Shandard Shiny Metallic，其中 Standard 就是默认的新建材质球，Shiny 是默认材质球把 Smoothness 拉到 0.9，Metallic 就是把 Metallic 和 Smoothness 同时拉到 0.9。创建好以后修改<code>ShapeFactory</code>如下~</p>
+<pre><code class="lang-csharp">
+[CreateAssetMenu]
+public class ShapeFactory : ScriptableObject
+{
+    [SerializeField] private Shape[] _prefabs;
+
+    [SerializeField] private Material[] _materials;
+
+    public Shape Get(int shapeId, int materialId)
+    {
+        var instance = Instantiate(_prefabs[shapeId]);
+        instance.ShapeId = shapeId;
+        instance.SetMaterial(_materials[materialId], materialId);
+        return instance;
+    }
+
+    public Shape GetRandom()
+    {
+        var instance = Get(Random.Range(0, _prefabs.Length), Random.Range(0, _materials.Length));
+        instance.SetColor(Random.ColorHSV(0f, 1f, 0.4f, 0.6f, 0.7f, 0.9f, 1f, 1f));
+        return instance;
+    }
+}
+</code></pre>
+<p>注意我们在<code>Get()</code>中添加一个参数并在<code>Instantiate()</code>后调用<code>SetMaterial()</code>用于设置材质球，以及在<code>GetRandom()</code>中调用的<code>SetColor()</code>从而设置随机颜色之类的～最后相应的修改<code>VarietyDemo</code>如下～</p>
+<pre><code class="lang-csharp">
+public class VarietyDemo : PersistableObject
+{
+    ...
+
+    public override void Save(GameDataWriter writer)
+    {
+        writer.Write(_objectList.Count);
+        for (int i = 0; i &lt; _objectList.Count; i++)
+        {
+            writer.Write(_objectList[i].ShapeId);
+            writer.Write(_objectList[i].MaterialId);
+            _objectList[i].Save(writer);
+        }
+    }
+
+    public override void Load(GameDataReader reader)
+    {
+        ...
+        for (int i = 0; i &lt; count; i++)
+        {
+            var shapeId = version &lt;= 0 ? 0 : reader.ReadInt();
+            var materialId = version &lt;= 0 ? 0 : reader.ReadInt();
+            Shape instance = shapeFactory.Get(shapeId, materialId);
+            instance.Load(reader);
+            _objectList.Add(instance);
+        }
+    }
+}
+</code></pre>
+<p>全部完成后我们尝试运行一下～因为代码跨越多个文件如果不能马上理顺其中的关系的话可以尝试自行实现一遍应该会很快理解～</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018080901.gif" alt=""></p>
+<h2 id="PART-5-开启-GPU-Instancing"><a href="#PART-5-开启-GPU-Instancing" class="headerlink" title="PART 5 开启 GPU Instancing"></a>PART 5 开启 GPU Instancing</h2><p>那么开启 GPU Instancing 很简单只需要在 Material 中勾选 GPU Instancing 就可以了～就像下面这样。。</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018080902.png" alt=""></p>
+<p>所以勾选了这个真的有效果么？</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018080903.png" alt=""></p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018080904.png" alt=""></p>
+<p>那么我们注意到开启了 GPU Instancing 以后 Batches 从 402 降低到了 219，但事实上我们还有很多改进空间。因为默认的 Shadard Shader 中 Unity 只会将只有 Transform 组件不同的 GameObject 进行合批处理，因此改变颜色会导致该机制失效，那么我们首先创建一个支持将颜色声明为 instanced property 的 shader 使其支持不同颜色的 GameObject。代码如下~</p>
+<pre><code class="lang-c++">Shader &quot;Custom/InstancedColors&quot; {
+    Properties {
+        _Color (&quot;Color&quot;, Color) = (1,1,1,1)
+        _MainTex (&quot;Albedo (RGB)&quot;, 2D) = &quot;white&quot; {}
+        _Glossiness (&quot;Smoothness&quot;, Range(0,1)) = 0.5
+        _Metallic (&quot;Metallic&quot;, Range(0,1)) = 0.0
+    }
+    SubShader {
+        Tags { &quot;RenderType&quot;=&quot;Opaque&quot; }
+        LOD 200
+
+        CGPROGRAM
+        #pragma surface surf Standard fullforwardshadows
+        #pragma instancing_options assumeuniformscaling
+
+        #pragma target 3.0
+
+        sampler2D _MainTex;
+
+        struct Input {
+            float2 uv_MainTex;
+        };
+
+        half _Glossiness;
+        half _Metallic;
+
+        UNITY_INSTANCING_BUFFER_START(Props)
+            UNITY_DEFINE_INSTANCED_PROP(fixed4, _Color)
+        UNITY_INSTANCING_BUFFER_END(Props)
+
+        void surf (Input IN, inout SurfaceOutputStandard o) {
+            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) *
+                UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
+            o.Albedo = c.rgb;
+            o.Metallic = _Metallic;
+            o.Smoothness = _Glossiness;
+            o.Alpha = c.a;
+        }
+        ENDCG
+    }
+    FallBack &quot;Diffuse&quot;
+}
+</code></pre>
+<p>使用以上 Shader 时，我们需要使用<a href="http://docs.unity3d.com/Documentation/ScriptReference/MaterialPropertyBlock.html" target="_blank" rel="noopener"><code>MaterialPropertyBlock</code></a>将 _Color 属性的变化告诉 Unity 使其可以将这些 GameObject 置入同一个 draw call 中。修改<code>Shape</code>代码如下</p>
+<pre><code class="lang-csharp">public class Shape : PersistableObject
+{
+    ...
+    private MeshRenderer _meshRenderer;
+
+    private static int _colorPropertyId = Shader.PropertyToID(&quot;_Color&quot;);
+    private static MaterialPropertyBlock _sharedPropertyBlock;
+
+    void Awake () {
+        _meshRenderer = GetComponent&lt;MeshRenderer&gt;();
+    }
+
+    public void SetMaterial(Material material, int materialId)
+    {
+        _meshRenderer.material = material;
+        MaterialId = materialId;
+    }
+
+    public void SetColor(Color color)
+    {
+        if (_sharedPropertyBlock == null) {
+            _sharedPropertyBlock = new MaterialPropertyBlock();
+        }
+        _sharedPropertyBlock.SetColor(_colorPropertyId, color);
+        _meshRenderer.SetPropertyBlock(_sharedPropertyBlock);
+        Color = color;
+    }
+    ...
+}
+</code></pre>
+<p>最后再运行一下看看～效果显著！从 219 又降到 55 非常神奇～</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018081001.png" alt=""></p>
+<h2 id="PART-6-总结"><a href="#PART-6-总结" class="headerlink" title="PART 6 总结"></a>PART 6 总结</h2><p>又是持续两天写完的文章(<del>实际上有三天因为现在已经过 12 点了</del>)。。不管怎么说完成这篇文章以后博主自己还是稍微有一点点收获的，就是关于 GPU Instancing 的最最基础的使用的部分。这篇真的好长而且很多功能横跨几个文件，没太理顺的同学可以跳转「<a href="https://github.com/sNaticY/CatlikePractice" target="_blank" rel="noopener">Github项目地址</a>」下载工程亲自跑起来试一下会更容易理解～希望在假期结束之前也就是8月15号之前可以顺利完成「对象管理」的部分，加油～</p>
+<hr>
+<p>原文链接：<a href="https://snatix.com/2018/08/08/026-object-variety/">https://snatix.com/2018/08/08/026-object-variety/</a></p>
+<p>本文由 <a href="https://github.com/sNaticY" target="_blank" rel="noopener">sNatic</a> 发布于『<a href="https://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 Gitalk -->
+<div id="gitalk-comment">
+    <!-- Gitalk 评论框 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script>
+    var gitalk = new Gitalk({
+            id: 'Wed Aug 08 2018 16:40:48 GMT+0200',
+            clientID: '2ed6908a49c9d9b463a2',
+            clientSecret: '1c7ed40bc6c9c95e3e682ca3544846403d37115c',
+            repo: 'hexo-blog',
+            owner: 'sNaticY',
+            admin: ['sNaticY'],
+            // facebook-like distraction free mode
+            distractionFreeMode: true
+        })
+   gitalk.render('gitalk-container')
+</script>
+</div>
+<style>
+    #gitalk-comment {
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2018/08/19/027-reusing-objects/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/08/05/025-persisting-objects/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/miao.png" alt="sNatic's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        Hi! I&#39;m snatic
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="/about" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">account_box</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/08/">八月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2014/08/">八月 2014<span class="sidebar_archives-count">6</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/Catlike学习笔记/">Catlike学习笔记<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Hexo博客重启计划/">Hexo博客重启计划<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Octopress折腾之路/">Octopress折腾之路<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Unity通用框架工程/">Unity通用框架工程<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/git探索之路/">git探索之路<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/快节奏多人游戏同步/">快节奏多人游戏同步<span class="sidebar_archives-count">4</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                    <i class="material-icons sidebar-material-icons">label_outline</i>
+                
+                标签云
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">account_circle</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links" title="友情链接">
+                
+                    <i class="material-icons sidebar-material-icons">touch_app</i>
+                
+                友情链接
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/timeline" title="时间轴">
+                
+                    <i class="material-icons sidebar-material-icons">event_node</i>
+                
+                时间轴
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+        <a href="https://www.instagram.com/snaticx/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-instagram">
+                <span class="visuallyhidden">Instagram</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/sNaticY" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/snatiz" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-zhihu">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2014&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>大喵的新窝
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- GitTalk -->
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+    
+        <script>lsloader.load("hanabi","/js/hanabi-browser-bundle.js?Pki5+pzkluqu53g+ouMWpA==", true)</script>
+    
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+        
+        
+        HanabiBrowser.start('pre code',false);
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+    
+</html>

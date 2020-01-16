@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            Catlike学习笔记(1.3)-使用Unity画更复杂的3D函数图像 | 
+        
+        大喵的新窝
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/miao.png">
+    <link rel="icon" href="/img/miao.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="Catlike Coding, Unity基础教程, Unity中使用Cube绘制3D图形">
+    <meta name="keywords" content=",unity,教程,基础,csharp">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <style>
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 300;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-300.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: regular;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-regular.svg#Roboto) format('svg')
+        }
+
+        @font-face {
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: 500;
+            src: url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot);
+            src: local('Roboto'),local('Roboto-Normal'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.eot?#iefix) format('embedded-opentype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff2) format('woff2'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.woff) format('woff'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.ttf) format('truetype'),url(https://lib.baomitu.com/fonts/roboto/roboto-v15-latin-500.svg#Roboto) format('svg')
+        }
+    </style>
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="大喵的新窝">
+    <meta name="msapplication-starturl" content="https://snatix.com/2018/06/20/021-mathematical-surfaces/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="大喵的新窝">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/miao.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+        
+            <link rel=alternate type="application/atom+xml" href="/atom.xml">
+        
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://snatix.com/2018/06/20/021-mathematical-surfaces/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Catlike学习笔记(1.3)-使用Unity画更复杂的3D函数图像 | 大喵的新窝">
+    <meta property="og:image" content="/img/miao.png">
+    <meta property="og:description" content="Catlike Coding, Unity基础教程, Unity中使用Cube绘制3D图形">
+    <meta property="og:article:tag" content="unity"> <meta property="og:article:tag" content="教程"> <meta property="og:article:tag" content="基础"> <meta property="og:article:tag" content="csharp"> 
+
+    
+        <meta property="article:published_time" content="Wed Jun 20 2018 16:46:27 GMT+0200">
+        <meta property="article:modified_time" content="Thu Jan 16 2020 02:51:21 GMT+0100">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="https://snatix.com/2018/06/20/021-mathematical-surfaces/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "https://snatix.com/2018/06/20/021-mathematical-surfaces/index.html",
+    "headline": "Catlike学习笔记(1.3)-使用Unity画更复杂的3D函数图像",
+    "datePublished": "Wed Jun 20 2018 16:46:27 GMT+0200",
+    "dateModified": "Thu Jan 16 2020 02:51:21 GMT+0100",
+    "author": {
+        "@type": "Person",
+        "name": "sNatic",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/miao.png"
+        },
+        "description": "这只喵很懒，什么都没留下"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "大喵的新窝",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/miao.png"
+        }
+    },
+    "keywords": ",unity,教程,基础,csharp",
+    "description": "Catlike Coding, Unity基础教程, Unity中使用Cube绘制3D图形",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+        <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-120660091-1', 'auto');ga('send', 'pageview');
+</script>
+    
+    
+        <script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?b00efe9609c7d625c1a23758b10a56c8';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+    
+    
+
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-1-概述"><span class="post-toc-text">PART 1 概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-2-支持多函数叠加"><span class="post-toc-text">PART 2 支持多函数叠加</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-3-画出水滴的波纹"><span class="post-toc-text">PART 3 画出水滴的波纹</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-4-画出三维图形"><span class="post-toc-text">PART 4 画出三维图形</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#圆柱体"><span class="post-toc-text">圆柱体</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#球体"><span class="post-toc-text">球体</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#圆环体"><span class="post-toc-text">圆环体</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PART-5-总结"><span class="post-toc-text">PART 5 总结</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Catlike学习笔记(1.3)-使用Unity画更复杂的3D函数图像
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/miao.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>sNatic</strong>
+        <span>6月 20, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC6klEQVR42u3awW4iMRAEUP7/p7PXlTZAVXs2Yew3J4QGxs9IqXS3H19HXg9sbGxsbGxsbGzsj2Q/4uvv+//97LN3vnl8/JRn39OuGRsbG/sE9ps//U/Yrzfi6eMDTHJnvmZsbGzsc9h5aCULTRa9EmD5mrGxsbGxk9JiFnsrBQ82NjY29nqA5cVJ205qX2NjY2Njtw2aFpmXE/k3/2gvDRsbG/vj2SuD3t96/cvzbWxsbOyPYa9c+SC2PaCTMOrVYmNjY2/KzpeYLG42NpgNCfIGEzY2NvY57CQwEmr7nXnU5c8qAgwbGxv75uwkHpKQyzeoLTxmZUnUVMLGxsbegp2TkoM7baTNBr1tSYONjY19DjuPouQQT97Qz9eQbEEdYNjY2Ng3Z+cPzhv9r99pC5KrthgbGxt7V3b+L37eKmpbVPmYOS9ChhUYNjY29m3Z+bg0Cbm8/fSa1H6qnm9jY2Njb8G+NpbywuN/bHoRYNjY2NibsvMwmN05OyqUDJsv66VhY2Nj35A9G6zmV97ub0n5KAIbGxv7THYSQnnLPik/clJStGBjY2Nj5wVD8k57uGdlDLxUimBjY2PfkN0GRt6KWhkVzNpVb+7ExsbG3pq90vpvY68tSNrjmFEpgo2Njb0ROz/IOHt8XvbUTaJ2I7CxsbE3ZSf/0M8a9G3RctUBnacbh42Njb0pOw+hlaP2s+27+AAoNjY29jHsPDxWypL8WUnDKNkCbGxs7L3Z0ceCALtqhNwOCYYBho2NjX0Auz2Ckxck642nfLCBjY2NvTd7dhAnj5kk/PKYnAUkNjY29t7slZDIH78yPJgNfYteGjY2NvYW7JUDN+sNo/xnmBU22NjY2Oew8xZSOwBuy4ZZuL75AbCxsbGxy6Iif6ctb9pyBRsbGxs7D4kkitrhblsmYWNjY5/Mvqr1k7ecknCabRY2Njb2aewWMAuV12PgNpzqwQM2Njb2puxzLmxsbGxsbGxsbOyPuf4AR3EqXPcVIBwAAAAASUVORK5CYII=">
+    
+</ul>
+
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/csharp/">csharp</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/unity/">unity</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/基础/">基础</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/教程/">教程</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Catlike学习笔记(1.3)-使用Unity画更复杂的3D函数图像&url=https://snatix.com/2018/06/20/021-mathematical-surfaces/index.html&pic=https://snatix.com/img/miao.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Catlike学习笔记(1.3)-使用Unity画更复杂的3D函数图像&url=https://snatix.com/2018/06/20/021-mathematical-surfaces/index.html&via=sNatic" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://snatix.com/2018/06/20/021-mathematical-surfaces/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://snatix.com/2018/06/20/021-mathematical-surfaces/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>第三篇来了～今天去参加了 Unite 2018 Berlin，感觉就是。。。。非常困。。。回来以后稍微睡了下清醒了觉得是时候认真学习下了，不过讲的很多东西都是还没有发布或者只有 Preview 的版本，按照 Unity 的习惯肯定 Bug 多到令人发指，最近不太想折腾所以就先继续写文章把。。按照惯例奉上『<a href="https://catlikecoding.com/unity/tutorials/basics/mathematical-surfaces/" target="_blank" rel="noopener">原文链接</a>』</p>
+<a id="more"></a>
+<h2 id="PART-1-概述"><a href="#PART-1-概述" class="headerlink" title="PART 1 概述"></a>PART 1 概述</h2><p>首先大概介绍一下什么是『<a href="https://catlikecoding.com/unity/tutorials/" target="_blank" rel="noopener">Catlike教程</a>』，大家自行访问一下就会发现是这位『<a href="https://www.patreon.com/catlikecoding/memberships" target="_blank" rel="noopener">大神</a>』写的一个 Unity 系列教程，里面由浅至深的以一个个有趣的小课题来引导大家学习 Unity 的方方面面～回想自己毕业三年都在做 Unity 游戏开发，然而看了大神的教程以后发现自己欠缺的东西非常多～真正对引擎的掌握程度非常低只是在不停的拼 UI 写业务逻辑。做这个系列呢也是希望自己可以坚持把大神的教程学完让自己变得更厉害～就酱。。</p>
+<p>那么言归正传我们本期节目的最终目标是实现作者配图中的看起来很屌的图形，像是这样的。。。</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018061201.jpg" alt="Animation"></p>
+<p>对比上一篇文章的函数图像，大概有以下几个关键点需要实现。</p>
+<ul>
+<li>支持多函数叠加</li>
+<li>从一条曲线变成一个曲面</li>
+<li>由曲面扩展成真正的三维图形</li>
+</ul>
+<h2 id="PART-2-支持多函数叠加"><a href="#PART-2-支持多函数叠加" class="headerlink" title="PART 2 支持多函数叠加"></a>PART 2 支持多函数叠加</h2><p>首先我们的目标是可以通过一个滑杆来控制「<a href="https://snatix.com/2018/06/09/020-building-a-grap/">上一篇</a>」中的曲线显示的函数，因此先复制之前的代码改改名字比如 Graph3DController.cs 再修改类名与文件名一致。然后我们的关键是需要修改这一行</p>
+<pre><code class="lang-csharp">var pos = new Vector3(x, Calc(x), 0);
+</code></pre>
+<p>使其变成根据滑杆中的 int 值选择 delegate 中的某个函数，如下所示，代码中主要修改的地方用注释稍微解释了下。</p>
+<pre><code class="lang-csharp">// 新的 deleagate
+public delegate float Function(float x, float t);
+
+// 记得修改类名与文件名一致否则不能挂在 gameobject 上
+public class Graph3DController : MonoBehaviour
+{
+    [Range(10, 100), SerializeField] private int _resolution;
+    [SerializeField] private GameObject _cube;
+    // 添加新的滑杆
+    [Range(0, 1), SerializeField] private int _function;
+    // 一个 delegate 数组用于保存我们接下来使用的两个函数
+    private Function[] _functions;
+
+    ...
+
+    // Use this for initialization
+    private void Start()
+    {
+        // 初始化 _functions 
+        _functions = new Function[] {SineFunction, MultiSineFunction};        
+        ...
+    }
+
+    private void Update()
+    {
+        _startX = -1f;
+        for (int i = 0; i &lt; _resolution; i++)
+        {
+            var x = _startX + i * _step;
+            // 此处修改调用方法
+            var pos = new Vector3(x, _functions[_function](x, Time.time), 0);
+            var point = _points[i];
+            point.transform.localPosition = pos;
+        }
+    }
+
+    private float SineFunction(float x, float t)
+    {
+        return Mathf.Sin(Mathf.PI * (x + t));
+    }
+
+    private float MultiSineFunction(float x, float t)
+    {
+        float y = Mathf.Sin(Mathf.PI * (x + t));
+        y += Mathf.Sin(2f * Mathf.PI * (x + 2f * t)) / 2f;
+        y *= 2f / 3f;
+        return y;
+    }
+}
+</code></pre>
+<p>于是我们实现了如下的效果～</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018061801.gif" alt="Animation"></p>
+<p>不过作者在原文中还添加了 Enum 然后可以不用滑杆而是改用一个下拉菜单来改变要显示的函数图像。最终效果没什么不同就不再赘述了感兴趣的同学可以自行找到『<a href="https://catlikecoding.com/unity/tutorials/basics/mathematical-surfaces/" target="_blank" rel="noopener">原文链接</a>』查看更详细的步骤～</p>
+<h2 id="PART-3-画出水滴的波纹"><a href="#PART-3-画出水滴的波纹" class="headerlink" title="PART 3 画出水滴的波纹"></a>PART 3 画出水滴的波纹</h2><p>那么接下来开始要真正的绘制一个3D曲面了~那么首先是创建更多的小方块～我们在初始化的地方改成一个二维的 List 来保存所有的小方块</p>
+<pre><code class="lang-csharp">private void Start()
+{
+    ...
+    for (int i = 0; i &lt; _resolution; i++)
+    {
+        _points.Add(new List&lt;Transform&gt;());
+        for (int j = 0; j &lt; _resolution; j++)
+        {
+            var point = Instantiate(_cube, transform);
+            _points[i].Add(point.transform);
+            point.transform.localScale = scale;
+            point.SetActive(true);
+        }
+    }
+}
+</code></pre>
+<p>在后续的遍历也对该二维数组进行遍历。</p>
+<pre><code class="lang-csharp">private void Update()
+{
+    for (int i = 0; i &lt; _points.Count; i++)
+    {
+        for (int j = 0; j &lt; _points[i].Count; j++)
+        {
+            var posX = i * _step - 1;
+            var posZ = j * _step - 1;
+            var pos = new Vector3(posX, _functions[(int) _function](posX, posZ, Time.time), posZ);
+            var point = _points[i][j];
+            point.localPosition = pos;
+        }
+    }
+}
+</code></pre>
+<p>最后再稍微修改下两个函数的参数就完成了从 2D 到 3D 的跳跃～如图所示</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018061802.gif" alt="Animation"></p>
+<p>不过我们并不应该满足于此，感觉这样其实并没有充分利用 Z 轴啊，完全就是复制了很多条曲线排在一起。所以我们新建两个这样的函数。</p>
+<pre><code class="lang-csharp">private float Sine2DFunction(float x, float z, float t)
+{
+    float y = Mathf.Sin(Mathf.PI * (x + t));
+    y += Mathf.Sin(Mathf.PI * (z + t));
+    y *= 0.5f;
+    return y;
+}
+
+private float MultiSine2DFunction(float x, float z, float t)
+{
+    float y = 4f * Mathf.Sin(Mathf.PI * (x + z + t * 0.5f));
+    y += Mathf.Sin(Mathf.PI * (x + t));
+    y += Mathf.Sin(2f * Mathf.PI * (z + 2f * t)) * 0.5f;
+    y *= 1f / 5.5f;
+    return y;
+}
+</code></pre>
+<p>那么<code>Sine2DFunction</code>可以很明显的看出是两个完全一样的正弦波分别沿 x 轴和 Z 轴传播并且直接叠加，那么第二个。。。反正很复杂语言解释不清楚大概就是 3 个波叠加起来的，大家可以一行一行注释掉看看效果就知道了～</p>
+<p>那么如何画出一个波纹呢，首先波纹是由原点也就是<code>(0, 0)</code>点开始均匀扩散的，那么可能是一个从原点向周围扩散的正弦波。那么直觉上来说这个函数可能长这样。。</p>
+<pre><code class="lang-csharp">private float Ripple (float x, float z, float t) 
+{
+    float d = Mathf.Sqrt(x * x + z * z);
+    float y = Mathf.Sin(Mathf.PI * (d - t));
+    return y;
+}
+</code></pre>
+<p>运行下会发现完全不像，主要是因为水波在扩散的过程中是要衰减的，正弦波完全不会，因此我们需要加上衰减的控制。既然是衰减的话显然距离越大衰减的越多喽所以我们让 y 除以 <code>1 + 2 * Mathf.PI * d</code>试一试，之所以加1是为了防止在距离原点过于近的时候结果趋近于无穷大。所以现在代码变成了这样～</p>
+<pre><code class="lang-csharp">private float Ripple(float x, float z, float t)
+{
+    float d = Mathf.Sqrt(x * x + z * z);
+    float y = Mathf.Sin(Mathf.PI * (d - t));
+    y = y / (1 + 2 * Mathf.PI * d);
+    return y;
+}
+</code></pre>
+<p>跑起来看一下会发现。。。emmmm</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018061901.png" alt="Animation"></p>
+<p>所以我们再加上一些参数比如<code>_velocity</code>传播速度，<code>frequency</code>水波频率，<code>_amplitude</code>振幅，<code>_attenuation</code>衰减。代码如下。（这些参数并不是数值越大就直观意义上越大，虽然这样不太好但是懒得整理了。。。大家大概意思理解就好）</p>
+<pre><code class="lang-csharp">private float Ripple(float x, float z, float t)
+{
+    float d = Mathf.Sqrt(x * x + z * z);
+    float y = Mathf.Sin(_frequency * Mathf.PI * (d - t / _velocity));
+    y *= 1 / (_amplitude + _attenuation * 2 * Mathf.PI * d);
+    return y;
+}
+</code></pre>
+<p>然后将这些参数调整到合适的值，就完成一个完美的水波了～如图所示</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018061902.gif" alt="Animation"></p>
+<h2 id="PART-4-画出三维图形"><a href="#PART-4-画出三维图形" class="headerlink" title="PART 4 画出三维图形"></a>PART 4 画出三维图形</h2><p>显然我们不能满足于此，传入 x 和 z 来计算出唯一的 y 导致了无法有两个点拥有相同的 x 和 z，这极大的限制了我们的发挥～比如说画出一个球体之类的。所以我们接下来的目标是画出真正的三维图形～</p>
+<p>在开始之前，我们首先要放弃传入 x 和 z 来计算 y 的设想，所以应该把所有的函数的返回值改成 Vector3，并且为了区分我们将函数的参数变成 u，v，t。</p>
+<pre><code class="lang-csharp">public delegate Vector3 Function(float u, float v, float t);
+
+public enum GraphFunctionName {
+    Sine,
+    MultiSine,
+    Sine2D,
+    MultiSine2D,
+    Ripple,
+}
+
+public class Graph3DController : MonoBehaviour
+{
+    [Range(10, 100), SerializeField] private int _resolution;
+    [SerializeField] private GameObject _cube;
+    [SerializeField] public GraphFunctionName _function;
+
+    [SerializeField] private float _amplitude = 3;
+    [SerializeField] private float _frequency = 4;
+    [SerializeField] private float _velocity = 2;
+    [SerializeField] private float _attenuation = 6;
+
+    private List&lt;List&lt;Transform&gt;&gt; _points;
+    private float _step;
+
+    private Function[] _functions;
+
+    // Use this for initialization
+    private void Start()
+    {
+        _functions = new Function[] {SineFunction, MultiSineFunction, Sine2DFunction, MultiSine2DFunction, Ripple};
+
+        _cube.SetActive(false);
+        _points = new List&lt;List&lt;Transform&gt;&gt;();
+        _step = 2f / _resolution;
+
+        var scale = Vector3.one * _step;
+
+        for (int i = 0; i &lt; _resolution; i++)
+        {
+            _points.Add(new List&lt;Transform&gt;());
+            for (int j = 0; j &lt; _resolution; j++)
+            {
+                var point = Instantiate(_cube, transform);
+                _points[i].Add(point.transform);
+                point.transform.localScale = scale;
+                point.SetActive(true);
+            }
+        }
+
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i &lt; _points.Count; i++)
+        {
+            for (int j = 0; j &lt; _points[i].Count; j++)
+            {
+                var u = i * _step - 1;
+                var v = j * _step - 1;
+                var point = _points[i][j];
+                point.localPosition = _functions[(int) _function](u, v, Time.time);
+            }
+        }
+    }
+
+    private Vector3 SineFunction(float u, float v, float t)
+    {
+        var x = u;
+        var y = Mathf.Sin(Mathf.PI * (u + t));
+        var z = v;
+        return new Vector3(x, y, z);
+    }
+
+    private Vector3 MultiSineFunction(float u, float v, float t)
+    {
+        var x = u;
+        float y = Mathf.Sin(Mathf.PI * (u + t));
+        y += Mathf.Sin(2f * Mathf.PI * (u + 2f * t)) / 2f;
+        y *= 2f / 3f;
+        var z = v;
+        return new Vector3(x, y, z);
+    }
+
+    private Vector3 Sine2DFunction(float u, float v, float t)
+    {
+        var x = u;
+        float y = Mathf.Sin(Mathf.PI * (u + t));
+        y += Mathf.Sin(Mathf.PI * (v + t));
+        y *= 0.5f;
+        var z = v;
+        return new Vector3(x, y, z);
+    }
+
+    private Vector3 MultiSine2DFunction(float u, float v, float t)
+    {
+        var x = u;
+        float y = 4f * Mathf.Sin(Mathf.PI * (u + v + t * 0.5f));
+        y += Mathf.Sin(Mathf.PI * (u + t));
+        y += Mathf.Sin(2f * Mathf.PI * (v + 2f * t)) * 0.5f;
+        y *= 1f / 5.5f;
+        var z = v;
+        return new Vector3(x, y, z);
+    }
+
+    private Vector3 Ripple(float u, float v, float t)
+    {
+        var x = u;
+        float d = Mathf.Sqrt(u * u + v * v);
+        float y = Mathf.Sin(_frequency * Mathf.PI * (d - t / _velocity));
+        y *= 1 / (_amplitude + _attenuation * 2 * Mathf.PI * d);
+        var z = v;
+        return new Vector3(x, y, z);
+    }
+}
+</code></pre>
+<h3 id="圆柱体"><a href="#圆柱体" class="headerlink" title="圆柱体"></a>圆柱体</h3><p>那么如何组成一个圆柱体呢，首先我们知道圆柱体可以认为是由许多个圆环组成的，那么如何构成一个圆环呢？我们知道 u 的取值范围是[-1, 1]，将 u <em> PI 即可获得 [-PI, PI] 即刚好一个圆周的弧度，对应的坐标即是`(x = sin(PI </em> u), z = cos(PI * u))`，按照以上思路我们完成以下代码。然后每一个点的纵座标 y 就直接取 v 的值即可形成「每个水平的圆周上有100个点，共100个圆纵向排列组成的圆柱体」了好吧感觉表述的不是特别清楚写出来跑跑看就知道了。。。</p>
+<pre><code class="lang-csharp">private Vector3 Cylinder(float u, float v, float t)
+{
+    var x = Mathf.Sin(Mathf.PI * u);
+    var y = v;
+    var z = Mathf.Cos(Mathf.PI * u);
+    return new Vector3(x, y, z);
+}
+</code></pre>
+<p>运行一下发现果然是一个圆柱体，如果想要控制圆柱体的半径和高直接在 x 和 z 乘以 R，y 乘以 H 即可，如下图所示。代码就不贴了大家都会自己乘～</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018062001.png" alt="Animation"></p>
+<p>那么如何让这个圆柱体动起来呢～比如说随便对 R 做一些手脚像下面这样</p>
+<pre><code class="lang-csharp">private Vector3 InterestingCylinder(float u, float v, float t)
+{
+    var r = _radius * (0.8f + Mathf.Sin(Mathf.PI * (6f * u + 2f * v + t)) * 0.2f);
+    var x = r * Mathf.Sin(Mathf.PI * u);
+    var y = _height * v;
+    var z = r * Mathf.Cos(Mathf.PI * u);
+    return new Vector3(x, y, z);
+}
+</code></pre>
+<p>尝试改变 u 和 v 的系数可以看到很多有趣的现象哦～懒得自己写的可以打开我的「<a href="https://github.com/sNaticY/CatlikePractice" target="_blank" rel="noopener">Github Repo</a>」直接运行时修改 FactorU 和 FactorV 的值查看结果～最终我们可以达到类似这样的效果</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018062002.gif" alt="Animation"></p>
+<h3 id="球体"><a href="#球体" class="headerlink" title="球体"></a>球体</h3><p>我们在圆柱体的基础上稍加修改就可以获得一个球体，首先，球体跟圆柱体一样也可以认为是很多半径不同的圆环组成的，那么圆环的半径呈现怎样的变化呢，我们想象球体沿经线切开后，可以观察到一圈纬线的半径和纬线的纵座标分别对应<code>Cos(PI / 2 * v)</code>和<code>Sin(PI / 2 * v)</code>，按照这个思路我们尝试写出如下代码。</p>
+<pre><code class="lang-csharp">private Vector3 Sphere(float u, float v, float t)
+{
+    var r = _radius * Mathf.Cos(Mathf.PI / 2 * v);
+    var x = r * Mathf.Sin(Mathf.PI * u);
+    var y = _radius * Mathf.Sin(Mathf.PI / 2 * v);
+    var z = r * Mathf.Cos(Mathf.PI * u);
+    return new Vector3(x, y, z);
+}
+</code></pre>
+<p>运行一下发现完全没有问题～如图所示。。。</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018062003.png" alt="Animation"></p>
+<p>所以想要让球体动起来我们可以使用同样地思路对 r 的计算进行一点点魔改，比如说这样的一个参数<code>factor</code>：</p>
+<pre><code class="lang-csharp">private Vector3 InterestingSphere(float u, float v, float t)
+{
+    var factor = 0.8f + Mathf.Sin(Mathf.PI * (_factorU * u + t)) * 0.1f;
+    factor += Mathf.Sin(Mathf.PI * (_factorV * v + t)) * 0.1f;
+    var r = factor * _radius * Mathf.Cos(Mathf.PI / 2 * v);
+    ...
+}
+</code></pre>
+<p>调一些奇怪的参数。。。然后就出现了一坨嚅动的，。。球体。。。</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018062004.gif" alt="Animation"></p>
+<h3 id="圆环体"><a href="#圆环体" class="headerlink" title="圆环体"></a>圆环体</h3><p>那么想象下一个圆环体和球体到底有什么区别呢，针对每左半条或者右半条经线圈，如果直接变成一个环，那么球体不就变成圆环了么。。。那么怎么变成圆环呢，我们之前提到</p>
+<blockquote>
+<p>一圈纬线的半径和纬线的纵座标分别对应<code>Cos(PI / 2 * v)</code>和`Sin(PI / 2 * v)</p>
+</blockquote>
+<p>所以我们把半个周期的 cos 和 sin 变成完整周期就可以了，不要除以 2 就好。。于是我们尝试着写下如下代码</p>
+<pre><code class="lang-csharp">private Vector3 Torus(float u, float v, float t)
+{
+    var r = _radius * Mathf.Cos(Mathf.PI * v);
+    var x = r * Mathf.Sin(Mathf.PI * u);
+    var y = _radius * Mathf.Sin(Mathf.PI * v);
+    var z = r * Mathf.Cos(Mathf.PI * u);
+    return new Vector3(x, y, z);
+}
+</code></pre>
+<p>运行一下发现还是球体啊。。这是为什么呢，仔细观察发现似乎小方块比以前稀疏了，是因为半条经线被扩展到整个周期以后变成了一整圈经线，所以和对面的那半条完全重叠了。。所以怎么解决这个问题呢？就是扩大纬线圈让相对的两个半条经线不会相互重叠甚至完全分离就可以了。所以这样修改下试试</p>
+<pre><code class="lang-csharp">private Vector3 Torus(float u, float v, float t)
+{
+    var r = _radius * Mathf.Cos(Mathf.PI * v) + _radius2;
+    ...
+}
+</code></pre>
+<p>这里之所以是加一个<code>_radius2</code>在最外面是为了达到「无论 v 如何变化都可以是的半径无条件增加 _radius2」的效果。。。运行下会发现嗯果然没问题了。。</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018062005.png" alt="Animation"></p>
+<p>所以最后也顺便让它动起来吧。。。</p>
+<p><img src="https://blog-1301118239.cos.eu-frankfurt.myqcloud.com/Images/2018062006.gif" alt="Animation"></p>
+<h2 id="PART-5-总结"><a href="#PART-5-总结" class="headerlink" title="PART 5 总结"></a>PART 5 总结</h2><p>好吧这篇真的好长，而且写的好累并且在公式功能坏掉的情况下又很难讲清楚～大家把「<a href="https://github.com/sNaticY/CatlikePractice" target="_blank" rel="noopener">Github Repo</a>」下载下来自己运行稍微修改下就很容易理解了～总之我们把简单的图像扩展到了三维的图形的过程还是很有趣的～虽然不知道暂时有什么用处不过对于培养数学思维也还是挺有帮助的～好吧希望下一篇早日更新～就酱。。。</p>
+<hr>
+<p>原文链接：<a href="https://snatix.com/2018/06/20/021-mathematical-surfaces/">https://snatix.com/2018/06/20/021-mathematical-surfaces/</a></p>
+<p>本文由 <a href="https://github.com/sNaticY" target="_blank" rel="noopener">sNatic</a> 发布于『<a href="https://snatix.com">大喵的新窝</a>』 转载请保留本申明</p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 Gitalk -->
+<div id="gitalk-comment">
+    <!-- Gitalk 评论框 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<script>
+    var gitalk = new Gitalk({
+            id: 'Wed Jun 20 2018 16:46:27 GMT+0200',
+            clientID: '2ed6908a49c9d9b463a2',
+            clientSecret: '1c7ed40bc6c9c95e3e682ca3544846403d37115c',
+            repo: 'hexo-blog',
+            owner: 'sNaticY',
+            admin: ['sNaticY'],
+            // facebook-like distraction free mode
+            distractionFreeMode: true
+        })
+   gitalk.render('gitalk-container')
+</script>
+</div>
+<style>
+    #gitalk-comment {
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2018/07/07/022-constructing-a-fractal/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/06/09/020-building-a-grap/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/miao.png" alt="sNatic's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        Hi! I&#39;m snatic
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="/about" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">account_box</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/08/">八月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2014/08/">八月 2014<span class="sidebar_archives-count">6</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/Catlike学习笔记/">Catlike学习笔记<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Hexo博客重启计划/">Hexo博客重启计划<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Octopress折腾之路/">Octopress折腾之路<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Unity通用框架工程/">Unity通用框架工程<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/git探索之路/">git探索之路<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/快节奏多人游戏同步/">快节奏多人游戏同步<span class="sidebar_archives-count">4</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                    <i class="material-icons sidebar-material-icons">label_outline</i>
+                
+                标签云
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">account_circle</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/links" title="友情链接">
+                
+                    <i class="material-icons sidebar-material-icons">touch_app</i>
+                
+                友情链接
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/timeline" title="时间轴">
+                
+                    <i class="material-icons sidebar-material-icons">event_node</i>
+                
+                时间轴
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+        <a href="https://www.instagram.com/snaticx/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-instagram">
+                <span class="visuallyhidden">Instagram</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/sNaticY" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/snatiz" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-zhihu">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2014&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>大喵的新窝
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+   <!-- GitTalk -->
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+    
+        <script>lsloader.load("hanabi","/js/hanabi-browser-bundle.js?Pki5+pzkluqu53g+ouMWpA==", true)</script>
+    
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+        
+        
+        HanabiBrowser.start('pre code',false);
+    
+</script>
+
+<!-- MathJax Load-->
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+    
+</html>
